@@ -1,14 +1,13 @@
 'use client'
 
-import classes from '@boilerplate/front-end/components/tackle/right/style.module.scss'
-
-import { Corusel } from '@boilerplate/front-end/components/tackle/right/corusel'
-import { Card } from '@boilerplate/front-end/components/tackle/right/card'
-
 import { useGetProductsQuery } from '@boilerplate/front-end/store/queries/product.query'
 
+import { Card } from '@boilerplate/front-end/components/tackle/right/card'
+import { Corusel } from '@boilerplate/front-end/components/tackle/right/corusel'
+import classes from '@boilerplate/front-end/components/tackle/right/style.module.scss'
+
 interface RightTackleProps {
-  products?: { id: string; title: string; price: number; description: string; pathToImage: string; }[];
+  products?: { id: string; title: string; price: number; description: string; pathToImage: string }[]
 }
 
 export const RightTackle: React.FC<RightTackleProps> = ({ products }) => {
@@ -25,5 +24,5 @@ export const RightTackle: React.FC<RightTackleProps> = ({ products }) => {
         ))}
       </div>
     </>
-  );
-};
+  )
+}

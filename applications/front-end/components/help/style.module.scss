@@ -1,86 +1,9 @@
-.carousel {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-
-    &Inner {
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-    }
-
-    &Item {
-        min-width: 100%;
-        transition: opacity 0.5s ease;
-        opacity: 0;
-
-        &.active {
-            opacity: 1;
-        }
-    }
-
-    .image {
-        width: 100%;
-        height: 100%;
-        display: block;
-        object-fit: contain;
-    }
-
-    .prevButton,
-    .nextButton {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        font-size: 2rem;
-        cursor: pointer;
-        padding: 0.5rem 1rem;
-        z-index: 1;
-
-        &:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-    }
-
-    .prevButton {
-        left: 10px;
-    }
-
-    .nextButton {
-        right: 10px;
-    }
-
-    .indicators {
-        padding: 10px;
-        background-color: rgb(150, 150, 150);
-        opacity: 50%;
-        border-radius: 10px;
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    .indicator {
-        width: 115px;
-        height: 15px;
-        background-color: rgba(255, 255, 255, 0.5);
-        border-radius: 10px;
-        border: none;
-        cursor: pointer;
-
-        &.active {
-            background-color: rgba(255, 255, 255, 1);
-        }
-    }
-}
-
-.carouselItem {
+.title {
     display: flex;
     justify-content: center;
-    width: 950px;
-    height: 380px;
+    align-items: center;
+    font-size: 2rem;
+    margin: 20px;
+    color: #3a3b3b;
+    font-weight: 600;
 }

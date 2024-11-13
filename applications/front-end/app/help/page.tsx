@@ -4,7 +4,7 @@
 
 import { Help } from '@boilerplate/front-end/components/help'
 
-export interface HelpPageProps { }
+export interface HelpPageProps {}
 
 const HelpPage: React.FC<HelpPageProps> = () => <Help />
 

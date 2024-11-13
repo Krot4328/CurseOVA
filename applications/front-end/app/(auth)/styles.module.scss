@@ -8,6 +8,9 @@
 }
 
 .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 5.5% auto;
   max-width: 460px;
   width: 100%;
@@ -15,21 +18,19 @@
 }
 
 .under-card {
-  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1.2rem;
+  font-size: 0.8rem;
+
 }
 
 .sign {
   color: blue;
+  font-size: 1rem;
 }
 
 .sign:hover {
-  color: #380092;
-}
-
-.lost {
-  color: red;
-}
-
-.lost:hover {
-  color: #a32e00;
+  color: #11002c;
 }

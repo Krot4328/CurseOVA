@@ -10,7 +10,7 @@ import { useAppDispatch } from '@boilerplate/front-end/store'
 
 import { signInStart } from '@boilerplate/front-end/store/sagas/sign-in.saga'
 
-interface SignInBaseFormProps extends Omit<FormProps, 'onSubmit'> {}
+interface SignInBaseFormProps extends Omit<FormProps, 'onSubmit'> { }
 
 const SignInBaseForm: React.FC<SignInBaseFormProps> = (props) => {
   const dispatch = useAppDispatch()
@@ -22,7 +22,7 @@ const SignInBaseForm: React.FC<SignInBaseFormProps> = (props) => {
 
     dispatch(
       signInStart({
-        redirect: () => router.push('/wallet'),
+        redirect: () => router.push('/'),
       }),
     )
   }

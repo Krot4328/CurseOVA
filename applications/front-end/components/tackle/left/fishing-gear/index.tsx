@@ -1,28 +1,29 @@
 'use client'
 
 import { useState } from 'react'
+
 import classes from '@boilerplate/front-end/components/tackle/left/fishing-gear/style.module.scss'
 
-interface FishingGearProps { }
+interface FishingGearProps {}
 
 export const FishingGear: React.FC<FishingGearProps> = () => {
-  const [activeCategories, setActiveCategories] = useState<Record<string, boolean>>({});
+  const [activeCategories, setActiveCategories] = useState<Record<string, boolean>>({})
 
   const toggleCategory = (category: string) => {
     setActiveCategories((prevCategories) => ({
       ...prevCategories,
       [category]: !prevCategories[category],
-    }));
-  };
+    }))
+  }
 
   return (
     <div className={classes.container}>
       <div className={classes.gear}>
-        <div className={classes["col-md-4"]}>
+        <div className={classes['col-md-4']}>
           <div>
-            <div className={classes["gear-category"]}>
+            <div className={classes['gear-category']}>
               <h3 onClick={() => toggleCategory('rod')}>Вудки</h3>
-              {activeCategories['rod'] && (
+              {activeCategories.rod && (
                 <ul>
                   <li>Спінінги</li>
                   <li>Фідери</li>
@@ -34,11 +35,11 @@ export const FishingGear: React.FC<FishingGearProps> = () => {
           </div>
         </div>
 
-        <div className={classes["col-md-4"]}>
+        <div className={classes['col-md-4']}>
           <div>
-            <div className={classes["gear-category"]}>
+            <div className={classes['gear-category']}>
               <h3 onClick={() => toggleCategory('reel')}>Котушки</h3>
-              {activeCategories['reel'] && (
+              {activeCategories.reel && (
                 <ul>
                   <li>Передньо-фрикційні котушки</li>
                   <li>Задньо-фрикційні котушки</li>
@@ -50,11 +51,11 @@ export const FishingGear: React.FC<FishingGearProps> = () => {
           </div>
         </div>
 
-        <div className={classes["col-md-4"]}>
+        <div className={classes['col-md-4']}>
           <div>
-            <div className={classes["gear-category"]}>
+            <div className={classes['gear-category']}>
               <h3 onClick={() => toggleCategory('line')}>Ліски</h3>
-              {activeCategories['line'] && (
+              {activeCategories.line && (
                 <ul>
                   <li>Монофільна лісочка</li>
                   <li>Плетена лісочка</li>
@@ -66,11 +67,11 @@ export const FishingGear: React.FC<FishingGearProps> = () => {
           </div>
         </div>
 
-        <div className={classes["col-md-4"]}>
+        <div className={classes['col-md-4']}>
           <div>
-            <div className={classes["gear-category"]}>
+            <div className={classes['gear-category']}>
               <h3 onClick={() => toggleCategory('hook')}>Гачоки</h3>
-              {activeCategories['hook'] && (
+              {activeCategories.hook && (
                 <ul>
                   <li>Риболовні гачки</li>
                   <li>Гачки для морської риболовлі</li>
@@ -82,11 +83,11 @@ export const FishingGear: React.FC<FishingGearProps> = () => {
           </div>
         </div>
 
-        <div className={classes["col-md-4"]}>
+        <div className={classes['col-md-4']}>
           <div>
-            <div className={classes["gear-category"]}>
+            <div className={classes['gear-category']}>
               <h3 onClick={() => toggleCategory('weights')}>Грузила</h3>
-              {activeCategories['weights'] && (
+              {activeCategories.weights && (
                 <ul>
                   <li>Плоскі грузила</li>
                   <li>Кулясті грузила</li>
@@ -98,11 +99,11 @@ export const FishingGear: React.FC<FishingGearProps> = () => {
           </div>
         </div>
 
-        <div className={classes["col-md-4"]}>
+        <div className={classes['col-md-4']}>
           <div>
-            <div className={classes["gear-category"]}>
+            <div className={classes['gear-category']}>
               <h3 onClick={() => toggleCategory('floats')}>Поплавці</h3>
-              {activeCategories['floats'] && (
+              {activeCategories.floats && (
                 <ul>
                   <li>Махові поплавці</li>
                   <li>Підводні поплавці</li>
@@ -114,11 +115,11 @@ export const FishingGear: React.FC<FishingGearProps> = () => {
           </div>
         </div>
 
-        <div className={classes["col-md-4"]}>
+        <div className={classes['col-md-4']}>
           <div>
-            <div className={classes["gear-category"]}>
+            <div className={classes['gear-category']}>
               <h3 onClick={() => toggleCategory('lures')}>Приманки</h3>
-              {activeCategories['lures'] && (
+              {activeCategories.lures && (
                 <ul>
                   <li>Твістери</li>
                   <li>Воблери</li>
@@ -130,11 +131,11 @@ export const FishingGear: React.FC<FishingGearProps> = () => {
           </div>
         </div>
 
-        <div className={classes["col-md-4"]}>
+        <div className={classes['col-md-4']}>
           <div>
-            <div className={classes["gear-category"]}>
+            <div className={classes['gear-category']}>
               <h3 onClick={() => toggleCategory('bait')}>Наживка</h3>
-              {activeCategories['bait'] && (
+              {activeCategories.bait && (
                 <ul>
                   <li>Черви</li>
                   <li>Рибки на наживку</li>
@@ -146,11 +147,11 @@ export const FishingGear: React.FC<FishingGearProps> = () => {
           </div>
         </div>
 
-        <div className={classes["col-md-4"]}>
+        <div className={classes['col-md-4']}>
           <div>
-            <div className={classes["gear-category"]}>
+            <div className={classes['gear-category']}>
               <h3 onClick={() => toggleCategory('swivels')}>Вертілюги</h3>
-              {activeCategories['swivels'] && (
+              {activeCategories.swivels && (
                 <ul>
                   <li>Вертлюги для риболовлі</li>
                   <li>Вертілюги з подвійними кільцями</li>
@@ -162,11 +163,11 @@ export const FishingGear: React.FC<FishingGearProps> = () => {
           </div>
         </div>
 
-        <div className={classes["col-md-4"]}>
+        <div className={classes['col-md-4']}>
           <div>
-            <div className={classes["gear-category"]}>
+            <div className={classes['gear-category']}>
               <h3 onClick={() => toggleCategory('leaders')}>Повідці</h3>
-              {activeCategories['leaders'] && (
+              {activeCategories.leaders && (
                 <ul>
                   <li>Необроблені повідці</li>
                   <li>Куплені повідці</li>
@@ -178,11 +179,11 @@ export const FishingGear: React.FC<FishingGearProps> = () => {
           </div>
         </div>
 
-        <div className={classes["col-md-4"]}>
+        <div className={classes['col-md-4']}>
           <div>
-            <div className={classes["gear-category"]}>
+            <div className={classes['gear-category']}>
               <h3 onClick={() => toggleCategory('nets')}>Сітки</h3>
-              {activeCategories['nets'] && (
+              {activeCategories.nets && (
                 <ul>
                   <li>Рибальські сітки</li>
                   <li>Сітки для ловлі раків</li>
@@ -194,11 +195,11 @@ export const FishingGear: React.FC<FishingGearProps> = () => {
           </div>
         </div>
 
-        <div className={classes["col-md-4"]}>
+        <div className={classes['col-md-4']}>
           <div>
-            <div className={classes["gear-category"]}>
+            <div className={classes['gear-category']}>
               <h3 onClick={() => toggleCategory('traps')}>Ловушки</h3>
-              {activeCategories['traps'] && (
+              {activeCategories.traps && (
                 <ul>
                   <li>Ловушки для раків</li>
                   <li>Капкани для риби</li>
@@ -211,5 +212,5 @@ export const FishingGear: React.FC<FishingGearProps> = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

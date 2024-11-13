@@ -1,7 +1,7 @@
 .accordion {
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    margin: 20px 50px;
+    margin: auto;
+    width: 70%;
+    margin-bottom: 80px;
 
     .card {
         border: none;
@@ -13,9 +13,8 @@
         }
 
         .card-header {
-            background-color: #f8f9fa;
-            padding: 10px 15px;
-            border-bottom: 1px solid #ddd;
+            background-color: rgba(160, 160, 160, 0.03);
+            padding: 25px 80px 25px;
             cursor: pointer;
 
             h5 {
@@ -24,7 +23,7 @@
 
             .btn {
                 font-weight: bold;
-                color: #007bff;
+                color: #4b9bf1;
                 text-decoration: none;
                 background: none;
                 border: none;
@@ -32,17 +31,22 @@
                 text-align: left;
                 cursor: pointer;
                 width: 100%;
+                padding-left: auto;
+                display: flex;
+
+
 
                 &:focus {
                     outline: none;
                 }
 
                 &.btn-link {
-                    color: #007bff;
+                    color: #4b9bf1;
                     text-decoration: none;
 
                     &:hover {
-                        text-decoration: underline;
+                        text-decoration: none;
+                        color: #0e82ff;
                     }
                 }
             }
@@ -55,12 +59,13 @@
         .collapse {
             display: none;
 
+
             &.show {
                 display: block;
             }
 
             .card-body {
-                padding: 15px;
+                padding: 15px 15px 15px 80px;
                 background-color: #fff;
             }
         }
@@ -69,4 +74,10 @@
     .mb-0 {
         margin-bottom: 0 !important;
     }
+}
+
+.img {
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
 }

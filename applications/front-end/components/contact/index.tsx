@@ -1,26 +1,28 @@
-'use client';
+'use client'
 
-import React, { useState } from 'react';
-import classes from '@boilerplate/front-end/components/contact/style.module.scss';
+import React, { useState } from 'react'
 
-interface ContactProps { }
+import classes from '@boilerplate/front-end/components/contact/style.module.scss'
+
+interface ContactProps {}
 
 export const Contact: React.FC<ContactProps> = () => {
   const [formData, setFormData] = useState({
     name: '',
     contact: '',
-    message: ''
-  });
+    message: '',
+  })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    const { name, value } = e.target
+
+    setFormData({ ...formData, [name]: value })
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Дані форми:", formData);
-  };
+    e.preventDefault()
+    console.log('Дані форми:', formData)
+  }
 
   return (
     <>
@@ -28,7 +30,9 @@ export const Contact: React.FC<ContactProps> = () => {
       <div className={classes.container}>
         <div className={classes.form} onSubmit={handleSubmit}>
           <div className={classes.formGroup}>
-            <label htmlFor="name" className={classes.label}>Ім'я та Прізвище</label>
+            <label htmlFor="name" className={classes.label}>
+              Ім'я та Прізвище
+            </label>
             <input
               type="text"
               id="name"
@@ -42,7 +46,9 @@ export const Contact: React.FC<ContactProps> = () => {
           </div>
 
           <div className={classes.formGroup}>
-            <label htmlFor="contact" className={classes.label}>Пошта або Телефон</label>
+            <label htmlFor="contact" className={classes.label}>
+              Пошта або Телефон
+            </label>
             <input
               type="text"
               id="contact"
@@ -56,7 +62,9 @@ export const Contact: React.FC<ContactProps> = () => {
           </div>
 
           <div className={classes.formGroup}>
-            <label htmlFor="message" className={classes.label}>Повідомлення</label>
+            <label htmlFor="message" className={classes.label}>
+              Повідомлення
+            </label>
             <textarea
               id="message"
               name="message"
@@ -69,9 +77,11 @@ export const Contact: React.FC<ContactProps> = () => {
             />
           </div>
 
-          <button type="submit" className={classes.button}>Відправити</button>
+          <button type="submit" className={classes.button}>
+            Відправити
+          </button>
         </div>
       </div>
     </>
-  );
-};
+  )
+}

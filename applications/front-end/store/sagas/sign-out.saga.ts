@@ -1,7 +1,7 @@
-import { type PayloadAction, createAction } from '@reduxjs/toolkit'
+import { createAction } from '@reduxjs/toolkit'
 import logger from 'loglevel'
 import { type SagaIterator } from 'redux-saga'
-import { call, put, takeLatest } from 'redux-saga/effects'
+import { call, getContext, put, takeLatest } from 'redux-saga/effects'
 
 import { createSagaActionType } from '@boilerplate/core/builders/saga-action-type.builder'
 import { type HttpClientResponse } from '@boilerplate/core/interfaces/http'
@@ -13,15 +13,16 @@ import { saga } from '@boilerplate/front-end/store'
 
 import { logout } from '@boilerplate/front-end/store/queries/token.query'
 import { profileSlice } from '@boilerplate/front-end/store/slices/profile.slice'
+import { useRouter } from 'next/navigation'
 
-interface SignOutStartActionPayload {
-  redirect: () => void
-}
+interface SignOutStartActionPayload { }
 
 export const signOutStart = createAction<SignOutStartActionPayload>(createSagaActionType('sign-out-start'))
 
-function* handler(action: PayloadAction<SignOutStartActionPayload>): SagaIterator<void> {
+function* handler(): SagaIterator<void> {
   try {
+    const router: ReturnType<typeof useRouter> = yield getContext('router')
+
     const deleteTokenRequest = yield put(logout.initiate())
 
     const deleteTokenResponse: HttpClientResponse<DeleteTokenResultDto> = yield call(() => deleteTokenRequest)
@@ -34,11 +35,12 @@ function* handler(action: PayloadAction<SignOutStartActionPayload>): SagaIterato
 
     yield put(profileSlice.actions.init(null))
 
-    yield call(action.payload.redirect)
+    yield call(router.push, '/')
   } catch (error) {
     logger.error(error)
   }
 }
+
 
 saga.run(function* () {
   yield takeLatest(signOutStart, handler)

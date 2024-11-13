@@ -4,7 +4,7 @@
 
 import { AboutUs } from '@boilerplate/front-end/components/about-us'
 
-export interface AboutUsPageProps { }
+export interface AboutUsPageProps {}
 
 const AboutAsPage: React.FC<AboutUsPageProps> = () => <AboutUs />
 

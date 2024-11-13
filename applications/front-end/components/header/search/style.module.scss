@@ -1,0 +1,28 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.search {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: solid;
+  border-color: aliceblue;
+  color: aliceblue;
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.but {
+  border: none;
+  background: transparent;
+  position: absolute;
+}
+
+.icon {
+  color: aliceblue;
+}

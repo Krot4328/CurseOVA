@@ -4,7 +4,7 @@
 
 import { Cart } from '@boilerplate/front-end/components/cart'
 
-export interface CartPageProps { }
+export interface CartPageProps {}
 
 const CartPage: React.FC<CartPageProps> = () => <Cart />
 

@@ -9,6 +9,7 @@ import { type MyProfile } from '@boilerplate/types/auth/interfaces/profile'
 import { type AppStore, createStore } from '@boilerplate/front-end/store'
 
 import { profileSlice } from '@boilerplate/front-end/store/slices/profile.slice'
+import { useRouter } from 'next/navigation'
 
 interface ReduxProviderProps {
   children: React.ReactNode
@@ -16,9 +17,12 @@ interface ReduxProviderProps {
 }
 
 export const ReduxProvider: React.FC<ReduxProviderProps> = ({ children, profile }) => {
+  const router = useRouter()
+
   const storeRef = useRef<AppStore | null>(null)
+
   if (!storeRef.current) {
-    storeRef.current = createStore()
+    storeRef.current = createStore({ router })
     storeRef.current.dispatch(profileSlice.actions.init(profile))
   }
 

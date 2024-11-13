@@ -19,8 +19,8 @@ import { ReduxProvider } from '@boilerplate/front-end/store/provider'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@boilerplate/front-end/app/global.scss'
 
-import { Header } from '@boilerplate/front-end/components/header'
 import { Footer } from '@boilerplate/front-end/components/footer'
+import { Header } from '@boilerplate/front-end/components/header'
 
 export interface RootLayoutProps {
   readonly children: React.ReactNode
@@ -76,7 +76,11 @@ const RootLayout: React.FC<RootLayoutProps> = async ({ children }) => {
         <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
       </head>
       <body>
-        <ReduxProvider profile={profile}><Header />{children}<Footer /></ReduxProvider>
+        <ReduxProvider profile={profile}>
+          <Header />
+          {children}
+          <Footer />
+        </ReduxProvider>
       </body>
     </html>
   )

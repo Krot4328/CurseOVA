@@ -4,7 +4,7 @@
 
 import { Profile } from '@boilerplate/front-end/components/profile'
 
-export interface ProfilePageProps { }
+export interface ProfilePageProps {}
 
 const ProfilePage: React.FC<ProfilePageProps> = () => <Profile />
 

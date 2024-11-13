@@ -33,11 +33,12 @@
   padding-left: 10px;
   cursor: pointer;
   transition: color 0.3s ease;
+
+  &:hover {
+    color: #007bff;
+  }
 }
 
-.gear-category h3:hover {
-  color: #007bff;
-}
 
 .gear-category ul {
   list-style-type: none;

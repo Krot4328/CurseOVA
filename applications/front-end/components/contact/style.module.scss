@@ -1,13 +1,14 @@
 .h2 {
-  font-size: 2.2rem;
+  font-size: 2rem;
   color: #333;
   text-align: center;
   margin-bottom: 15px;
-  margin-top: 10px;
+  margin-top: 20px;
+  font-weight: 600;
 }
 
 .form {
-  max-width: 800px;
+  // max-width: 800px;
   padding: 30px;
   background-color: #f9f9f9;
   border-radius: 8px;
@@ -19,7 +20,7 @@
 }
 
 .label {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   color: #555;
   display: block;
   margin-bottom: 8px;
@@ -29,10 +30,14 @@
 .textarea {
   width: 100%;
   padding: 15px;
-  font-size: 1.1rem;
+  font-size: 0.7rem;
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
+
+  &::placeholder {
+    color: #6c757d;
+  }
 }
 
 .input:focus,
@@ -61,5 +66,5 @@
 .container {
   height: 65vh;
   margin: 0 auto;
-  width: 800px;
+  width: 40%;
 }

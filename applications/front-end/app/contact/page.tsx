@@ -4,7 +4,7 @@
 
 import { Contact } from '@boilerplate/front-end/components/contact'
 
-export interface ContactPageProps { }
+export interface ContactPageProps {}
 
 const ContactPage: React.FC<ContactPageProps> = () => <Contact />
 

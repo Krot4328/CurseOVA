@@ -1,7 +1,7 @@
 import { Method } from '@boilerplate/core/interfaces/http'
 
 import {
-  GetProductsHttpClientRequestDto,
+  type GetProductsHttpClientRequestDto,
   GetProductsListUrl,
 } from '@boilerplate/types/products/dto/requests/products'
 import { type GetProductDataDto } from '@boilerplate/types/products/dto/responses/products'

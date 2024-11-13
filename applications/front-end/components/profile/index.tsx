@@ -1,9 +1,12 @@
-'use client';
+'use client'
 
-import React, { useState } from 'react';
-import classes from '@boilerplate/front-end/components/profile/style.module.scss';
-import Image from 'next/image';
-import profile from '@boilerplate/front-end/assets/icons/proFile.svg';
+import React, { useState } from 'react'
+
+import Image from 'next/image'
+
+import profile from '@boilerplate/front-end/assets/icons/proFile.svg'
+
+import classes from '@boilerplate/front-end/components/profile/style.module.scss'
 
 interface ProfileProps { }
 
@@ -12,36 +15,38 @@ export const Profile: React.FC<ProfileProps> = () => {
     phone: '123-456-7890',
     email: 'example@gmail.com',
     address: '123 Main St, City, Country',
-  });
+  })
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [newContactInfo, setNewContactInfo] = useState(contactInfo);
+  const [isEditing, setIsEditing] = useState(false)
+  const [newContactInfo, setNewContactInfo] = useState(contactInfo)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setNewContactInfo((prev) => ({ ...prev, [name]: value }));
-  };
+    const { name, value } = e.target
+
+    setNewContactInfo((prev) => ({ ...prev, [name]: value }))
+  }
 
   const handleEdit = () => {
-    setIsEditing(!isEditing);
-  };
+    setIsEditing(!isEditing)
+  }
 
   const handleSave = () => {
-    setContactInfo(newContactInfo);
-    setIsEditing(false);
-  };
+    setContactInfo(newContactInfo)
+    setIsEditing(false)
+  }
 
   return (
     <div className={classes.profileContainer}>
-      <div className={classes.profileInfo} style={{ width: '30%' }}>
+      <div className={classes.profileInfo} >
         <Image className={classes.profileImage} src={profile} alt="Profile Picture" />
         <h2 className={classes.profileName}>Ім'я Прізвище</h2>
       </div>
 
-      <div className={classes.contactInfo} style={{ width: '50%' }}>
+      <div className={classes.contactInfo} >
         <h3 className={classes.contactHeader}>Контактна інформація</h3>
         {isEditing ? (
           <div className={classes.editForm}>
+            <p className={classes.contactEdit}>Телефон</p>
             <input
               className={classes.contactInput}
               type="text"
@@ -50,6 +55,7 @@ export const Profile: React.FC<ProfileProps> = () => {
               onChange={handleChange}
               placeholder="Телефон"
             />
+            <p className={classes.contactEdit}>Електронна пошта</p>
             <input
               className={classes.contactInput}
               type="email"
@@ -58,6 +64,7 @@ export const Profile: React.FC<ProfileProps> = () => {
               onChange={handleChange}
               placeholder="Електронна пошта"
             />
+            <p className={classes.contactEdit}>Адреса</p>
             <input
               className={classes.contactInput}
               type="text"
@@ -66,17 +73,21 @@ export const Profile: React.FC<ProfileProps> = () => {
               onChange={handleChange}
               placeholder="Адреса"
             />
-            <button className={classes.saveButton} onClick={handleSave}>Зберегти</button>
+            <button className={classes.saveButton} onClick={handleSave}>
+              Зберегти
+            </button>
           </div>
         ) : (
           <div className={classes.contactDetails}>
             <p className={classes.contactDetail}>Телефон: {contactInfo.phone}</p>
             <p className={classes.contactDetail}>Електронна пошта: {contactInfo.email}</p>
             <p className={classes.contactDetail}>Адреса: {contactInfo.address}</p>
-            <button className={classes.editButton} onClick={handleEdit}>Редагувати</button>
+            <button className={classes.editButton} onClick={handleEdit}>
+              Редагувати
+            </button>
           </div>
         )}
       </div>
     </div>
-  );
-};
+  )
+}

@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form'
 
 import classes from '@boilerplate/front-end/app/(auth)/lost-password/styles.module.scss'
 
-export interface AuthLostPasswordPageProps { }
+export interface AuthLostPasswordPageProps {}
 
 const AuthLostPasswordPage: React.FC<AuthLostPasswordPageProps> = () => (
   <Card style={{ backgroundColor: 'rgb(0, 180, 225)' }}>

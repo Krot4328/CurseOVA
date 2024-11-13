@@ -10,8 +10,9 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 7px 100px;
+    padding: 7px 20px;
     background-color: rgb(20, 20, 20);
+    gap: 1.4rem;
 }
 
 .logo .img {
@@ -29,6 +30,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
+    color: #fff;
 }
 
 .cart-profile .a:hover {
@@ -57,6 +60,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
+    color: #fff;
 }
 
 .bottom-header .a:hover {

@@ -4,7 +4,7 @@
 
 import { Tackle } from '@boilerplate/front-end/components/tackle'
 
-export interface TacklePageProps { }
+export interface TacklePageProps {}
 
 const TacklePage: React.FC<TacklePageProps> = () => <Tackle />
 
