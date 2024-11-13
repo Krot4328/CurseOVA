@@ -1,4 +1,4 @@
-const DEFAULT_PREFIX = 'api://' as const
+const DEFAULT_PREFIX = 'api://'
 
 export const createApiKey = <
   TApiName extends string = string,
@@ -10,3 +10,5 @@ export const createApiKey = <
   prefix?: TPrefix,
 ): `[v${TVersion}] ${TPrefix | typeof DEFAULT_PREFIX}/${TApiName}` =>
   `[v${version}] ${prefix || DEFAULT_PREFIX}/${apiName}`
+
+export const isApiKey = (key: string): boolean => Boolean(key?.split?.(' ')?.[1]?.startsWith(DEFAULT_PREFIX))
