@@ -11,25 +11,25 @@ export interface GetProductData extends GetProductDataShort {
 }
 
 export enum Tackle {
-  Rod = "Rod",
-  Reel = "Reel",
-  Line = "Line",
-  Hook = "Hook",
-  Sinkers = "Sinkers",
-  Floats = "Floats",
-  Lures = "Lures",
-  Bait = "Bait",
-  Swivels = "Swivels",
-  Leaders = "Leaders",
-  Nets = "Nets",
-  Traps = "Traps",
+  Rod = 'Rod',
+  Reel = 'Reel',
+  Line = 'Line',
+  Hook = 'Hook',
+  Sinkers = 'Sinkers',
+  Floats = 'Floats',
+  Lures = 'Lures',
+  Bait = 'Bait',
+  Swivels = 'Swivels',
+  Leaders = 'Leaders',
+  Nets = 'Nets',
+  Traps = 'Traps',
 }
 
 export interface PostProductData {
   title: string
   description: string
   price: number
-  tackle: string
+  tackle: Tackle
   file: Express.Multer.File
 }
 

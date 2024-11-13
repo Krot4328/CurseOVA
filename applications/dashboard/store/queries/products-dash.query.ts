@@ -1,7 +1,7 @@
 import { Method } from '@boilerplate/core/interfaces/http'
 
 import {
-  GetProductsHttpClientRequestDto,
+  type GetProductsHttpClientRequestDto,
   GetProductsListUrl,
 } from '@boilerplate/types/products/dto/requests/products'
 import { type GetProductDataDto } from '@boilerplate/types/products/dto/responses/products'
@@ -15,6 +15,10 @@ const api = v1ReactApi.injectEndpoints({
         method: Method.Get,
         url: GetProductsListUrl,
       }),
+      providesTags: (result) =>
+        Array.isArray(result)
+          ? [...result.map(({ id }) => ({ type: 'Product', id }) as const), { type: 'Product', id: 'LIST' }]
+          : [{ type: 'Product', id: 'LIST' }],
     }),
   }),
 })

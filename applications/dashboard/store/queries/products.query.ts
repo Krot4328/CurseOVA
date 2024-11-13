@@ -1,7 +1,7 @@
 import { Method } from '@boilerplate/core/interfaces/http'
 
 import {
-  type PostProductDataDto,
+  DeleteProductUrl,
   type PostProductHttpClientRequestDto,
   PostProductUrl,
 } from '@boilerplate/types/products/dto/requests/products'
@@ -20,15 +20,19 @@ const api = v1ReactApi.injectEndpoints({
         },
         data: formData,
       }),
+      invalidatesTags: [{ type: 'Product', id: 'LIST' }],
     }),
-    delete: build.mutation<void, { productId: string }>({
+    deleteProduct: build.mutation<void, { productId: string }>({
       query: ({ productId }) => ({
         method: Method.Delete,
-        url: `/products/${productId}`,
-      })
-    })
+        url: DeleteProductUrl,
+        params: {
+          productId,
+        },
+      }),
+      invalidatesTags: [{ type: 'Product', id: 'LIST' }],
+    }),
   }),
 })
 
-export const { create, delete: deleteProduct } = api.endpoints
-export const { useDeleteMutation } = api
+export const { create, deleteProduct } = api.endpoints

@@ -1,11 +1,14 @@
 'use client'
 
-import classes from '@boilerplate/dashboard/components/product-list/style.module.scss'
+import { useCallback } from 'react'
+
 import Image from 'next/image'
 
 import card from '@boilerplate/dashboard/assets/icons/card.svg'
-import { useState } from 'react'
-import { useDeleteMutation } from '@/store/queries/products.query'
+
+import { useAppDispatch } from '@boilerplate/dashboard/store'
+
+import classes from '@boilerplate/dashboard/components/product-list/style.module.scss'
 
 interface DashItemProps {
   id: string
@@ -17,38 +20,36 @@ interface DashItemProps {
   onDelete: (id: string) => void
 }
 
-export const DashItem: React.FC<DashItemProps> = ({ id, title, price, description, tackle, pathToImage, onDelete }) => {
-  const [isDeleting, setIsDeleting] = useState(false)
+export const DashItem: React.FC<DashItemProps> = ({ id, title, price, description, tackle, pathToImage }) => {
+  const dispatch = useAppDispatch()
 
-  const [deleteProduct] = useDeleteMutation()
+  const handleDelete = useCallback<React.MouseEventHandler<HTMLButtonElement>>(async () => {
+    const { deleteProductStart } = await import('@boilerplate/dashboard/store/sagas/delete-product.saga')
 
-  const handleDelete = async () => {
-    try {
-      setIsDeleting(true)
+    dispatch(deleteProductStart({ productId: id }))
+  }, [id])
 
-      await deleteProduct({ productId: id }).unwrap()
-
-      onDelete(id)
-    } catch (error) {
-      console.log('Error deleting product:', error)
-      alert('Помилка при видаленні')
-    } finally {
-      setIsDeleting(false)
-    }
-  }
-
-  console.log({ pathToImage })
   return (
     <tr className={classes.row}>
-      <td className={classes["table-cell"]}><Image className={classes.img} src={pathToImage ? `/.${pathToImage}` : card} width="268" height="180" alt='card' /></td>
-      <td className={classes["table-cell"]}>{title}</td>
-      <td className={classes["table-cell"]}>{tackle}</td>
-      <td className={classes["table-cell"]}>{description}</td>
-      <td className={classes["table-cell"]}>{price.toFixed(2)}₴</td>
-      <td className={classes["table-cell"]}>
-        <button className={classes["btn-update"]}>Редагувати</button>
-        <button className={classes["btn-delete"]} onClick={handleDelete} disabled={isDeleting}>Видалити</button>
+      <td className={classes['table-cell']}>
+        <Image
+          className={classes.img}
+          src={pathToImage ? `/.${pathToImage}` : card}
+          width="268"
+          height="180"
+          alt="card"
+        />
+      </td>
+      <td className={classes['table-cell']}>{title}</td>
+      <td className={classes['table-cell']}>{tackle}</td>
+      <td className={classes['table-cell']}>{description}</td>
+      <td className={classes['table-cell']}>{price.toFixed(2)}₴</td>
+      <td className={classes['table-cell']}>
+        <button className={classes['btn-update']}>Редагувати</button>
+        <button className={classes['btn-delete']} onClick={handleDelete}>
+          Видалити
+        </button>
       </td>
     </tr>
-  );
-};
+  )
+}

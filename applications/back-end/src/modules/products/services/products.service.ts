@@ -1,11 +1,18 @@
 import { Injectable } from '@nestjs/common'
 
-import { DeleteProductResult, GetProductData, PostProductData, PostProductResult, Tackle } from '@boilerplate/types/products/interfaces/products'
+import { HttpListServerResponse, HttpServerResponse } from '@boilerplate/core/interfaces/http'
+
+import {
+  DeleteProductResult,
+  GetProductData,
+  PostProductData,
+  PostProductResult,
+  Tackle,
+} from '@boilerplate/types/products/interfaces/products'
 
 import { ProductsRepository } from '@boilerplate/back-end/modules/products/repositories/products.repository'
 
 import { ProductsDataMapper } from '@boilerplate/back-end/modules/products/data-mappers/products.data-mapper'
-import { HttpListServerResponse, HttpServerResponse } from '@boilerplate/core/interfaces/http'
 
 @Injectable()
 export class ProductsService {
@@ -13,7 +20,7 @@ export class ProductsService {
     private readonly productsRepository: ProductsRepository,
 
     private readonly productsDataMapper: ProductsDataMapper,
-  ) { }
+  ) {}
 
   async getProducts(data: GetProductData): Promise<HttpListServerResponse<GetProductData>> {
     const { title, price, description, tackle } = data
@@ -29,7 +36,7 @@ export class ProductsService {
   async postProduct(data: PostProductData): Promise<HttpServerResponse<PostProductResult>> {
     const { title, description, price, tackle, file } = data
 
-    if (!Object.values(Tackle).includes(tackle as Tackle)) {
+    if (!Object.values(Tackle).includes(tackle)) {
       throw new Error(`Invalid tackle value: ${tackle}`)
     }
 
@@ -37,8 +44,8 @@ export class ProductsService {
       title,
       description,
       price: parseInt(`${price * 100}`, 10),
-      tackle: tackle as Tackle,
-      pathToImage: `/uploads/tackles/${file.filename}`
+      tackle,
+      pathToImage: `/uploads/tackles/${file.filename}`,
     })
 
     const result: PostProductResult = {
@@ -52,14 +59,14 @@ export class ProductsService {
 
   async deleteProduct(productId: string): Promise<HttpServerResponse<DeleteProductResult>> {
     const product = await this.productsRepository.findOne({
-      where: { id: productId }
-    });
+      where: { id: productId },
+    })
 
     if (!product) {
-      throw new Error('Product not found');
+      throw new Error('Product not found')
     }
 
-    await this.productsRepository.delete(productId);
+    await this.productsRepository.delete(productId)
 
     const result: DeleteProductResult = {
       isSuccess: true,
