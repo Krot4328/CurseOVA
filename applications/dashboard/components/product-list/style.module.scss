@@ -1,0 +1,116 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-header {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.row {
+  &:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
+
+.table-cell {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.btn-update,
+.btn-delete {
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-update {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 3px;
+}
+
+.btn-update:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.btn-delete {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 3px;
+}
+
+.btn-delete:hover {
+  background-color: #d32f2f;
+  transform: scale(1.05);
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.paginationButtonNumber {
+  width: 35px;
+  height: 42px;
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  border-radius: 4px;
+}
+
+.paginationButtonNumber:hover {
+  background-color: #f0f0f0;
+}
+
+.paginationButtonNumber:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+.paginationButtonText {
+  width: 108px;
+  height: 42px;
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  border-radius: 4px;
+}
+
+.paginationButtonText:hover {
+  background-color: #f0f0f0;
+}
+
+.paginationButtonText:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+.active {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}

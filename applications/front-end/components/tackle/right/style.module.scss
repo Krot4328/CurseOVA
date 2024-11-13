@@ -1,0 +1,16 @@
+.coruselWrapper {
+  width: 100%;
+}
+
+.cardContainer {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin: 100px 50px;
+  justify-items: center;
+}
+
+.cardContainer> :global(.card) {
+  box-sizing: border-box;
+  max-width: 100%;
+}

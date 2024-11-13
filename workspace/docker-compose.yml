@@ -1,0 +1,89 @@
+version: "3.8"
+services:
+
+  nginx:
+    image: nginx:1.25
+    restart: always
+    container_name: app.nginx.work
+    volumes:
+      - ./services/nginx/ssl:/etc/nginx/ssl:delegated
+      - ./services/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf:delegated
+    ports:
+      - 80:80
+      - 443:443
+
+  postgres:
+    image: workspace/postgresql
+    build:
+      context: './build/postgres'
+    restart: always
+    container_name: postgres.work
+    ports:
+      - 5432:5432
+    # volumes:
+    #   - workspace-postgres:/bitnami/postgresql:delegated
+    environment:
+      - POSTGRESQL_PASSWORD=postgres
+      - POSTGRESQL_SHARED_PRELOAD_LIBRARIES=uuid-ossp
+      - POSTGRESQL_DATABASE=boilerplate
+
+  dbadmin-postgres:
+    image: dpage/pgadmin4:8
+    restart: always
+    container_name: dbadmin.work
+    volumes:
+      - ./services/dbadmin-postgres/servers.json:/pgadmin4/servers.json:delegated
+      # - workspace-pgadmin:/var/lib/pgadmin:delegated
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=root@devloc.space
+      - PGADMIN_DEFAULT_PASSWORD=toor
+    links:
+      - "postgres:db"
+
+  redis:
+    image: "bitnami/redis:6.0.9"
+    restart: always
+    container_name: redis.work
+    volumes:
+      - ./redis:/bitnami/redis/data:delegated
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+
+  # boilerplate-front-end
+  boilerplate-front-end:
+    image: boilerplate-front-end
+    build:
+      context: "."
+      dockerfile: "../applications/front-end/build/workspace/Dockerfile"
+    container_name: front-end.work
+    env_file: "../applications/front-end/.env"
+    volumes:
+      - "..:/app:delegated"
+      - "../applications/back-end/uploads:/app/applications/front-end/public/uploads:delegated"
+
+  # boilerplate-dashboard
+  boilerplate-dashboard:
+    image: boilerplate-dashboard
+    build:
+      context: "."
+      dockerfile: "../applications/dashboard/build/workspace/Dockerfile"
+    container_name: dashboard.work
+    env_file: "../applications/dashboard/.env"
+    volumes:
+      - "..:/app:delegated"
+      - "../applications/back-end/uploads:/app/applications/dashboard/public/uploads:delegated"
+
+  # boilerplate-api
+  boilerplate-api:
+    image: boilerplate-api
+    build:
+      context: "."
+      dockerfile: "../applications/back-end/build/workspace/Dockerfile"
+    container_name: back-end.work
+    env_file: "../applications/back-end/.env"
+    volumes:
+      - "..:/app:delegated"
+
+networks:
+  boilerplate:
+    name: workspace

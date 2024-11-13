@@ -1,0 +1,35 @@
+.root {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+
+  background-color: #fff;
+}
+
+.content {
+  margin: 5.5% auto;
+  max-width: 460px;
+  width: 100%;
+  position: relative;
+}
+
+.under-card {
+  padding-top: 10px;
+}
+
+.sign {
+  color: blue;
+}
+
+.sign:hover {
+  color: #380092;
+}
+
+.lost {
+  color: red;
+}
+
+.lost:hover {
+  color: #a32e00;
+}

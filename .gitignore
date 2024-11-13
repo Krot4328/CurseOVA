@@ -1,0 +1,4 @@
+node_modules/
+
+workspace/redis/appendonly.aof
+workspace/redis/dump.rdb
