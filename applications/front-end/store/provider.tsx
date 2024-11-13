@@ -11,7 +11,6 @@ import { type MyProfile } from '@boilerplate/types/auth/interfaces/profile'
 import { type AppStore, createStore } from '@boilerplate/front-end/store'
 
 import { profileSlice } from '@boilerplate/front-end/store/slices/profile.slice'
-import { useRouter } from 'next/navigation'
 
 interface ReduxProviderProps {
   children: React.ReactNode

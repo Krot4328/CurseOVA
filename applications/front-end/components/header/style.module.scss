@@ -21,11 +21,13 @@
 }
 
 .cart-profile {
+    flex-shrink: 0;
     display: flex;
     gap: 10px;
 }
 
 .cart-profile .a {
+    flex-shrink: 0;
     padding: 10px;
     display: flex;
     justify-content: center;
