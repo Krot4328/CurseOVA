@@ -15,7 +15,6 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiParam, ApiTags } from '@nestjs/swagger'
 import multer from 'multer'
-import { JwtPassportLogoutAuthGuard } from 'src/modules/auth/guards/jwt-passport-logout-auth.guard'
 import { v4 as uuid } from 'uuid'
 
 import { Roles } from '@boilerplate/core/decorators/roles.decorator'
