@@ -67,7 +67,7 @@ export const config = createProfiguration<ConfigDto>(
     },
     redis: {
       url: {
-        default: 'redis://aplus-redis.workspace:6379/0',
+        default: 'redis://redis.work:6379/0',
         env: 'REDIS_URL',
       },
     },
@@ -104,6 +104,34 @@ export const config = createProfiguration<ConfigDto>(
         cert: {
           default: '',
           env: 'DATABASE_SSL_CERT',
+        },
+      },
+    },
+    bull: {
+      limiter: {
+        duration: {
+          default: 1000,
+          env: 'BULL_LIMITER_DURATION',
+        },
+        max: {
+          default: 10,
+          env: 'BULL_LIMITER_MAX',
+        },
+        bounceBack: {
+          default: false,
+          env: 'BULL_LIMITER_BOUNCE_BACK',
+        },
+      },
+      processors: {
+        deleteToken: {
+          delay: {
+            default: '5s',
+            env: 'BULL_PROCESSORS_DELETE_TOKEN_DELAY',
+          },
+          concurrency: {
+            default: 1,
+            env: 'BULL_PROCESSORS_DELETE_TOKEN_CONCURRENCY',
+          },
         },
       },
     },

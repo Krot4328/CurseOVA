@@ -7,7 +7,7 @@ const nextConfig = {
     return [
       {
         source: '/api/v1/:path*',
-        destination: 'http://boilerplate-api/api/v1/:path*'
+        destination: 'http://back-end.work/api/v1/:path*'
       }
     ]
   },

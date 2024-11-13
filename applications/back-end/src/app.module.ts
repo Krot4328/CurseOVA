@@ -1,3 +1,4 @@
+import { BullModule } from '@nestjs/bull'
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
@@ -18,11 +19,11 @@ const sslCert = config.get('database.ssl.cert')
 const ssl =
   sslRejectUnauthorized || sslCA || sslKey || sslCert
     ? {
-      rejectUnauthorized: sslRejectUnauthorized,
-      ca: sslCA,
-      key: sslKey,
-      cert: sslCert,
-    }
+        rejectUnauthorized: sslRejectUnauthorized,
+        ca: sslCA,
+        key: sslKey,
+        cert: sslCert,
+      }
     : undefined
 
 @Module({
@@ -43,8 +44,17 @@ const ssl =
       migrations: [`${__dirname}/**/migrations/*{.js,.ts}`],
       ssl,
     }),
+    BullModule.forRoot({
+      url: config.get('redis.url'),
+      // the limiter is optional. needed for high load and can be changed
+      limiter: {
+        max: config.get('bull.limiter.max'),
+        duration: config.get('bull.limiter.duration'),
+        bounceBack: config.get('bull.limiter.bounceBack'),
+      },
+    }),
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}

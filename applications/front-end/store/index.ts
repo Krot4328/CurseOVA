@@ -2,8 +2,9 @@
 
 'use client'
 
+import { type useRouter } from 'next/navigation'
+
 import { combineSlices, configureStore, createDynamicMiddleware } from '@reduxjs/toolkit'
-import { useRouter } from 'next/navigation'
 // eslint-disable-next-line no-restricted-imports
 import { useDispatch, useSelector } from 'react-redux'
 import { default as createSagaMiddleware } from 'redux-saga'
@@ -11,7 +12,7 @@ import { default as createSagaMiddleware } from 'redux-saga'
 /**
  * need for next overriding with slices
  */
-interface LazyLoadedSlices { }
+interface LazyLoadedSlices {}
 
 const rootReducer = combineSlices().withLazyLoadedSlices<LazyLoadedSlices>()
 
@@ -22,9 +23,11 @@ const sagasMiddleware = createSagaMiddleware()
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const createStore = ({ router }: { router: ReturnType<typeof useRouter> }) => {
   sagasMiddleware.setContext({ router })
+
   return configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }).concat([dynamicMiddleware.middleware, sagasMiddleware]),
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({ serializableCheck: false }).concat([dynamicMiddleware.middleware, sagasMiddleware]),
   })
 }
 

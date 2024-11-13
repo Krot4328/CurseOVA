@@ -2,6 +2,8 @@
 
 import { useRef } from 'react'
 
+import { useRouter } from 'next/navigation'
+
 import { Provider } from 'react-redux'
 
 import { type MyProfile } from '@boilerplate/types/auth/interfaces/profile'

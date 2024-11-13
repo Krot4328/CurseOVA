@@ -16,7 +16,7 @@ const BASE_CONFIG = {
   headers: {
     'Content-Type': 'application/json',
   },
-  baseURL: typeof window === 'undefined' ? 'http://boilerplate-api/api/v1' : '/api/v1',
+  baseURL: typeof window === 'undefined' ? 'http://back-end.work/api/v1' : '/api/v1',
 }
 
 export const instance = axios.create(BASE_CONFIG)

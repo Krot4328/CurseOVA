@@ -16,11 +16,15 @@ import { type MyProfile } from '@boilerplate/types/auth/interfaces/profile'
 
 import { ReduxProvider } from '@boilerplate/front-end/store/provider'
 
-import 'bootstrap/dist/css/bootstrap.min.css'
-import '@boilerplate/front-end/app/global.scss'
-
 import { Footer } from '@boilerplate/front-end/components/footer'
 import { Header } from '@boilerplate/front-end/components/header'
+import { Progress } from '@boilerplate/front-end/components/progress'
+import { Snackbar } from '@boilerplate/front-end/components/snackbar'
+
+import 'bootstrap/dist/css/bootstrap.min.css'
+import '@boilerplate/front-end/app/global.scss'
+import '@boilerplate/dashboard/assets/css/satoshi.css'
+import '@boilerplate/dashboard/assets/css/style.css'
 
 export interface RootLayoutProps {
   readonly children: React.ReactNode
@@ -78,7 +82,9 @@ const RootLayout: React.FC<RootLayoutProps> = async ({ children }) => {
       <body>
         <ReduxProvider profile={profile}>
           <Header />
+          <Progress />
           {children}
+          <Snackbar />
           <Footer />
         </ReduxProvider>
       </body>
