@@ -91,9 +91,6 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = () => {
         ></textarea>
       </div>
       <div>
-        <label className="mb-3 block text-sm font-medium text-white dark:text-white">
-          Завантажити файл
-        </label>
         <input
           type="file"
           className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
