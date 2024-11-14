@@ -1,5 +1,12 @@
-import { Tackle } from '@boilerplate/types/products/interfaces/products'
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  Index,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm'
 
 @Entity()
 export class ProductEntity {
@@ -14,9 +21,6 @@ export class ProductEntity {
 
   @Column()
   price: number
-
-  @Column({ type: 'enum', enum: Tackle, nullable: true })
-  tackle: Tackle
 
   @Column({ type: 'text', nullable: true })
   pathToImage: string

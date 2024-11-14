@@ -1,8 +1,33 @@
+import { type HttpSearch } from '@boilerplate/core/interfaces/http'
+
+export interface PostProductData {
+  title: string
+  description: string
+  price: number
+  tags: string[]
+  fileId: string
+}
+
+export interface PostProductResult {
+  isSuccess: boolean
+}
+
+export interface GetProductsSearch extends HttpSearch {
+  search?: string
+
+  page?: string
+  pageSize?: string
+
+  tagsIds?: string[]
+}
+
 export interface GetProductDataShort {
   id: string
   title: string
   price: number
-  pathToImage: string
+  images: string[]
+
+  tags: string[]
 }
 
 export interface GetProductData extends GetProductDataShort {
@@ -10,44 +35,16 @@ export interface GetProductData extends GetProductDataShort {
   tackle: string
 }
 
-export enum Tackle {
-  Rod = 'Rod',
-  Reel = 'Reel',
-  Line = 'Line',
-  Hook = 'Hook',
-  Sinkers = 'Sinkers',
-  Floats = 'Floats',
-  Lures = 'Lures',
-  Bait = 'Bait',
-  Swivels = 'Swivels',
-  Leaders = 'Leaders',
-  Nets = 'Nets',
-  Traps = 'Traps',
-}
-
-export interface PostProductData {
-  title: string
-  description: string
-  price: number
-  tackle: Tackle
-  file: Express.Multer.File
-}
-
-export interface GetSearchProduct {
+export interface PatchProductData {
   title?: string
-  tackle?: string[]
+  price?: number
+  images?: string[]
+
+  tags?: string[]
 }
 
-export interface PostProductResult {
+export interface PatchProductResult {
   isSuccess: boolean
-}
-
-export interface GetProductsListResult {
-  isSuccess: boolean
-}
-
-export interface GetSingleproductsData {
-  productId: string
 }
 
 export interface DeleteProductResult {

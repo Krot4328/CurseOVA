@@ -7,8 +7,10 @@ import { config } from '@boilerplate/back-end/config'
 import { DatabaseNamingStrategy } from '@boilerplate/back-end/db/database-naming.strategy'
 
 import { AuthModule } from '@boilerplate/back-end/modules/auth/auth.module'
+import { FilesModule } from '@boilerplate/back-end/modules/files/files.module'
 import { HealthCheckModule } from '@boilerplate/back-end/modules/health-check/health-check.module'
 import { ProductsModule } from '@boilerplate/back-end/modules/products/products.module'
+import { ReferenceModule } from '@boilerplate/back-end/modules/reference/reference.module'
 import { SettingsModule } from '@boilerplate/back-end/modules/settings/settings.module'
 
 const sslRejectUnauthorized = config.get('database.ssl.rejectUnauthorized')
@@ -29,8 +31,10 @@ const ssl =
 @Module({
   imports: [
     AuthModule,
+    FilesModule,
     HealthCheckModule,
     ProductsModule,
+    ReferenceModule,
     SettingsModule,
     TypeOrmModule.forRoot({
       type: 'postgres',

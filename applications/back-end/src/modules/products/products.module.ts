@@ -19,4 +19,4 @@ import { ProductsDataMapper } from '@boilerplate/back-end/modules/products/data-
   providers: [ProductsRepository, ProductsService, ProductsDataMapper],
   exports: [ProductsRepository, ProductsService, ProductsDataMapper],
 })
-export class ProductsModule { }
+export class ProductsModule {}

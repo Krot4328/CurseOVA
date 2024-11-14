@@ -8,6 +8,6 @@ export const dataSource = new DataSource({
   type: 'postgres',
   url: config.get('database.url'),
   namingStrategy: new DatabaseNamingStrategy(),
-  migrations: [`${__dirname}/../**/migrations/*{.js,.ts}`],
+  migrations: [`${__dirname}/../**/{migrations,seeds}/*{.js,.ts}`],
   entities: [`${__dirname}/../**/*.entity{.js,.ts}`],
 })
