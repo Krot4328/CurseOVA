@@ -1,31 +1,35 @@
 import { Type } from 'class-transformer'
-import { IsArray, IsNumber, IsOptional, IsString } from 'class-validator'
+import { IsArray, IsOptional, IsString, IsUUID } from 'class-validator'
 
 import { HttpListServerResponseDto } from '@boilerplate/core/dto/responses/http-list-server-response.dto'
 
-export class GetProductDataDto {
-  @IsString()
+import { ImageDto } from '@boilerplate/types/files/dto/generic/image.dto'
+import { PriceDto } from '@boilerplate/types/products/dto/generic/price.dto'
+import { GetProductShort } from '@boilerplate/types/products/interfaces/products'
+import { ReferenceTagDto } from '@boilerplate/types/reference/dto/responses/reference/get-reference-tags-response.dto'
+
+export class GetProductShortDto implements GetProductShort {
+  @IsUUID(4)
   id: string
 
   @IsString()
   title: string
 
-  @IsNumber()
-  price: number
+  @Type(() => PriceDto)
+  price: PriceDto
 
-  @IsString()
-  description: string
+  @IsArray()
+  @Type(() => ImageDto)
+  images: ImageDto[]
 
-  @IsString()
-  pathToImage: string
-
-  @IsString()
-  tackle: string
+  @IsArray()
+  @Type(() => ReferenceTagDto)
+  tags: ReferenceTagDto[]
 }
 
-export class GetProductsListHttpResponseDto extends HttpListServerResponseDto<GetProductDataDto> {
+export class GetProductsHttpListResponseDto extends HttpListServerResponseDto<GetProductShortDto> {
   @IsOptional()
   @IsArray()
-  @Type(() => GetProductDataDto)
-  result?: GetProductDataDto[]
+  @Type(() => GetProductShortDto)
+  result?: GetProductShortDto[]
 }

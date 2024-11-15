@@ -1,26 +1,35 @@
+import { Type } from 'class-transformer'
+import { IsUUID, ValidateNested } from 'class-validator'
+
+import { HttpRequestFieldDecorator } from '@boilerplate/core/decorators/http-request-field.decorator'
 import { HttpClientRequestDto } from '@boilerplate/core/dto/requests/http-client-request.dto'
 import { HttpServerRequestDto } from '@boilerplate/core/dto/requests/http-server-request.dto'
-import { Method } from '@boilerplate/core/interfaces/http'
+import { Method, type Params } from '@boilerplate/core/interfaces/http'
 
 export const DeleteProductUrl = '/products/:productId'
 
-export class DeleteProductHttpServerReqestDto extends HttpServerRequestDto<
-  typeof DeleteProductUrl,
-  undefined,
-  undefined,
-  { productId: string }
-> {
-  readonly method = Method.Delete;
+export class DeleteProductParamsDto implements Params<typeof DeleteProductUrl> {
+  @HttpRequestFieldDecorator()
+  @IsUUID(4)
+  productId: string
+}
 
-  readonly url = DeleteProductUrl;
+export class DeleteProductHttpServerReqestDto extends HttpServerRequestDto<typeof DeleteProductUrl> {
+  readonly method = Method.Delete
 
-  params: { productId: string };
+  readonly url = DeleteProductUrl
+
+  @ValidateNested()
+  @Type(() => DeleteProductParamsDto)
+  params: DeleteProductParamsDto
 }
 
 export class DeleteProductHttpClientReqestDto extends HttpClientRequestDto<typeof DeleteProductUrl> {
-  readonly method = Method.Delete;
+  readonly method = Method.Delete
 
-  readonly url = DeleteProductUrl;
+  readonly url = DeleteProductUrl
 
-  params: { productId: string };
+  @ValidateNested()
+  @Type(() => DeleteProductParamsDto)
+  params: DeleteProductParamsDto
 }

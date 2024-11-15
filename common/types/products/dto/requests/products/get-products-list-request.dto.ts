@@ -1,54 +1,63 @@
-import { IsNumber, IsOptional, IsString } from 'class-validator'
+import { Type } from 'class-transformer'
+import { IsOptional, IsString, IsUUID, ValidateNested } from 'class-validator'
 
 import { HttpRequestFieldDecorator } from '@boilerplate/core/decorators/http-request-field.decorator'
-import { HttpServerRequestDto } from '@boilerplate/core/dto/requests/http-server-request.dto'
 import { HttpClientRequestDto } from '@boilerplate/core/dto/requests/http-client-request.dto'
+import { HttpServerRequestDto } from '@boilerplate/core/dto/requests/http-server-request.dto'
 import { Method } from '@boilerplate/core/interfaces/http'
 
-import { Tackle } from '@boilerplate/types/products/interfaces/products'
+import { GetProductsSearch } from '@boilerplate/types/products/interfaces/products'
 
 export const GetProductsListUrl = '/products'
 
-export class GetProductDataDto {
-  @HttpRequestFieldDecorator()
-  @IsString()
-  @IsOptional()
-  id: string
+export class GetProductsSearchDto implements GetProductsSearch {
+  [x: string]: string | readonly string[]
 
   @HttpRequestFieldDecorator()
-  @IsString()
   @IsOptional()
-  title: string
+  @IsString()
+  search?: string
 
   @HttpRequestFieldDecorator()
-  @IsString()
   @IsOptional()
-  description: string
+  @IsString()
+  page?: string
 
   @HttpRequestFieldDecorator()
-  @IsNumber()
   @IsOptional()
-  price: number
+  @IsString()
+  pageSize?: string
 
   @HttpRequestFieldDecorator()
-  @IsString()
   @IsOptional()
-  tackle: Tackle
-
-  @HttpRequestFieldDecorator()
-  @IsString()
-  @IsOptional()
-  pathToImage: string
+  @IsUUID(4, { each: true })
+  tagsIds?: string[]
 }
 
-export class GetProductsHttpServerRequestDto extends HttpServerRequestDto<typeof GetProductsListUrl> {
+export class GetProductsHttpServerRequestDto extends HttpServerRequestDto<
+  typeof GetProductsListUrl,
+  never,
+  GetProductsSearchDto
+> {
   readonly method = Method.Get
 
   readonly url = GetProductsListUrl
+
+  @ValidateNested()
+  @Type(() => GetProductsSearchDto)
+  search?: GetProductsSearchDto
 }
 
-export class GetProductsHttpClientRequestDto extends HttpClientRequestDto<typeof GetProductsListUrl> {
+export class GetProductsHttpClientRequestDto extends HttpClientRequestDto<
+  typeof GetProductsListUrl,
+  never,
+  GetProductsSearchDto
+> {
   readonly method = Method.Get
 
   readonly url = GetProductsListUrl
+
+  @ValidateNested()
+  @Type(() => GetProductsSearchDto)
+  search?: GetProductsSearchDto
 }

@@ -1,11 +1,20 @@
 import { type HttpSearch } from '@boilerplate/core/interfaces/http'
 
+import { type Image } from '@boilerplate/types/files/interfaces/files'
+import { type CurrencyType } from '@boilerplate/types/reference/interfaces/currency'
+import { type Tag } from '@boilerplate/types/reference/interfaces/tags'
+
+export interface Price {
+  value: number
+  currency: CurrencyType
+}
+
 export interface PostProductData {
   title: string
   description: string
-  price: number
-  tags: string[]
-  fileId: string
+  price: Price
+  tagsIds: string[]
+  filesIds: string[]
 }
 
 export interface PostProductResult {
@@ -21,23 +30,26 @@ export interface GetProductsSearch extends HttpSearch {
   tagsIds?: string[]
 }
 
-export interface GetProductDataShort {
+export interface GetProductShort {
   id: string
   title: string
-  price: number
-  images: string[]
+  price: Price
 
-  tags: string[]
+  images: Image[]
+
+  tags: Tag[]
 }
 
-export interface GetProductData extends GetProductDataShort {
+export interface GetProduct extends GetProductShort {
   description: string
-  tackle: string
 }
 
 export interface PatchProductData {
   title?: string
-  price?: number
+  description?: string
+
+  price?: Price
+
   images?: string[]
 
   tags?: string[]

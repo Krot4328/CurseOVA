@@ -5,7 +5,7 @@ import { HttpClientRequestDto } from '@boilerplate/core/dto/requests/http-client
 import { HttpServerRequestDto } from '@boilerplate/core/dto/requests/http-server-request.dto'
 import { Method } from '@boilerplate/core/interfaces/http'
 
-export const PostFilePreloadRequestUrl = '/files'
+export const PostFilePreloadRequestUrl = '/files/preload'
 
 export class PostFilePreloadRequestHttpServerRequestDto extends HttpServerRequestDto<typeof PostFilePreloadRequestUrl> {
   readonly method = Method.Post

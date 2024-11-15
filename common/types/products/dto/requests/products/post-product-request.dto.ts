@@ -1,16 +1,17 @@
 import { Type } from 'class-transformer'
-import { IsEnum, IsNumber, IsString, Min, ValidateNested } from 'class-validator'
+import { IsString, ValidateNested } from 'class-validator'
 
 import { HttpRequestFieldDecorator } from '@boilerplate/core/decorators/http-request-field.decorator'
 import { HttpClientRequestDto } from '@boilerplate/core/dto/requests/http-client-request.dto'
 import { HttpServerRequestDto } from '@boilerplate/core/dto/requests/http-server-request.dto'
-import { HttpRequestFieldCast, Method } from '@boilerplate/core/interfaces/http'
+import { Method } from '@boilerplate/core/interfaces/http'
 
-import { type PostProductData, Tackle } from '@boilerplate/types/products/interfaces/products'
+import { PriceDto } from '@boilerplate/types/products/dto/generic/price.dto'
+import { type PostProductData } from '@boilerplate/types/products/interfaces/products'
 
 export const PostProductUrl = '/products'
 
-export class PostProductDataDto implements Omit<PostProductData, 'file'> {
+export class PostProductDataDto implements PostProductData {
   @HttpRequestFieldDecorator()
   @IsString()
   title: string
@@ -19,14 +20,17 @@ export class PostProductDataDto implements Omit<PostProductData, 'file'> {
   @IsString()
   description: string
 
-  @HttpRequestFieldDecorator({ cast: HttpRequestFieldCast.Number })
-  @IsNumber()
-  @Min(0.01)
-  price: number
+  @ValidateNested()
+  @Type(() => PriceDto)
+  price: PriceDto
 
   @HttpRequestFieldDecorator()
-  @IsEnum(Tackle)
-  tackle: Tackle
+  @IsString({ each: true })
+  tagsIds: string[]
+
+  @HttpRequestFieldDecorator()
+  @IsString({ each: true })
+  filesIds: string[]
 }
 
 export class PostProductHttpServerRequestDto extends HttpServerRequestDto<typeof PostProductUrl, PostProductDataDto> {

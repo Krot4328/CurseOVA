@@ -7,3 +7,8 @@ export interface PostFilePreloadData {
 export interface PostFilePreloadResult {
   id: string
 }
+
+export interface Image {
+  id: string
+  src: string
+}

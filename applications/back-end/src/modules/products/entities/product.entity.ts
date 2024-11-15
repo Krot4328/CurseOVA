@@ -4,9 +4,15 @@ import {
   DeleteDateColumn,
   Entity,
   Index,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
+
+import { CurrencyType } from '@boilerplate/types/reference/interfaces/currency'
+
+import { ProductToImageEntity } from '@boilerplate/back-end/modules/products/entities/product-to-image.entity'
+import { ProductToTagEntity } from '@boilerplate/back-end/modules/products/entities/product-to-tag.entity'
 
 @Entity()
 export class ProductEntity {
@@ -22,8 +28,8 @@ export class ProductEntity {
   @Column()
   price: number
 
-  @Column({ type: 'text', nullable: true })
-  pathToImage: string
+  @Column({ type: 'enum', enum: CurrencyType, default: CurrencyType.UAH })
+  priceCurrency: CurrencyType
 
   @Index()
   @CreateDateColumn({ type: 'timestamptz' })
@@ -36,4 +42,10 @@ export class ProductEntity {
   @Index()
   @DeleteDateColumn({ type: 'timestamptz' })
   deletedAt: Date
+
+  @OneToMany(() => ProductToImageEntity, (productToImage) => productToImage.product)
+  toImages: ProductToImageEntity[]
+
+  @OneToMany(() => ProductToTagEntity, (productToTag) => productToTag.product)
+  toTags: ProductToTagEntity[]
 }

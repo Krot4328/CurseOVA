@@ -10,7 +10,7 @@ export class PostProductResultDto implements PostProductResult {
   isSuccess: boolean
 }
 
-export class PostProductHttpResponseDto extends HttpServerResponseDto<PostProductResultDto> {
+export class PostProductResultHttpResponseDto extends HttpServerResponseDto<PostProductResultDto> {
   @IsOptional()
   @Type(() => PostProductResultDto)
   result?: PostProductResultDto
