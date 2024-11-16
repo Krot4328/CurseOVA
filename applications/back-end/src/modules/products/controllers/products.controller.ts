@@ -60,7 +60,7 @@ export class ProductsController {
       },
     })
 
-    return null
+    return await this.productsService.getProduct(productId)
   }
 
   @Post(PostProductUrl)
@@ -68,13 +68,21 @@ export class ProductsController {
   @UseGuards(JwtPassportAuthGuard)
   @Roles([Role.Admin])
   async postProduct(@Body() body: PostProductDataDto): Promise<PostProductResultHttpResponseDto> {
+    const { title, description, price, tagsIds, imagesIds } = body
+
     this.logger.log({
       controller: ProductsController.name,
       action: `${ProductsController.name}.postProduct`,
-      body,
+      data: {
+        title,
+        description,
+        price,
+        tagsIds,
+        imagesIds,
+      },
     })
 
-    return null
+    return await this.productsService.postProduct({ title, description, price, tagsIds, imagesIds })
   }
 
   @Patch(PatchProductUrl)
@@ -85,16 +93,18 @@ export class ProductsController {
     @Param('productId') productId: string,
     @Body() body: PatchProductDataDto,
   ): Promise<PatchProductResultHttpResponseDto> {
+    const { title, description, price, tagsIds, imagesIds } = body
+
     this.logger.log({
       controller: ProductsController.name,
       action: `${ProductsController.name}.patchProduct`,
       params: {
         productId,
       },
-      body,
+      data: { title, description, price, tagsIds, imagesIds },
     })
 
-    return null
+    return await this.productsService.patchProduct(productId, { title, description, price, tagsIds, imagesIds })
   }
 
   @Delete(DeleteProductUrl)
@@ -110,6 +120,6 @@ export class ProductsController {
       },
     })
 
-    return null
+    return await this.productsService.deleteProduct(productId)
   }
 }

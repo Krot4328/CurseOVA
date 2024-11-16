@@ -14,7 +14,7 @@ export interface PostProductData {
   description: string
   price: Price
   tagsIds: string[]
-  filesIds: string[]
+  imagesIds: string[]
 }
 
 export interface PostProductResult {
@@ -50,9 +50,9 @@ export interface PatchProductData {
 
   price?: Price
 
-  images?: string[]
+  imagesIds?: string[]
 
-  tags?: string[]
+  tagsIds?: string[]
 }
 
 export interface PatchProductResult {

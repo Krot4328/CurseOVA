@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common'
-import { FindOptionsWhere, ILike } from 'typeorm'
 
-import { HttpListServerResponse } from '@boilerplate/core/interfaces/http'
+import { HttpListServerResponse, HttpServerResponse } from '@boilerplate/core/interfaces/http'
 
-import { GetProductShort, GetProductsSearch } from '@boilerplate/types/products/interfaces/products'
-
-import { ProductEntity } from '@boilerplate/back-end/modules/products/entities/product.entity'
+import {
+  DeleteProductResult,
+  GetProduct,
+  GetProductShort,
+  GetProductsSearch,
+  PatchProductData,
+  PatchProductResult,
+  PostProductData,
+  PostProductResult,
+} from '@boilerplate/types/products/interfaces/products'
 
 import { ProductsRepository } from '@boilerplate/back-end/modules/products/repositories/products.repository'
 
@@ -20,16 +26,27 @@ export class ProductsService {
   ) {}
 
   async getProductsList(queries: GetProductsSearch): Promise<HttpListServerResponse<GetProductShort>> {
-    const { search, page, pageSize, tagsIds } = queries
+    const { search, tagsIds } = queries
 
-    const where: FindOptionsWhere<ProductEntity> = {}
+    const page = parseInt(`${queries.page ?? 0}`, 10)
+    const pageSize = parseInt(`${queries.pageSize ?? 10}`, 10)
 
-    if (typeof search === 'string' && search.length > 0) {
-      where.title = ILike(`%${search.split('').join('%')}%`)
+    const [products, total] = await this.productsRepository.findProductsAndCount({
+      search,
+      page,
+      pageSize,
+      tagsIds,
+    })
+
+    return {
+      result: products.map((product) => this.productsDataMapper.toGetProductShortResult(product)),
+      total,
     }
+  }
 
-    const [products, total] = await this.productsRepository.findAndCount({
-      where,
+  async getProduct(id: string): Promise<HttpServerResponse<GetProduct>> {
+    const product = await this.productsRepository.findOne({
+      where: { id },
       relations: {
         toImages: {
           image: true,
@@ -41,8 +58,62 @@ export class ProductsService {
     })
 
     return {
-      result: products.map((product) => this.productsDataMapper.toProductShort(product)),
-      total,
+      result: this.productsDataMapper.toGetProductResult(product),
     }
+  }
+
+  async postProduct(data: PostProductData): Promise<HttpServerResponse<PostProductResult>> {
+    const { imagesIds, tagsIds } = data
+
+    const { id } = await this.productsRepository.save(this.productsDataMapper.fromPostProductData(data))
+
+    await Promise.all([
+      this.productsRepository.assignImages(id, imagesIds),
+      this.productsRepository.assignTags(id, tagsIds),
+    ])
+
+    const result: PostProductResult = {
+      isSuccess: true,
+    }
+
+    return { result }
+  }
+
+  async patchProduct(id: string, data: PatchProductData): Promise<HttpServerResponse<PatchProductResult>> {
+    const { imagesIds, tagsIds } = data
+
+    await this.productsRepository.update({ id }, this.productsDataMapper.fromPatchProductData(data))
+
+    if (Array.isArray(imagesIds)) {
+      await this.productsRepository.unassignImages(id, imagesIds)
+
+      if (imagesIds.length > 0) {
+        await this.productsRepository.assignImages(id, imagesIds)
+      }
+    }
+
+    if (Array.isArray(tagsIds)) {
+      await this.productsRepository.unassignTags(id, tagsIds)
+
+      if (tagsIds.length > 0) {
+        await this.productsRepository.assignTags(id, tagsIds)
+      }
+    }
+
+    const result: PatchProductResult = {
+      isSuccess: true,
+    }
+
+    return { result }
+  }
+
+  async deleteProduct(id: string): Promise<HttpServerResponse<DeleteProductResult>> {
+    await this.productsRepository.softDelete({ id })
+
+    const result: DeleteProductResult = {
+      isSuccess: true,
+    }
+
+    return { result }
   }
 }

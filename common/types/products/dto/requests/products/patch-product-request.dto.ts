@@ -35,12 +35,12 @@ export class PatchProductDataDto implements PatchProductData {
   @HttpRequestFieldDecorator()
   @IsOptional()
   @IsString({ each: true })
-  images?: string[]
+  imagesIds?: string[]
 
   @HttpRequestFieldDecorator()
   @IsOptional()
   @IsString({ each: true })
-  tags?: string[]
+  tagsIds?: string[]
 }
 
 export class PatchProductHttpServerRequestDto extends HttpServerRequestDto<

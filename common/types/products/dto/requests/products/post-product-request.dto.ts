@@ -30,7 +30,7 @@ export class PostProductDataDto implements PostProductData {
 
   @HttpRequestFieldDecorator()
   @IsString({ each: true })
-  filesIds: string[]
+  imagesIds: string[]
 }
 
 export class PostProductHttpServerRequestDto extends HttpServerRequestDto<typeof PostProductUrl, PostProductDataDto> {

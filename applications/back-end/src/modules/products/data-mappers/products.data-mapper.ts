@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common'
 
-import { GetProductShort } from '@boilerplate/types/products/interfaces/products'
+import {
+  GetProduct,
+  GetProductShort,
+  PatchProductData,
+  PostProductData,
+} from '@boilerplate/types/products/interfaces/products'
 
 import { ProductEntity } from '@boilerplate/back-end/modules/products/entities/product.entity'
 
@@ -14,7 +19,7 @@ export class ProductsDataMapper {
     private readonly referenceDataMapper: ReferenceDataMapper,
   ) {}
 
-  toProductShort(entity: ProductEntity): GetProductShort {
+  toGetProductShortResult(entity: ProductEntity): GetProductShort {
     const { id, title, price, priceCurrency, toImages, toTags } = entity
 
     return {
@@ -27,5 +32,48 @@ export class ProductsDataMapper {
       images: toImages.map(({ image }) => this.filesDataMapper.toImage(image)),
       tags: toTags.map(({ tag }) => this.referenceDataMapper.toTag(tag)),
     }
+  }
+
+  toGetProductResult(entity: ProductEntity): GetProduct {
+    const { description } = entity
+
+    return {
+      ...this.toGetProductShortResult(entity),
+      description,
+    }
+  }
+
+  fromPostProductData(data: PostProductData): Partial<ProductEntity> {
+    const { title, description, price } = data
+    const { value, currency } = price
+
+    return {
+      title,
+      description,
+      price: value,
+      priceCurrency: currency,
+    }
+  }
+
+  fromPatchProductData(data: PatchProductData): Partial<ProductEntity> {
+    const { title, description, price } = data
+    const { value, currency } = price ?? {}
+
+    const result: Partial<ProductEntity> = {}
+
+    if (typeof title === 'string') {
+      result.title = title
+    }
+
+    if (typeof description === 'string') {
+      result.description = description
+    }
+
+    if (typeof price !== 'undefined') {
+      result.price = value
+      result.priceCurrency = currency
+    }
+
+    return result
   }
 }
