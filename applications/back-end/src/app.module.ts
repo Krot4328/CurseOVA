@@ -7,6 +7,7 @@ import { config } from '@boilerplate/back-end/config'
 import { DatabaseNamingStrategy } from '@boilerplate/back-end/db/database-naming.strategy'
 
 import { AuthModule } from '@boilerplate/back-end/modules/auth/auth.module'
+import { CartsModule } from '@boilerplate/back-end/modules/carts/carts.module'
 import { FilesModule } from '@boilerplate/back-end/modules/files/files.module'
 import { HealthCheckModule } from '@boilerplate/back-end/modules/health-check/health-check.module'
 import { ProductsModule } from '@boilerplate/back-end/modules/products/products.module'
@@ -31,6 +32,7 @@ const ssl =
 @Module({
   imports: [
     AuthModule,
+    CartsModule,
     FilesModule,
     HealthCheckModule,
     ProductsModule,

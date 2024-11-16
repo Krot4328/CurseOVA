@@ -56,12 +56,15 @@ export class PatchProductHttpServerRequestDto extends HttpServerRequestDto<
   readonly data: PatchProductDataDto
 }
 
-export class PatchProductHttpClientRequestDto extends HttpClientRequestDto<typeof PatchProductUrl, FormData> {
+export class PatchProductHttpClientRequestDto extends HttpClientRequestDto<
+  typeof PatchProductUrl,
+  PatchProductDataDto
+> {
   readonly method = Method.Patch
 
   readonly url = PatchProductUrl
 
   @ValidateNested()
-  @Type(() => FormData)
-  readonly data: FormData
+  @Type(() => PatchProductDataDto)
+  readonly data: PatchProductDataDto
 }

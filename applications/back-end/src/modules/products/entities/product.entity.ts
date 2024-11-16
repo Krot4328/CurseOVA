@@ -11,6 +11,7 @@ import {
 
 import { CurrencyType } from '@boilerplate/types/reference/interfaces/currency'
 
+import { CartToProductEntity } from '@boilerplate/back-end/modules/carts/entities/cart-to-product.entity'
 import { ProductToImageEntity } from '@boilerplate/back-end/modules/products/entities/product-to-image.entity'
 import { ProductToTagEntity } from '@boilerplate/back-end/modules/products/entities/product-to-tag.entity'
 
@@ -42,6 +43,9 @@ export class ProductEntity {
   @Index()
   @DeleteDateColumn({ type: 'timestamptz' })
   deletedAt: Date
+
+  @OneToMany(() => CartToProductEntity, (cartToProduct) => cartToProduct.product)
+  toCarts: CartToProductEntity[]
 
   @OneToMany(() => ProductToImageEntity, (productToImage) => productToImage.product)
   toImages: ProductToImageEntity[]

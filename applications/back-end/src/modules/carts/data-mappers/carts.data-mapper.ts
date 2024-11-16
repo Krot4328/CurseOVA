@@ -1,0 +1,30 @@
+import { Injectable } from '@nestjs/common'
+
+import { CartItem, GetCart } from '@boilerplate/types/carts/interfaces/carts'
+
+import { CartToProductEntity } from '@boilerplate/back-end/modules/carts/entities/cart-to-product.entity'
+import { CartEntity } from '@boilerplate/back-end/modules/carts/entities/cart.entity'
+
+import { ProductsDataMapper } from '@boilerplate/back-end/modules/products/data-mappers/products.data-mapper'
+
+@Injectable()
+export class CartsDataMapper {
+  constructor(private readonly productsDataMapper: ProductsDataMapper) {}
+
+  toCartItem(entity: CartToProductEntity): CartItem {
+    const { product, quantity } = entity
+
+    return {
+      product: this.productsDataMapper.toGetProductShortResult(product),
+      quantity,
+    }
+  }
+
+  toCart(entity: CartEntity): GetCart {
+    const { toProducts } = entity
+
+    return {
+      items: toProducts.map((toProduct) => this.toCartItem(toProduct)),
+    }
+  }
+}

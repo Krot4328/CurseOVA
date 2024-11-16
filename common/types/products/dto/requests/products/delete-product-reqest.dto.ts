@@ -14,7 +14,7 @@ export class DeleteProductParamsDto implements Params<typeof DeleteProductUrl> {
   productId: string
 }
 
-export class DeleteProductHttpServerReqestDto extends HttpServerRequestDto<typeof DeleteProductUrl> {
+export class DeleteProductHttpServerRequestDto extends HttpServerRequestDto<typeof DeleteProductUrl> {
   readonly method = Method.Delete
 
   readonly url = DeleteProductUrl
@@ -24,7 +24,7 @@ export class DeleteProductHttpServerReqestDto extends HttpServerRequestDto<typeo
   params: DeleteProductParamsDto
 }
 
-export class DeleteProductHttpClientReqestDto extends HttpClientRequestDto<typeof DeleteProductUrl> {
+export class DeleteProductHttpClientRequestDto extends HttpClientRequestDto<typeof DeleteProductUrl> {
   readonly method = Method.Delete
 
   readonly url = DeleteProductUrl

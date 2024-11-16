@@ -5,7 +5,7 @@ import { HttpClientRequestDto } from '@boilerplate/core/dto/requests/http-client
 import { HttpServerRequestDto } from '@boilerplate/core/dto/requests/http-server-request.dto'
 import { Method, Params } from '@boilerplate/core/interfaces/http'
 
-export const GetProductUrl = '/product/:productId'
+export const GetProductUrl = '/products/:productId'
 
 export class GetProductParamsDto implements Params<typeof GetProductUrl> {
   @HttpRequestFieldDecorator()

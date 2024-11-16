@@ -1,7 +1,13 @@
 import { type BaseQueryFn, type FetchBaseQueryError, type FetchBaseQueryMeta } from '@reduxjs/toolkit/query'
 import axios, { AxiosError } from 'axios'
+import _get from 'lodash/get'
 
-import { type HttpClientRequest, type HttpSearch, type HttpServerResponse } from '@boilerplate/core/interfaces/http'
+import {
+  type HttpClientRequest,
+  type HttpListServerResponse,
+  type HttpSearch,
+  type HttpServerResponse,
+} from '@boilerplate/core/interfaces/http'
 import { jwtStore } from '@boilerplate/core/stores/jwt.store'
 
 export type AxiosBaseQuery = BaseQueryFn<
@@ -41,6 +47,7 @@ instance.interceptors.request.use(
 export function createAxiosBaseQuery() {
   return async <Url extends string, Data, Search extends HttpSearch>({
     params = {},
+    search,
     ...args
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   }: HttpClientRequest<Url, Data, Search>) => {
@@ -53,7 +60,13 @@ export function createAxiosBaseQuery() {
         url = url.replace(`:${paramKey}?`, value).replace(`:${paramKey}`, value) as typeof args.url
       }
 
-      const result = await instance<HttpServerResponse<unknown>>({ ...args, url })
+      url = url.replaceAll(/\/undefined/g, '') as typeof args.url
+
+      const result = await instance<HttpServerResponse<unknown> | HttpListServerResponse<unknown>>({
+        ...args,
+        params: search,
+        url,
+      })
 
       if (result instanceof AxiosError) {
         throw result
@@ -61,6 +74,9 @@ export function createAxiosBaseQuery() {
 
       return {
         data: result.data.result,
+        meta: {
+          total: _get(result, 'data.total', undefined),
+        },
       }
     } catch (axiosError) {
       const err = axiosError as AxiosError<HttpServerResponse<unknown>>

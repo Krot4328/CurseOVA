@@ -5,6 +5,8 @@ import { createSliceKey } from '@boilerplate/core/builders/slice-key.builder'
 
 import { reducer } from '@boilerplate/dashboard/store'
 
+// import { getProduct } from '@boilerplate/dashboard/store/queries/product.query'
+
 interface SignUpState {
   email: string
   password: string
@@ -28,6 +30,9 @@ const slice = createSlice({
       state.password = action.payload
     },
   },
+  // extraReducers(builder) {
+  //   builder.addMatcher(getProduct.matchFulfilled, (state, action) => {})
+  // },
 })
 
 const withSlice = reducer.inject(slice)

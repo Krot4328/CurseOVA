@@ -1,7 +1,7 @@
 'use client'
 
 import { type WithSlice } from '@reduxjs/toolkit'
-import { createApi } from '@reduxjs/toolkit/query'
+import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { createApiKey } from '@boilerplate/core/builders/api-key.builder'
 import { createAxiosBaseQuery } from '@boilerplate/core/builders/axios-base-query.builder'
@@ -20,6 +20,7 @@ export const v1Api = createApi({
     }
   },
 
+  tagTypes: ['Product'],
   endpoints: () => ({}),
 })
 

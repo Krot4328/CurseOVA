@@ -43,12 +43,12 @@ export class PostProductHttpServerRequestDto extends HttpServerRequestDto<typeof
   readonly data: PostProductDataDto
 }
 
-export class PostProductHttpClientRequestDto extends HttpClientRequestDto<typeof PostProductUrl, FormData> {
+export class PostProductHttpClientRequestDto extends HttpClientRequestDto<typeof PostProductUrl, PostProductDataDto> {
   readonly method = Method.Post
 
   readonly url = PostProductUrl
 
   @ValidateNested()
-  @Type(() => FormData)
-  readonly data: FormData
+  @Type(() => PostProductDataDto)
+  readonly data: PostProductDataDto
 }
