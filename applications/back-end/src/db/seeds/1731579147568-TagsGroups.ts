@@ -12,7 +12,7 @@ export class TagsGroups1731579147568 implements MigrationInterface {
         { id: '88039e3b-2a40-4228-a8a0-ba4ac3d210ae', name: 'Вудки' },
         { id: 'cda1a908-32a2-43b5-ac2a-078e55f908d2', name: 'Котушки' },
         { id: 'e8ad1891-c0ad-47a2-b32c-ea1febd8db2d', name: 'Ліски' },
-        { id: '3433c250-9fbc-47ed-ad9b-9051b02ac20b', name: 'Гачоки' },
+        { id: '3433c250-9fbc-47ed-ad9b-9051b02ac20b', name: 'Гачки' },
         { id: '378b7996-f10a-4ec5-b50e-06e522a805db', name: 'Грузила' },
         { id: '98742eb7-aba4-49c3-b970-441fd5a199b1', name: 'Поплавці' },
         { id: 'e592d4b0-39eb-44d0-bfca-0ce0e4509535', name: 'Приманки' },
