@@ -2,7 +2,7 @@ import { type MigrationInterface, type QueryRunner } from 'typeorm'
 
 import { TagGroupEntity } from '@boilerplate/back-end/modules/reference/entities/tag-group.entity'
 
-export class TagsGroups1731579147568 implements MigrationInterface {
+export class SeedTagGroups1731764292091 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.connection
       .createQueryBuilder()
@@ -25,5 +25,5 @@ export class TagsGroups1731579147568 implements MigrationInterface {
       .execute()
   }
 
-  async down(queryRunner: QueryRunner): Promise<void> {}
+  async down(queryRunner: QueryRunner): Promise<void> { }
 }

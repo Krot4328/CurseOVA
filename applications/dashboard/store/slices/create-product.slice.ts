@@ -5,63 +5,63 @@ import { createSliceKey } from '@boilerplate/core/builders/slice-key.builder'
 
 import { reducer } from '@boilerplate/dashboard/store'
 
-interface CreateProductState {
+interface PostProductState {
   title: string
-  price: number
   description: string
-  tackle: string
-  file: File | null
+  price: number
+  tagsIds: string[]
+  imagesIds: string[]
 }
 
 const slice = createSlice({
-  name: createSliceKey('create-product'),
-  initialState: (): CreateProductState => ({
+  name: createSliceKey('post-product'),
+  initialState: (): PostProductState => ({
     title: '',
-    price: 0,
     description: '',
-    tackle: '',
-    file: null,
+    price: 0,
+    tagsIds: [],
+    imagesIds: [],
   }),
   selectors: {
     title: (state) => state.title,
-    price: (state) => state.price,
     description: (state) => state.description,
-    tackle: (state) => state.tackle,
-    file: (state) => state.file,
+    price: (state) => state.price,
+    tagsIds: (state) => state.tagsIds,
+    imagesIds: (state) => state.imagesIds,
   },
   reducers: {
     setTitle(state, action: PayloadAction<string>) {
       state.title = action.payload
     },
-    setPrice(state, action: PayloadAction<number>) {
-      state.price = action.payload
-    },
     setDescription(state, action: PayloadAction<string>) {
       state.description = action.payload
     },
-    setTackle(state, action: PayloadAction<string>) {
-      state.tackle = action.payload
+    setPrice(state, action: PayloadAction<number>) {
+      state.price = action.payload
     },
-    setFile(state, action: PayloadAction<File | null>) {
-      state.file = action.payload
+    setTagsIds(state, action: PayloadAction<string[]>) {
+      state.tagsIds = action.payload
+    },
+    setImagesIds(state, action: PayloadAction<string[]>) {
+      state.imagesIds = action.payload
     },
   },
 })
 
 const withSlice = reducer.inject(slice)
 
-export const createProductSlice = {
+export const postProductSlice = {
   /**
-   * Omit reducer and reducerPath for prevent any other connections of it to store
+   * Omit reducer and reducerPath to prevent any other connections of it to the store
    */
   ..._omit(slice, ['reducer', 'reducerPath']),
   selectSlice: withSlice.selector(slice.selectSlice),
   selectors: {
     title: withSlice.selector(slice.selectors.title),
-    price: withSlice.selector(slice.selectors.price),
     description: withSlice.selector(slice.selectors.description),
-    tackle: withSlice.selector(slice.selectors.tackle),
-    file: withSlice.selector(slice.selectors.file),
+    price: withSlice.selector(slice.selectors.price),
+    tagsIds: withSlice.selector(slice.selectors.tagsIds),
+    imagesIds: withSlice.selector(slice.selectors.imagesIds),
   },
 }
 

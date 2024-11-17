@@ -10,37 +10,40 @@ import { type PostProductResultDto } from '@boilerplate/types/products/dto/respo
 
 import { saga } from '@boilerplate/dashboard/store'
 
-import { create } from '@boilerplate/dashboard/store/queries/products.query'
-import { createProductSlice } from '@boilerplate/dashboard/store/slices/create-product.slice'
+import { postProduct } from '@boilerplate/dashboard/store/queries/product.query'
+import { postProductSlice } from '@boilerplate/dashboard/store/slices/create-product.slice'
 
 interface CreateProductStartActionPayload {
   redirect: () => void
 }
 
-export const createProductStart = createAction<CreateProductStartActionPayload>(createSagaActionType('create-product-start'))
+export const createProductStart = createAction<CreateProductStartActionPayload>(
+  createSagaActionType('create-product-start'),
+)
 
 function* handler(action: PayloadAction<CreateProductStartActionPayload>): SagaIterator<void> {
   try {
-    const title: ReturnType<typeof createProductSlice.selectors.title> = yield select(createProductSlice.selectors.title)
-    const price: ReturnType<typeof createProductSlice.selectors.price> = yield select(createProductSlice.selectors.price)
-    const description: ReturnType<typeof createProductSlice.selectors.description> = yield select(createProductSlice.selectors.description)
-    const tackle: ReturnType<typeof createProductSlice.selectors.tackle> = yield select(createProductSlice.selectors.tackle)
-    const file: ReturnType<typeof createProductSlice.selectors.file> = yield select(createProductSlice.selectors.file)
+    const title: ReturnType<typeof postProductSlice.selectors.title> = yield select(postProductSlice.selectors.title)
+    const description: ReturnType<typeof postProductSlice.selectors.description> = yield select(
+      postProductSlice.selectors.description,
+    )
+    const price: ReturnType<typeof postProductSlice.selectors.price> = yield select(postProductSlice.selectors.price)
+    const tagsIds: ReturnType<typeof postProductSlice.selectors.tagsIds> = yield select(
+      postProductSlice.selectors.tagsIds,
+    )
+    const imagesIds: ReturnType<typeof postProductSlice.selectors.imagesIds> = yield select(
+      postProductSlice.selectors.imagesIds,
+    )
 
-    if (!file) {
-      throw new Error('Файл не вибрано!')
+    const postProductData = {
+      title,
+      description,
+      price,
+      tagsIds,
+      imagesIds,
     }
 
-    const formData = new FormData()
-    formData.append('title', title)
-    formData.append('description', description)
-    formData.append('price', price.toString())
-    formData.append('tackle', tackle)
-    formData.append('file', file)
-
-    console.log({ formData });
-
-    const postProductRequest = yield put(create.initiate(formData))
+    const postProductRequest = yield put(postProduct.initiate(postProductData))
 
     const postProductResponse: HttpClientResponse<PostProductResultDto> = yield call(() => postProductRequest)
 

@@ -14,8 +14,9 @@ import { saga } from '@boilerplate/dashboard/store'
 
 import { getProfile } from '@boilerplate/dashboard/store/queries/profile.query'
 import { login } from '@boilerplate/dashboard/store/queries/token.query'
-import { authSlice } from '@/store/slices/auth.slice'
 import { profileSlice } from '@boilerplate/dashboard/store/slices/profile.slice'
+
+import { authSlice } from '@/store/slices/auth.slice'
 
 interface SignInStartActionPayload {
   redirect: () => void

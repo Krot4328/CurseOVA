@@ -3,6 +3,7 @@
 import { type Metadata } from 'next'
 
 import { WithProfile } from '@boilerplate/dashboard/store/with-profile'
+
 import { CreateProductForm } from '@boilerplate/dashboard/components/forms/create-product.form'
 
 interface DashboardCreateProductPageProps { }

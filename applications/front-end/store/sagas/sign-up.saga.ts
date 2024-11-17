@@ -28,8 +28,6 @@ function* handler(action: PayloadAction<SignUpStartActionPayload>): SagaIterator
     const email: ReturnType<typeof authSlice.selectors.email> = yield select(authSlice.selectors.email)
     const phone: ReturnType<typeof authSlice.selectors.phone> = yield select(authSlice.selectors.phone)
     const password: ReturnType<typeof authSlice.selectors.password> = yield select(authSlice.selectors.password)
-    const passCode: ReturnType<typeof authSlice.selectors.promoCode> = yield select(authSlice.selectors.promoCode)
-    const usResident: ReturnType<typeof authSlice.selectors.usResident> = yield select(authSlice.selectors.usResident)
 
     const postTokenRequest = yield put(
       registration.initiate({
@@ -38,8 +36,6 @@ function* handler(action: PayloadAction<SignUpStartActionPayload>): SagaIterator
         email,
         phone,
         password,
-        passCode,
-        usResident,
       }),
     )
 

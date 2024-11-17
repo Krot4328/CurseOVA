@@ -6,7 +6,7 @@ import { WithProfile } from '@boilerplate/dashboard/store/with-profile'
 
 import { DefaultLayout } from '@boilerplate/dashboard/components/layouts/default-layout'
 
-interface DashboardPageProps {}
+interface DashboardPageProps { }
 
 export const metadata: Metadata = {
   title: 'Next.js E-commerce Dashboard | TailAdmin - Next.js Dashboard Template',
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export const DashboardPage: React.FC<DashboardPageProps> = () => (
   <WithProfile>
-    <DefaultLayout>Hello, world!</DefaultLayout>
+    <DefaultLayout />
   </WithProfile>
 )
 

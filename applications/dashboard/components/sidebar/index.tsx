@@ -5,8 +5,7 @@ import { Suspense, lazy } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { FaAtlas, FaDoorOpen, FaKey, FaMoneyBill, FaMoneyBillAlt, FaNotesMedical, FaWallet } from 'react-icons/fa'
-import { FaCartShopping, FaUsers } from 'react-icons/fa6'
+import { FaDoorOpen } from 'react-icons/fa'
 
 import { ClickOutside } from '@boilerplate/dashboard/components/click-outside'
 import { SidebarItem } from '@boilerplate/dashboard/components/sidebar/sidebar-item'
@@ -23,8 +22,8 @@ const NOOP_LOGOUT = (): void => undefined
 export const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => (
   <ClickOutside onClick={() => setSidebarOpen(false)}>
     <aside
-      className={`fixed left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+      className={`fixed left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:translate-x-0 
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
     >
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <Link href="/">
