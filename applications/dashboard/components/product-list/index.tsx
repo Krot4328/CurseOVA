@@ -7,11 +7,9 @@ import { useGetProductsQuery } from '@boilerplate/dashboard/store/queries/produc
 import { DashItem } from '@boilerplate/dashboard/components/product-list/product-item'
 import classes from '@boilerplate/dashboard/components/product-list/style.module.scss'
 
-interface TacklePageProps {
-  products?: { id: string; title: string; price: number; description: string; pathToImage: string; tackle: string }[]
-}
+interface TacklePageProps {}
 
-export const TacklePage: React.FC<TacklePageProps> = ({ products }) => {
+export const TacklePage: React.FC<TacklePageProps> = () => {
   const { data = [] } = useGetProductsQuery()
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 5
@@ -20,7 +18,7 @@ export const TacklePage: React.FC<TacklePageProps> = ({ products }) => {
 
   const paginatedData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
-  const handlePageChange = (pageNumber: number) => {
+  const handlePageChange = (pageNumber: number): void => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber)
     }
@@ -34,21 +32,19 @@ export const TacklePage: React.FC<TacklePageProps> = ({ products }) => {
             <th className={classes['table-header']}>Картинка</th>
             <th className={classes['table-header']}>Назва</th>
             <th className={classes['table-header']}>Тип</th>
-            <th className={classes['table-header']}>Опис</th>
             <th className={classes['table-header']}>Ціна</th>
             <th className={classes['table-header']}>Дії</th>
           </tr>
         </thead>
         <tbody>
-          {paginatedData.map(({ id, title, price, description, pathToImage, tackle }) => (
+          {paginatedData.map(({ id, title, price, images, tags }) => (
             <DashItem
               key={id}
               id={id}
               title={title}
-              price={price}
-              description={description}
-              pathToImage={pathToImage}
-              tackle={tackle}
+              price={price.value}
+              imageSrc={images.length > 0 ? images[0].src : undefined}
+              tag={tags.length > 0 ? tags[0] : undefined}
             />
           ))}
         </tbody>

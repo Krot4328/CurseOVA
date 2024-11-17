@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 
 import Image from 'next/image'
 
-import card from '@boilerplate/dashboard/assets/icons/card.svg'
+import { type Tag } from '@boilerplate/types/reference/interfaces/tags'
 
 import { useAppDispatch } from '@boilerplate/dashboard/store'
 
@@ -14,13 +14,11 @@ interface DashItemProps {
   id: string
   title: string
   price: number
-  description: string
-  tackle: string
-  pathToImage: string
-  onDelete: (id: string) => void
+  tag?: Tag
+  imageSrc?: string
 }
 
-export const DashItem: React.FC<DashItemProps> = ({ id, title, price, description, tackle, pathToImage }) => {
+export const DashItem: React.FC<DashItemProps> = ({ id, title, price, tag, imageSrc }) => {
   const dispatch = useAppDispatch()
 
   const handleDelete = useCallback<React.MouseEventHandler<HTMLButtonElement>>(async () => {
@@ -32,17 +30,10 @@ export const DashItem: React.FC<DashItemProps> = ({ id, title, price, descriptio
   return (
     <tr className={classes.row}>
       <td className={classes['table-cell']}>
-        <Image
-          className={classes.img}
-          src={pathToImage ? `/.${pathToImage}` : card}
-          width="268"
-          height="180"
-          alt="card"
-        />
+        {imageSrc ? <Image className={classes.img} src={imageSrc} width="268" height="180" alt="card" /> : 'N/A'}
       </td>
       <td className={classes['table-cell']}>{title}</td>
-      <td className={classes['table-cell']}>{tackle}</td>
-      <td className={classes['table-cell']}>{description}</td>
+      <td className={classes['table-cell']}>{tag ? tag.title : 'N/A'}</td>
       <td className={classes['table-cell']}>{price.toFixed(2)}₴</td>
       <td className={classes['table-cell']}>
         <button className={classes['btn-update']}>Редагувати</button>

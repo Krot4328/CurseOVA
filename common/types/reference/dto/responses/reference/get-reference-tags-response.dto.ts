@@ -27,9 +27,9 @@ export class ReferenceTagsMapDto extends ReferenceTagGroupDto implements TagsMap
   tags: ReferenceTagDto[]
 }
 
-export class GetReferenceTagsHttpListResponseDto extends HttpListServerResponseDto<ReferenceTagDto> {
+export class GetReferenceTagsHttpListResponseDto extends HttpListServerResponseDto<ReferenceTagsMapDto> {
   @IsOptional()
   @IsArray()
-  @Type(() => ReferenceTagDto)
-  result?: ReferenceTagDto[]
+  @Type(() => ReferenceTagsMapDto)
+  result?: ReferenceTagsMapDto[]
 }

@@ -2,6 +2,7 @@ import { Method } from '@boilerplate/core/interfaces/http'
 
 import {
   DeleteProductUrl,
+  type PostProductDataDto,
   type PostProductHttpClientRequestDto,
   PostProductUrl,
 } from '@boilerplate/types/products/dto/requests/products'
@@ -11,14 +12,17 @@ import { v1Api } from '@boilerplate/dashboard/store/api/v1.api'
 
 const api = v1Api.injectEndpoints({
   endpoints: (build) => ({
-    create: build.mutation<PostProductResultDto, FormData>({
-      query: (formData): PostProductHttpClientRequestDto => ({
+    create: build.mutation<PostProductResultDto, PostProductDataDto>({
+      query: ({ title, description, price, tagsIds, imagesIds }): PostProductHttpClientRequestDto => ({
         method: Method.Post,
         url: PostProductUrl,
-        headers: {
-          'Content-Type': 'multipart/form-data',
+        data: {
+          title,
+          description,
+          price,
+          tagsIds,
+          imagesIds,
         },
-        data: formData,
       }),
       invalidatesTags: [{ type: 'Product', id: 'LIST' }],
     }),

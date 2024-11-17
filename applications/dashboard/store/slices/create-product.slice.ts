@@ -9,8 +9,8 @@ interface PostProductState {
   title: string
   description: string
   price: number
-  tagsIds: string[]
-  imagesIds: string[]
+  tagId: string | null
+  fileId: string | null
 }
 
 const slice = createSlice({
@@ -19,15 +19,15 @@ const slice = createSlice({
     title: '',
     description: '',
     price: 0,
-    tagsIds: [],
-    imagesIds: [],
+    tagId: '',
+    fileId: null,
   }),
   selectors: {
     title: (state) => state.title,
     description: (state) => state.description,
     price: (state) => state.price,
-    tagsIds: (state) => state.tagsIds,
-    imagesIds: (state) => state.imagesIds,
+    tagId: (state) => state.tagId,
+    fileId: (state) => state.fileId,
   },
   reducers: {
     setTitle(state, action: PayloadAction<string>) {
@@ -39,11 +39,11 @@ const slice = createSlice({
     setPrice(state, action: PayloadAction<number>) {
       state.price = action.payload
     },
-    setTagsIds(state, action: PayloadAction<string[]>) {
-      state.tagsIds = action.payload
+    setTagId(state, action: PayloadAction<string>) {
+      state.tagId = action.payload
     },
-    setImagesIds(state, action: PayloadAction<string[]>) {
-      state.imagesIds = action.payload
+    setFileId(state, action: PayloadAction<string | null>) {
+      state.fileId = action.payload
     },
   },
 })
@@ -60,11 +60,11 @@ export const postProductSlice = {
     title: withSlice.selector(slice.selectors.title),
     description: withSlice.selector(slice.selectors.description),
     price: withSlice.selector(slice.selectors.price),
-    tagsIds: withSlice.selector(slice.selectors.tagsIds),
-    imagesIds: withSlice.selector(slice.selectors.imagesIds),
+    tagId: withSlice.selector(slice.selectors.tagId),
+    fileId: withSlice.selector(slice.selectors.fileId),
   },
 }
 
 declare module '@boilerplate/dashboard/store' {
-  export interface LazyLoadedSlices extends WithSlice<typeof slice> { }
+  export interface LazyLoadedSlices extends WithSlice<typeof slice> {}
 }

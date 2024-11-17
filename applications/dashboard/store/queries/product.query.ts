@@ -27,7 +27,7 @@ import {
   type PostProductResultDto,
 } from '@boilerplate/types/products/dto/responses/products'
 
-import { v1Api } from '@boilerplate/front-end/store/api/v1.api'
+import { v1Api } from '@boilerplate/dashboard/store/api/v1.api'
 
 const api = v1Api.injectEndpoints({
   endpoints: (build) => ({
