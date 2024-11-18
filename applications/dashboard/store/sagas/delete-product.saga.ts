@@ -28,8 +28,8 @@ function* handler(action: PayloadAction<DeleteProductStartActionPayload>): SagaI
     const { productId } = action.payload
 
     const isConfirmed = yield call(confirmDeletion, {
-      title: 'Confirm deletion',
-      description: 'Product will be removed.',
+      title: 'Підтвердити видалення',
+      description: 'Продукт буде видалено',
     })
 
     if (!isConfirmed) {
@@ -44,10 +44,10 @@ function* handler(action: PayloadAction<DeleteProductStartActionPayload>): SagaI
     } = deleteProductResponse
 
     if (!isSuccess) {
-      notification.error("Something's wrong!")
+      notification.error('Щось пішло не так!')
     }
 
-    notification.success('Product removed.')
+    notification.success('Продукт видалено.')
   } catch (error) {
     logger.error(error)
   }

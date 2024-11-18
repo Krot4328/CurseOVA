@@ -6,12 +6,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import profileIcon from '@boilerplate/front-end/assets/icons/profile.svg'
+import Button from 'react-bootstrap/Button'
 
 import { useAppDispatch, useAppSelector } from '@boilerplate/front-end/store'
 
 import { profileSlice } from '@boilerplate/front-end/store/slices/profile.slice'
-
-import Button from 'react-bootstrap/Button'
 
 import classes from '@boilerplate/front-end/components/header/style.module.scss'
 

@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 
 import Image from 'next/image'
 
-import profile from '@boilerplate/front-end/assets/icons/proFile.svg'
+import profile from '@boilerplate/front-end/assets/icons/profile.svg'
 
 import classes from '@boilerplate/front-end/components/profile/style.module.scss'
 
@@ -37,12 +37,12 @@ export const Profile: React.FC<ProfileProps> = () => {
 
   return (
     <div className={classes.profileContainer}>
-      <div className={classes.profileInfo} >
+      <div className={classes.profileInfo}>
         <Image className={classes.profileImage} src={profile} alt="Profile Picture" />
         <h2 className={classes.profileName}>Ім'я Прізвище</h2>
       </div>
 
-      <div className={classes.contactInfo} >
+      <div className={classes.contactInfo}>
         <h3 className={classes.contactHeader}>Контактна інформація</h3>
         {isEditing ? (
           <div className={classes.editForm}>

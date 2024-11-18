@@ -20,7 +20,7 @@ export const v1Api = createApi({
     }
   },
 
-  tagTypes: ['Product'],
+  tagTypes: ['Product', 'Cart'],
   endpoints: () => ({}),
 })
 
@@ -29,5 +29,6 @@ reducer.inject(v1Api)
 middleware.inject(v1Api.middleware)
 
 declare module '@boilerplate/front-end/store' {
-  export interface LazyLoadedSlices extends WithSlice<typeof v1Api> {}
+  // eslint-disable-next-line prettier/prettier
+  export interface LazyLoadedSlices extends WithSlice<typeof v1Api> { }
 }

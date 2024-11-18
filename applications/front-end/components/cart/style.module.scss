@@ -1,8 +1,7 @@
 .order {
   display: flex;
-  justify-content: space-around;
-  margin: auto;
-  gap: 10%;
+  justify-content: space-evenly;
+  margin-top: 20px;
 }
 
 .title {
@@ -16,6 +15,7 @@
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  width: 40rem;
 }
 
 .product {
@@ -83,7 +83,7 @@
 .check {
   font-size: 1.2rem;
   font-weight: bold;
-  margin-top: auto;
+  margin: auto;
   text-align: right;
 }
 
@@ -102,4 +102,16 @@
 
 .checkoutButton:hover {
   background-color: #0069d9;
+}
+
+.cart-list {
+  padding: 0;
+}
+
+.orderForm {
+  width: 40rem;
+}
+
+.p {
+  margin-bottom: 0;
 }

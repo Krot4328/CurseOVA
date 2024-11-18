@@ -15,10 +15,8 @@ export const PatchCartAuthorizedUrl = '/carts/user/:cartId'
 export const PatchCartAdminUrl = '/carts/admin/:cartId'
 
 export class PatchCartParamsDto
-  implements Params<typeof PatchCartUnauthorizedUrl | typeof PatchCartAuthorizedUrl | typeof PatchCartAdminUrl>
-{
-  readonly [x: string]: string | number
-
+  // eslint-disable-next-line prettier/prettier
+  implements Params<typeof PatchCartUnauthorizedUrl | typeof PatchCartAuthorizedUrl | typeof PatchCartAdminUrl> {
   @HttpRequestFieldDecorator()
   @IsUUID(4)
   cartId: string

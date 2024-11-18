@@ -7,28 +7,23 @@ import {
   GetProductsListUrl,
   type GetProductsSearchDto,
 } from '@boilerplate/types/products/dto/requests/products'
-import {
-  type GetProductDto,
-  type GetProductShortDto,
-  type GetProductsHttpListResponseDto,
-} from '@boilerplate/types/products/dto/responses/products'
+import { type GetProductDto, type GetProductShortDto } from '@boilerplate/types/products/dto/responses/products'
 
 import { v1Api } from '@boilerplate/front-end/store/api/v1.api'
 
 const api = v1Api.injectEndpoints({
   endpoints: (build) => ({
-    getProductsList: build.query<GetProductsHttpListResponseDto, Required<GetProductsSearchDto>>({
-      query: (search): GetProductsHttpClientRequestDto => ({
+    getProductsList: build.query<GetProductShortDto[], Required<GetProductsSearchDto>>({
+      query: ({ search, page, pageSize, tagsIds }): GetProductsHttpClientRequestDto => ({
         method: Method.Get,
         url: GetProductsListUrl,
-        search,
+        search: {
+          search,
+          page,
+          pageSize,
+          tagsIds,
+        },
       }),
-      transformResponse(data: GetProductShortDto[], meta: { total: number }): GetProductsHttpListResponseDto {
-        return {
-          result: data,
-          total: meta?.total,
-        }
-      },
       providesTags: (result) =>
         Array.isArray(result)
           ? [...result.map(({ id }) => ({ type: 'Product', id }) as const), { type: 'Product', id: 'LIST' }]

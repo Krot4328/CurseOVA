@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 import classes from '@boilerplate/front-end/components/tackle/left/fishing-gear/style.module.scss'
 
-interface FishingGearProps {}
+interface FishingGearProps { }
 
 export const FishingGear: React.FC<FishingGearProps> = () => {
   const [activeCategories, setActiveCategories] = useState<Record<string, boolean>>({})
@@ -70,7 +70,7 @@ export const FishingGear: React.FC<FishingGearProps> = () => {
         <div className={classes['col-md-4']}>
           <div>
             <div className={classes['gear-category']}>
-              <h3 onClick={() => toggleCategory('hook')}>Гачоки</h3>
+              <h3 onClick={() => toggleCategory('hook')}>Гачки</h3>
               {activeCategories.hook && (
                 <ul>
                   <li>Риболовні гачки</li>
