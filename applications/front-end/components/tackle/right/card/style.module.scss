@@ -27,7 +27,7 @@
 .card-title {
   font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: .25rem;
   color: #333;
   text-decoration: none;
 }
@@ -39,20 +39,28 @@
 }
 
 .btn-primary {
-  display: inline-block;
   padding: 10px 20px;
   background-color: #007bff;
   color: #fff;
-  text-decoration: none;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: 500;
   transition: background-color 0.3s;
-  border: 0;
-  margin-top: 5px;
-
+  display: flex;
+  margin: auto;
+  margin-bottom: 1rem;
 
   &:hover {
     background-color: #0056b3;
   }
+}
+
+.link {
+  text-decoration: none;
+}
+
+.cart-price {
+  margin-top: 0;
+  margin-bottom: .2rem;
+  color: #111;
 }

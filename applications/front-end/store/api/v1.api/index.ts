@@ -20,7 +20,7 @@ export const v1Api = createApi({
     }
   },
 
-  tagTypes: ['Product', 'Cart'],
+  tagTypes: ['Product', 'Cart', 'Profile', 'Tag'],
   endpoints: () => ({}),
 })
 

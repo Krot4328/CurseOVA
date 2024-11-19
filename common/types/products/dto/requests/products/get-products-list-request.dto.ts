@@ -20,16 +20,6 @@ export class GetProductsSearchDto implements GetProductsSearch {
 
   @HttpRequestFieldDecorator()
   @IsOptional()
-  @IsString()
-  page?: string
-
-  @HttpRequestFieldDecorator()
-  @IsOptional()
-  @IsString()
-  pageSize?: string
-
-  @HttpRequestFieldDecorator()
-  @IsOptional()
   @IsUUID(4, { each: true })
   tagsIds?: string[]
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { compact, uniq } from 'lodash'
 import { DataSource, FindManyOptions, FindOptionsWhere, ILike, In, Repository } from 'typeorm'
 
 import { FindProductsAndCountOptions } from '@boilerplate/back-end/modules/products/interfaces/repositories/products'
@@ -20,7 +21,7 @@ export class ProductsRepository extends Repository<ProductEntity> {
     super(ProductEntity, dataSource.createEntityManager())
   }
 
-  async findProductsAndCount({ search, page, pageSize /* , tagsIds */ }: FindProductsAndCountOptions = {}): Promise<
+  async findProductsAndCount({ search, tagsIds }: FindProductsAndCountOptions = {}): Promise<
     [products: ProductEntity[], total: number]
   > {
     const where: FindOptionsWhere<ProductEntity> = {}
@@ -28,6 +29,9 @@ export class ProductsRepository extends Repository<ProductEntity> {
     if (typeof search === 'string' && search.length > 0) {
       where.title = ILike(`%${search.split('').join('%')}%`)
     }
+
+    const tagIdsArray = Array.isArray(tagsIds) ? tagsIds : [tagsIds]
+    const normalizedTagsIds = compact(uniq(tagIdsArray))
 
     const options: FindManyOptions<ProductEntity> = {
       where,
@@ -39,14 +43,6 @@ export class ProductsRepository extends Repository<ProductEntity> {
           tag: true,
         },
       },
-    }
-
-    if (typeof pageSize === 'number') {
-      options.take = pageSize
-
-      if (typeof page === 'number') {
-        options.take = page * pageSize
-      }
     }
 
     return await this.findAndCount(options)

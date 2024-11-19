@@ -6,40 +6,47 @@ import Image from 'next/image'
 
 import profile from '@boilerplate/front-end/assets/icons/profile.svg'
 
+import { useGetProfileQuery } from '@boilerplate/front-end/store/queries/profile.query'
+
 import classes from '@boilerplate/front-end/components/profile/style.module.scss'
 
+// eslint-disable-next-line prettier/prettier
 interface ProfileProps { }
 
 export const Profile: React.FC<ProfileProps> = () => {
-  const [contactInfo, setContactInfo] = useState({
-    phone: '123-456-7890',
-    email: 'example@gmail.com',
-    address: '123 Main St, City, Country',
-  })
+  const { data } = useGetProfileQuery()
+  const { firstName, lastName, phone, email } = data ?? {}
+  // const [contactInfo, setContactInfo] = useState({
+  //   phone: '123-456-7890',
+  //   email: 'example@gmail.com',
+  //   address: '123 Main St, City, Country',
+  // })
 
   const [isEditing, setIsEditing] = useState(false)
-  const [newContactInfo, setNewContactInfo] = useState(contactInfo)
+  // const [newContactInfo, setNewContactInfo] = useState(contactInfo)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target
 
-    setNewContactInfo((prev) => ({ ...prev, [name]: value }))
-  }
+  //   setNewContactInfo((prev) => ({ ...prev, [name]: value }))
+  // }
 
-  const handleEdit = () => {
-    setIsEditing(!isEditing)
-  }
+  // // const handleEdit = () => {
+  //   setIsEditing(!isEditing)
+  // }
 
-  const handleSave = () => {
-    setContactInfo(newContactInfo)
-    setIsEditing(false)
-  }
+  // const handleSave = () => {
+  //   setContactInfo(newContactInfo)
+  //   setIsEditing(false)
+  // }
 
   return (
     <div className={classes.profileContainer}>
       <div className={classes.profileInfo}>
         <Image className={classes.profileImage} src={profile} alt="Profile Picture" />
-        <h2 className={classes.profileName}>Ім'я Прізвище</h2>
+        <h2 className={classes.profileName}>
+          {firstName} {lastName}
+        </h2>
       </div>
 
       <div className={classes.contactInfo}>
@@ -73,18 +80,17 @@ export const Profile: React.FC<ProfileProps> = () => {
               onChange={handleChange}
               placeholder="Адреса"
             />
-            <button className={classes.saveButton} onClick={handleSave}>
+            {/* <button className={classes.saveButton} onClick={handleSave}>
               Зберегти
-            </button>
+            </button> */}
           </div>
         ) : (
           <div className={classes.contactDetails}>
-            <p className={classes.contactDetail}>Телефон: {contactInfo.phone}</p>
-            <p className={classes.contactDetail}>Електронна пошта: {contactInfo.email}</p>
-            <p className={classes.contactDetail}>Адреса: {contactInfo.address}</p>
-            <button className={classes.editButton} onClick={handleEdit}>
+            <p className={classes.contactDetail}>Телефон: {phone}</p>
+            <p className={classes.contactDetail}>Електронна пошта: {email}</p>
+            {/* <button className={classes.editButton} onClick={handleEdit}>
               Редагувати
-            </button>
+            </button> */}
           </div>
         )}
       </div>

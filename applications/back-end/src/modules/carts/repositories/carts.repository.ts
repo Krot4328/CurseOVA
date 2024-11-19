@@ -75,6 +75,11 @@ export class CartsRepository extends Repository<CartEntity> {
           },
         },
       },
+      order: {
+        toProducts: {
+          createdAt: 'DESC',
+        },
+      },
     })
 
     if (!cart) {

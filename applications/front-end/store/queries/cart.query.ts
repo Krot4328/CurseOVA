@@ -11,6 +11,12 @@ import {
   type PatchCartParamsDto,
   type PatchCartUnauthorizedHttpClientRequestDto,
   PatchCartUnauthorizedUrl,
+  type PatchCartUserAuthorizedHttpClientRequestDto,
+  PatchCartUserAuthorizedUrl,
+  type PatchCartUserDataDto,
+  type PatchCartUserParamsDto,
+  type PatchCartUserUnauthorizedHttpClientRequestDto,
+  PatchCartUserUnauthorizedUrl,
   PostCartAuthorizedUrl,
   type PostCartAuthorizedUrlHttpClientRequestDto,
   PostCartUnauthorizedUrl,
@@ -19,6 +25,7 @@ import {
 import {
   type GetCartDto,
   type PatchCartResultDto,
+  type PatchCartUserDataResultDto,
   type PostCartResultDto,
 } from '@boilerplate/types/carts/dto/responses/carts'
 
@@ -76,9 +83,38 @@ const api = v1Api.injectEndpoints({
         { type: 'Cart', id: 'LIST' },
       ],
     }),
+
+    patchCartUserData: build.mutation<
+      PatchCartUserDataResultDto,
+      PatchCartUserParamsDto & PatchCartUserDataDto & { authorized: boolean }
+    >({
+      query: ({
+        cartId,
+        authorized,
+        firstName,
+        lastName,
+        phone,
+        email,
+        city,
+        department,
+        // paymentType,
+      }): PatchCartUserUnauthorizedHttpClientRequestDto | PatchCartUserAuthorizedHttpClientRequestDto => ({
+        method: Method.Patch,
+        url: authorized ? PatchCartUserAuthorizedUrl : PatchCartUserUnauthorizedUrl,
+        params: {
+          cartId,
+        },
+        data: { firstName, lastName, phone, email, city, department },
+      }),
+      invalidatesTags: (result, error, { cartId }) => [
+        { type: 'Cart', id: 'current' },
+        { type: 'Cart', id: cartId },
+        { type: 'Cart', id: 'LIST' },
+      ],
+    }),
   }),
 })
 
-export const { useGetCartQuery, usePostCartMutation, usePatchCartMutation } = api
+export const { useGetCartQuery, usePostCartMutation, usePatchCartMutation, usePatchCartUserDataMutation } = api
 
-export const { getCart, postCart, patchCart } = api.endpoints
+export const { getCart, postCart, patchCart, patchCartUserData } = api.endpoints

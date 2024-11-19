@@ -1,6 +1,6 @@
 'use client'
 
-import { useParams, useSearchParams } from 'next/navigation'
+import { useParams } from 'next/navigation'
 
 import { useSearch } from '@boilerplate/front-end/hooks/use-search.hook'
 
@@ -20,15 +20,9 @@ interface RightTackleProps {
 export const RightTackle: React.FC<RightTackleProps> = () => {
   const [search] = useSearch()
   const { tagsIds } = useParams<Partial<Record<'tagsIds', string>>>()
-  const searchParams = useSearchParams()
-
-  const pageSize = searchParams.get('pageSize') || '20'
-  const page = searchParams.get('page') || '1'
 
   const { data = [] } = useGetProductsListQuery({
     search: search ?? '',
-    page,
-    pageSize,
     tagsIds: tagsIds ? [tagsIds] : [],
   })
 

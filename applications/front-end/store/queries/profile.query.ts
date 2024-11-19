@@ -16,6 +16,10 @@ const api = v1Api.injectEndpoints({
           role: Role.User,
         },
       }),
+      providesTags: (result) =>
+        Array.isArray(result)
+          ? [...result.map(({ id }) => ({ type: 'Profile', id }) as const), { type: 'Profile', id: 'LIST' }]
+          : [{ type: 'Profile', id: 'LIST' }],
     }),
   }),
 })

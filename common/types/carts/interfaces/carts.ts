@@ -29,3 +29,24 @@ export interface PostCartResult {
   cartId: string
   isSuccess: boolean
 }
+
+export interface PatchCartUserData {
+  firstName?: string
+  lastName?: string
+  phone?: string
+  email?: string
+  city?: string
+  department?: string
+}
+
+export interface PatchCartUserDataResult {
+  isSuccess: boolean
+}
+
+export enum StatusType {
+  Pending = 'pending',
+  Processing = 'processing',
+  Paid = 'paid',
+  Completed = 'completed',
+  Failed = 'failed',
+}

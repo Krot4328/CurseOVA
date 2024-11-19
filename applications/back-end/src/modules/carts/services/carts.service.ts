@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common'
 
 import { HttpListServerResponse, HttpServerResponse } from '@boilerplate/core/interfaces/http'
@@ -7,7 +8,10 @@ import {
   GetCartsSearch,
   PatchCartData,
   PatchCartResult,
+  PatchCartUserData,
+  PatchCartUserDataResult,
   PostCartResult,
+  StatusType,
 } from '@boilerplate/types/carts/interfaces/carts'
 
 import { CartsRepository } from '@boilerplate/back-end/modules/carts/repositories/carts.repository'
@@ -20,7 +24,7 @@ export class CartsService {
     private readonly cartsRepository: CartsRepository,
 
     private readonly cartsDataMapper: CartsDataMapper,
-  ) {}
+  ) { }
 
   async getCartsList(queries: GetCartsSearch): Promise<HttpListServerResponse<GetCart>> {
     const page = parseInt(`${queries.page ?? 0}`, 10)
@@ -72,5 +76,34 @@ export class CartsService {
     }
 
     return { result }
+  }
+
+  async patchCartUserData(
+    id: string,
+    data: PatchCartUserData,
+    userGid?: string | 'all',
+  ): Promise<HttpServerResponse<PatchCartUserDataResult>> {
+    const { firstName, lastName, email, phone, city, department } = data
+
+    const cart = await this.cartsRepository.findCartOneOrFail(id, userGid)
+
+    cart.firstName = firstName || ''
+    cart.lastName = lastName || ''
+    cart.email = email || ''
+    cart.phone = phone || ''
+    cart.city = city || ''
+    cart.department = department || ''
+
+    cart.paymentStatus = StatusType.Processing
+
+    await this.cartsRepository.save(cart)
+
+    const result: PatchCartUserDataResult = {
+      isSuccess: true,
+    }
+
+    return {
+      result,
+    }
   }
 }

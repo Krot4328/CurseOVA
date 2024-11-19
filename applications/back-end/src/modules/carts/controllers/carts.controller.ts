@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Body, Controller, Get, Logger, Param, Patch, Post, Query, Request, UseGuards } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { JwtPassportAuthGuard } from 'src/modules/auth/guards/jwt-passport.guard'
@@ -19,6 +20,9 @@ import {
   PatchCartAuthorizedUrl,
   PatchCartDataDto,
   PatchCartUnauthorizedUrl,
+  PatchCartUserAuthorizedUrl,
+  PatchCartUserDataDto,
+  PatchCartUserUnauthorizedUrl,
   PostCartAuthorizedUrl,
   PostCartAuthorizedUrlHttpServerRequestDto,
   PostCartUnauthorizedUrl,
@@ -37,7 +41,7 @@ import { CartsService } from '@boilerplate/back-end/modules/carts/services/carts
 export class CartsController {
   private readonly logger = new Logger(CartsController.name)
 
-  constructor(private readonly cartsService: CartsService) {}
+  constructor(private readonly cartsService: CartsService) { }
 
   @Get(GetCartsListUrl)
   @ApiBearerAuth()
@@ -205,5 +209,36 @@ export class CartsController {
     })
 
     return await this.cartsService.patchCart(cartId, { productId, quantity }, 'all')
+  }
+
+  @Patch(PatchCartUserUnauthorizedUrl)
+  async patchCartUserUnauthorized(
+    @Param('cartId') cartId: string,
+    @Body() data: PatchCartUserDataDto,
+  ): Promise<PatchCartResultHttpResponseDto> {
+    const { firstName, lastName, email, phone, city, department } = data
+
+    return await this.cartsService.patchCartUserData(cartId, { firstName, lastName, email, phone, city, department })
+  }
+
+  @Patch(PatchCartUserAuthorizedUrl)
+  @ApiBearerAuth()
+  @UseGuards(JwtPassportAuthGuard)
+  @Roles([Role.User])
+  async patchCartUserAuthorized(
+    @Request() request: PatchCartAuthorizedHttpServerRequestDto,
+    @Param('cartId') cartId: string,
+    @Body() data: PatchCartUserDataDto,
+  ): Promise<PatchCartResultHttpResponseDto> {
+    const { firstName, lastName, email, phone, city, department } = data
+    const {
+      user: { gid: userGid },
+    } = request
+
+    return await this.cartsService.patchCartUserData(
+      cartId,
+      { firstName, lastName, email, phone, city, department },
+      userGid,
+    )
   }
 }

@@ -4,9 +4,14 @@ import React, { useState } from 'react'
 
 import Image from 'next/image'
 
-import topArrow from '@boilerplate/front-end/assets/icons/facebook.svg'
+import error from '@boilerplate/front-end/assets/images/error.png'
 
+import { useAppSelector } from '@boilerplate/front-end/store'
+
+import { usePatchCartMutation } from '@boilerplate/front-end/store/queries/cart.query'
 import { useGetProductQuery } from '@boilerplate/front-end/store/queries/product.query'
+import { cartSlice } from '@boilerplate/front-end/store/slices/cart.slice'
+import { profileSlice } from '@boilerplate/front-end/store/slices/profile.slice'
 
 import classes from '@boilerplate/front-end/components/tackle-description/style.module.scss'
 
@@ -17,7 +22,16 @@ interface TackleDescriptionProps {
 export const TackleDescription: React.FC<TackleDescriptionProps> = ({ tackleId }) => {
   const [quantity, setQuantity] = useState(1)
 
-  const { data: tackle, isLoading } = useGetProductQuery(tackleId)
+  const { data: tackle } = useGetProductQuery(tackleId)
+
+  const cartId = useAppSelector(cartSlice.selectors.id) as string
+  const isAuthorized = useAppSelector(profileSlice.selectors.isAuthorized)
+
+  const [patchCart] = usePatchCartMutation()
+
+  const handleAddToCartClick = (): void => {
+    patchCart({ cartId, authorized: isAuthorized, productId: tackleId, quantity })
+  }
 
   const increaseQuantity = (): void => {
     setQuantity((prevQuantity) => prevQuantity + 1)
@@ -35,19 +49,19 @@ export const TackleDescription: React.FC<TackleDescriptionProps> = ({ tackleId }
 
   return (
     <div className={classes['product-desc']}>
-      <div className={classes['about-figure']}>
+      <div className={classes['about-tackle']}>
         <div className={classes['column-1']}>
           <Image
-            src={tackle?.images?.length > 0 ? tackle?.images[0].src : topArrow}
+            src={tackle?.images?.length > 0 ? tackle?.images[0].src : error}
             alt="ArthasFigure"
-            className={classes['figure-img']}
+            className={classes['tackle-img']}
             width={500}
             height={500}
           />
         </div>
         <div className={classes['column-2']}>
           <h3 className={classes.h3}>{tackle?.title}</h3>
-          <div className={classes['figure-desc']}>
+          <div className={classes['tackle-desc']}>
             <p className={classes['common-text']}>{`${tackle?.description}`}</p>
           </div>
           {tackle?.tags && tackle.tags.length > 0 ? (
@@ -83,7 +97,9 @@ export const TackleDescription: React.FC<TackleDescriptionProps> = ({ tackleId }
               </div>
             </div>
             <button className={classes['add-to-cart']}>
-              <p className={classes.h}>Додати у кошик</p>
+              <p className={classes.h} onClick={handleAddToCartClick}>
+                Додати у кошик
+              </p>
             </button>
           </div>
         </div>

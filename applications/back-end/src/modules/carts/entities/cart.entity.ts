@@ -9,6 +9,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 
+import { StatusType } from '@boilerplate/types/carts/interfaces/carts'
+
 import { CartToProductEntity } from '@boilerplate/back-end/modules/carts/entities/cart-to-product.entity'
 
 @Entity()
@@ -19,6 +21,27 @@ export class CartEntity {
   @Index()
   @Column('uuid', { nullable: true, default: null })
   userGid: string
+
+  @Column({ nullable: true, default: null })
+  firstName: string
+
+  @Column({ nullable: true, default: null })
+  lastName: string
+
+  @Column({ nullable: true, default: null })
+  phone: string
+
+  @Column({ nullable: true, default: null })
+  email: string
+
+  @Column({ nullable: true, default: null })
+  city: string
+
+  @Column({ nullable: true, default: null })
+  department: string
+
+  @Column({ type: 'enum', enum: StatusType, nullable: true, default: StatusType.Pending })
+  paymentStatus: StatusType
 
   @Index()
   @CreateDateColumn({ type: 'timestamptz' })
