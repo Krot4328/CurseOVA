@@ -24,6 +24,9 @@ export interface PostProductResult {
 export interface GetProductsSearch extends HttpSearch {
   search?: string
 
+  page?: string
+  pageSize?: string
+
   tagsIds?: string[]
 }
 

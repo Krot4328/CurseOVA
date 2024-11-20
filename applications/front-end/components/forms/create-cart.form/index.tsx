@@ -65,7 +65,7 @@ export const SendCartData: React.FC<SendCartDataProps> = ({ firstName, lastName,
   const content = (
     <div className={classes.cartForm}>
       <h2 className={classes.title}>Оформлення замовлення</h2>
-      <Form>
+      <div>
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>Ім'я</Form.Label>
@@ -107,7 +107,7 @@ export const SendCartData: React.FC<SendCartDataProps> = ({ firstName, lastName,
             </Form.Select>
           </Form.Group>
         </Row>
-      </Form>
+      </div>
       <button className={classes.checkoutButton} type="submit">
         Оформити замовлення
       </button>

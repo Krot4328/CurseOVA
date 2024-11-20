@@ -30,23 +30,24 @@ import { ProductsService } from '@boilerplate/back-end/modules/products/services
 export class ProductsController {
   private readonly logger = new Logger(ProductsController.name)
 
-  // eslint-disable-next-line prettier/prettier
   constructor(private readonly productsService: ProductsService) { }
 
   @Get(GetProductsListUrl)
   async getProductsList(@Query() queries: GetProductsSearchDto): Promise<GetProductsHttpListResponseDto> {
-    const { search, tagsIds } = queries
+    const { search, page, pageSize, tagsIds } = queries
 
     this.logger.log({
       controller: ProductsController.name,
       action: `${ProductsController.name}.getProductsList`,
       queries: {
         search,
+        page,
+        pageSize,
         tagsIds,
       },
     })
 
-    return await this.productsService.getProductsList({ search, tagsIds })
+    return await this.productsService.getProductsList({ search, page, pageSize, tagsIds })
   }
 
   @Get(GetProductUrl)

@@ -23,14 +23,18 @@ export class ProductsService {
     private readonly productsRepository: ProductsRepository,
 
     private readonly productsDataMapper: ProductsDataMapper,
-    // eslint-disable-next-line prettier/prettier
   ) { }
 
   async getProductsList(queries: GetProductsSearch): Promise<HttpListServerResponse<GetProductShort>> {
     const { search, tagsIds } = queries
 
+    const page = parseInt(`${queries.page || 0}`, 10) || 0
+    const pageSize = parseInt(`${queries.pageSize || 20}`, 10) || 20
+
     const [products, total] = await this.productsRepository.findProductsAndCount({
       search,
+      page,
+      pageSize,
       tagsIds,
     })
 

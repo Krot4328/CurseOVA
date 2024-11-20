@@ -10,20 +10,15 @@ import { Card } from '@boilerplate/front-end/components/tackle/right/card'
 import { Corusel } from '@boilerplate/front-end/components/tackle/right/corusel'
 import classes from '@boilerplate/front-end/components/tackle/right/style.module.scss'
 
-interface RightTackleProps {
-  search: string
-  page: string
-  pageSize: string
-  tagsIds: string[]
-}
+interface RightTackleProps { }
 
 export const RightTackle: React.FC<RightTackleProps> = () => {
   const [search] = useSearch()
-  const { tagsIds } = useParams<Partial<Record<'tagsIds', string>>>()
+  const { tagId } = useParams<Partial<Record<'tagId', string>>>()
 
   const { data = [] } = useGetProductsListQuery({
     search: search ?? '',
-    tagsIds: tagsIds ? [tagsIds] : [],
+    tagsIds: tagId ? [tagId] : [],
   })
 
   return (

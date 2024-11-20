@@ -21,7 +21,7 @@ export class ProductsRepository extends Repository<ProductEntity> {
     super(ProductEntity, dataSource.createEntityManager())
   }
 
-  async findProductsAndCount({ search, tagsIds }: FindProductsAndCountOptions = {}): Promise<
+  async findProductsAndCount({ search, page, pageSize, tagsIds }: FindProductsAndCountOptions = {}): Promise<
     [products: ProductEntity[], total: number]
   > {
     const where: FindOptionsWhere<ProductEntity> = {}
@@ -32,6 +32,12 @@ export class ProductsRepository extends Repository<ProductEntity> {
 
     const tagIdsArray = Array.isArray(tagsIds) ? tagsIds : [tagsIds]
     const normalizedTagsIds = compact(uniq(tagIdsArray))
+
+    if (normalizedTagsIds.length > 0) {
+      where.toTags = {
+        tag: In(normalizedTagsIds),
+      }
+    }
 
     const options: FindManyOptions<ProductEntity> = {
       where,
@@ -44,6 +50,16 @@ export class ProductsRepository extends Repository<ProductEntity> {
         },
       },
     }
+
+    if (typeof pageSize !== 'undefined') {
+      options.take = pageSize
+
+      if (typeof page !== 'undefined') {
+        options.skip = pageSize * page
+      }
+    }
+
+    console.log(options)
 
     return await this.findAndCount(options)
   }
