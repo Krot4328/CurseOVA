@@ -20,27 +20,25 @@ export const Cart: React.FC<CartProps> = () => {
   const isAuthorized = useAppSelector(profileSlice.selectors.isAuthorized)
 
   const { data } = useGetCartQuery({ cartId, authorized: isAuthorized })
-  const cartItems = data?.items || []
+  const cartItems = cartId ? data?.items || [] : []
 
   return (
-    <>
-      <div className={classes.order}>
-        <SendCartData />
-        <div className={classes.cart}>
-          <ul className={classes['cart-list']}>
-            {cartItems.map(({ product, quantity }) => (
-              <CartItem
-                key={product.id}
-                id={product.id}
-                title={product.title}
-                price={product.price.value}
-                imageSrc={product.images?.length > 0 ? product.images[0].src : deleteIcon}
-                quantity={quantity}
-              />
-            ))}
-          </ul>
-        </div>
+    <div className={classes.order}>
+      <SendCartData />
+      <div className={classes.cart}>
+        <ul className={classes['cart-list']}>
+          {cartItems.map(({ product, quantity }) => (
+            <CartItem
+              key={product.id}
+              id={product.id}
+              title={product.title}
+              price={product.price.value}
+              imageSrc={product.images?.length > 0 ? product.images[0].src : deleteIcon}
+              quantity={quantity}
+            />
+          ))}
+        </ul>
       </div>
-    </>
+    </div>
   )
 }

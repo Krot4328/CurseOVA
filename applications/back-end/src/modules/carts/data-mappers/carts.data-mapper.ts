@@ -21,9 +21,18 @@ export class CartsDataMapper {
   }
 
   toCart(entity: CartEntity): GetCart {
-    const { toProducts } = entity
+    const { id, userGid, firstName, lastName, phone, email, city, department, paymentStatus, toProducts } = entity
 
     return {
+      id,
+      profileId: userGid,
+      firstName,
+      lastName,
+      phone,
+      email,
+      city,
+      department,
+      paymentStatus,
       items: toProducts.map((toProduct) => this.toCartItem(toProduct)),
     }
   }

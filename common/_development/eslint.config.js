@@ -95,6 +95,11 @@ module.exports = (tsconfigRootDir) => ({
             "position": "before"
           },
           {
+            "pattern": "@boilerplate/front-end/hooks/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
             "pattern": "@boilerplate/front-end/components/**",
             "group": "internal",
             "position": "before"
@@ -116,6 +121,11 @@ module.exports = (tsconfigRootDir) => ({
           },
           {
             "pattern": "@boilerplate/dashboard/store/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@boilerplate/dashboard/hooks/**",
             "group": "internal",
             "position": "before"
           },

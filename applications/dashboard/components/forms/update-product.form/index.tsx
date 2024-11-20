@@ -2,20 +2,30 @@
 
 import { useCallback, useEffect } from 'react'
 
+import { useParams } from 'next/navigation'
+
 import { useAppDispatch, useAppSelector } from '@boilerplate/dashboard/store'
 
+import { v1Api } from '@boilerplate/dashboard/store/api/v1.api'
 import { usePostFilePreloadMutation } from '@boilerplate/dashboard/store/queries/file.query'
+import { useGetProductQuery } from '@boilerplate/dashboard/store/queries/product.query'
 import { useGetTagsListQuery } from '@boilerplate/dashboard/store/queries/reference.query'
 import { postProductSlice } from '@boilerplate/dashboard/store/slices/create-product.slice'
 
-interface CreateProductFormProps {}
+interface UpdateProductFormProps {}
 
-export const CreateProductForm: React.FC<CreateProductFormProps> = () => {
+export const UpdateProductForm: React.FC<UpdateProductFormProps> = () => {
   const dispatch = useAppDispatch()
 
+  const { productId } = useParams<Record<'productId', string>>()
+
+  useGetProductQuery({ productId }, { refetchOnMountOrArgChange: true })
+
   useEffect(() => {
-    dispatch(postProductSlice.actions.clear())
-  }, [])
+    if (productId) {
+      dispatch(v1Api.util.invalidateTags([{ type: 'Product', id: productId }]))
+    }
+  }, [productId])
 
   const { data: tagsListData = {} } = useGetTagsListQuery()
   const tagsGroups = tagsListData.result || []

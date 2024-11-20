@@ -1,9 +1,9 @@
 import { Type } from 'class-transformer'
-import { IsArray, IsInt, IsOptional, Min, ValidateNested } from 'class-validator'
+import { IsArray, IsEnum, IsInt, IsOptional, IsString, IsUUID, Min, ValidateNested } from 'class-validator'
 
 import { HttpServerResponseDto } from '@boilerplate/core/dto/responses/http-server-response.dto'
 
-import { CartItem, GetCart } from '@boilerplate/types/carts/interfaces/carts'
+import { CartItem, GetCart, StatusType } from '@boilerplate/types/carts/interfaces/carts'
 import { GetProductShortDto } from '@boilerplate/types/products/dto/responses/products/get-products-list-response.dto'
 
 export class CartItemDto implements CartItem {
@@ -17,6 +17,33 @@ export class CartItemDto implements CartItem {
 }
 
 export class GetCartDto implements GetCart {
+  @IsUUID(4)
+  id: string
+
+  @IsUUID(4)
+  profileId: string
+
+  @IsString()
+  firstName: string
+
+  @IsString()
+  lastName: string
+
+  @IsString()
+  phone: string
+
+  @IsString()
+  email: string
+
+  @IsString()
+  city: string
+
+  @IsString()
+  department: string
+
+  @IsEnum(StatusType)
+  paymentStatus: StatusType
+
   @ValidateNested()
   @IsArray()
   @Type(() => CartItemDto)

@@ -5,6 +5,8 @@ import { createSliceKey } from '@boilerplate/core/builders/slice-key.builder'
 
 import { reducer } from '@boilerplate/dashboard/store'
 
+import { getProduct } from '@boilerplate/dashboard/store/queries/product.query'
+
 interface PostProductState {
   title: string
   description: string
@@ -45,6 +47,17 @@ const slice = createSlice({
     setFileId(state, action: PayloadAction<string | null>) {
       state.fileId = action.payload
     },
+    clear(state) {
+      Object.assign(state, slice.getInitialState())
+    },
+  },
+  extraReducers(builder) {
+    builder.addMatcher(getProduct.matchFulfilled, (state, action) => {
+      state.title = action.payload.title
+      state.description = action.payload.description
+      state.price = action.payload.price.value
+      state.tagId = action.payload.tags[0]?.id || ''
+    })
   },
 })
 

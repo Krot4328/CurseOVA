@@ -19,6 +19,7 @@ import {
   PatchCartUserUnauthorizedUrl,
   PostCartAuthorizedUrl,
   type PostCartAuthorizedUrlHttpClientRequestDto,
+  type PostCartDataDto,
   PostCartUnauthorizedUrl,
   type PostCartUnauthorizedUrlHttpClientRequestDto,
 } from '@boilerplate/types/carts/dto/requests/carts'
@@ -50,12 +51,16 @@ const api = v1Api.injectEndpoints({
           : [{ type: 'Cart', id: 'LIST' }],
     }),
 
-    postCart: build.mutation<PostCartResultDto, { authorized: boolean }>({
+    postCart: build.mutation<PostCartResultDto, { authorized: boolean } & Partial<PostCartDataDto>>({
       query: ({
         authorized,
+        force,
       }): PostCartUnauthorizedUrlHttpClientRequestDto | PostCartAuthorizedUrlHttpClientRequestDto => ({
         method: Method.Post,
         url: authorized ? PostCartAuthorizedUrl : PostCartUnauthorizedUrl,
+        data: {
+          force: force ?? false,
+        },
       }),
       invalidatesTags: [
         { type: 'Cart', id: 'current' },

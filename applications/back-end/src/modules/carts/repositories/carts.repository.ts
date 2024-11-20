@@ -41,9 +41,11 @@ export class CartsRepository extends Repository<CartEntity> {
       options.take = pageSize
 
       if (typeof page === 'number') {
-        options.take = page * pageSize
+        options.skip = page * pageSize
       }
     }
+
+    console.log({ options })
 
     return await this.findAndCount(options)
   }

@@ -1,3 +1,5 @@
+import { type useRouter } from 'next/navigation'
+
 import { type PayloadAction, createAction } from '@reduxjs/toolkit'
 import logger from 'loglevel'
 import { type SagaIterator } from 'redux-saga'
@@ -12,13 +14,13 @@ import { type PutTokenResultDto } from '@boilerplate/types/auth/dto/responses/to
 
 import { saga } from '@boilerplate/front-end/store'
 
+import { postCart } from '@boilerplate/front-end/store/queries/cart.query'
 import { getProfile } from '@boilerplate/front-end/store/queries/profile.query'
 import { login } from '@boilerplate/front-end/store/queries/token.query'
 import { authSlice } from '@boilerplate/front-end/store/slices/auth.slice'
 import { profileSlice } from '@boilerplate/front-end/store/slices/profile.slice'
-import { useRouter } from 'next/navigation'
 
-interface SignInStartActionPayload { }
+interface SignInStartActionPayload {}
 
 export const signInStart = createAction<SignInStartActionPayload>(createSagaActionType('sign-in-start'))
 
@@ -42,6 +44,10 @@ function* handler(action: PayloadAction<SignInStartActionPayload>): SagaIterator
     const getProfileResponse: HttpClientResponse<MyProfileDto> = yield call(() => getProfileRequest)
 
     yield put(profileSlice.actions.init(getProfileResponse.data))
+
+    const postOrderRequest = yield put(postCart.initiate({ authorized: true }))
+
+    yield call(() => postOrderRequest)
   } catch (error) {
     jwtStore.clear()
 

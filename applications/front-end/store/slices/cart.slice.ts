@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { type PayloadAction, type WithSlice, createSlice } from '@reduxjs/toolkit'
 import _omit from 'lodash/omit'
 
@@ -21,7 +20,7 @@ interface CartsListState {
 const slice = createSlice({
   name: createSliceKey('cart-card-list'),
   initialState: (): CartsListState => ({
-    id: localStorage.getItem('cartId') || null,
+    id: localStorage.getItem('cartId') ?? null,
     firstName: '',
     lastName: '',
     email: '',
@@ -79,12 +78,8 @@ const slice = createSlice({
 const withSlice = reducer.inject(slice)
 
 export const cartSlice = {
-  /**
-   
-Omit reducer and reducerPath for prevent any other connections of it to store*/ ..._omit(slice, [
-  'reducer',
-  'reducerPath',
-]),
+  /** Omit reducer and reducerPath for prevent any other connections of it to store*/
+  ..._omit(slice, ['reducer', 'reducerPath']),
   selectSlice: withSlice.selector(slice.selectSlice),
   selectors: {
     id: withSlice.selector(slice.selectors.id),
@@ -98,5 +93,5 @@ Omit reducer and reducerPath for prevent any other connections of it to store*/ 
 }
 
 declare module '@boilerplate/front-end/store' {
-  export interface LazyLoadedSlices extends WithSlice<typeof slice> { }
+  export interface LazyLoadedSlices extends WithSlice<typeof slice> {}
 }

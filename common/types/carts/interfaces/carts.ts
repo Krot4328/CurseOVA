@@ -8,6 +8,18 @@ export interface CartItem {
 }
 
 export interface GetCart {
+  id: string
+
+  profileId: string
+
+  firstName: string
+  lastName: string
+  phone: string
+  email: string
+  city: string
+  department: string
+  paymentStatus: StatusType
+
   items: CartItem[]
 }
 
@@ -23,6 +35,10 @@ export interface PatchCartData {
 
 export interface PatchCartResult {
   isSuccess: boolean
+}
+
+export interface PostCartData {
+  force: boolean
 }
 
 export interface PostCartResult {

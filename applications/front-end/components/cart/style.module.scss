@@ -33,11 +33,13 @@
 }
 
 .productName {
+  margin: 0;
   font-size: 1.2rem;
   font-weight: bold;
 }
 
 .productPrice {
+  margin: 0;
   font-size: 1rem;
   color: #555;
 }
@@ -81,10 +83,16 @@
 }
 
 .check {
+  margin: auto;
+  margin-top: 0;
+  margin-bottom: 0;
   font-size: 1.2rem;
   font-weight: bold;
-  margin: auto;
   text-align: right;
+
+  p {
+    margin: 0;
+  }
 }
 
 .checkoutButton {

@@ -25,6 +25,7 @@ import {
   PatchCartUserUnauthorizedUrl,
   PostCartAuthorizedUrl,
   PostCartAuthorizedUrlHttpServerRequestDto,
+  PostCartDataDto,
   PostCartUnauthorizedUrl,
 } from '@boilerplate/types/carts/dto/requests/carts'
 import {
@@ -78,17 +79,22 @@ export class CartsController {
   @Roles([Role.User])
   async postCart(
     @Request() request: PostCartAuthorizedUrlHttpServerRequestDto,
+    @Body() body: PostCartDataDto,
   ): Promise<PostCartResultHttpResponseDto> {
     const {
       user: { gid: userGid },
     } = request
+    const { force } = body
 
     this.logger.log({
       controller: CartsController.name,
       action: `${CartsController.name}.postCart`,
+      body: {
+        force,
+      }
     })
 
-    return await this.cartsService.postCart(userGid)
+    return await this.cartsService.postCart(userGid, force)
   }
 
   @Get(GetCartUnauthorizedUrl)

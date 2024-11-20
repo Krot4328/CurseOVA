@@ -1,7 +1,7 @@
-import { createAction } from '@reduxjs/toolkit'
+import { type PayloadAction, createAction } from '@reduxjs/toolkit'
 import logger from 'loglevel'
 import { type SagaIterator } from 'redux-saga'
-import { call, getContext, put, takeLatest } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 
 import { createSagaActionType } from '@boilerplate/core/builders/saga-action-type.builder'
 import { type HttpClientResponse } from '@boilerplate/core/interfaces/http'
@@ -11,18 +11,19 @@ import { type DeleteTokenResultDto } from '@boilerplate/types/auth/dto/responses
 
 import { saga } from '@boilerplate/front-end/store'
 
+import { v1Api } from '@boilerplate/front-end/store/api/v1.api'
 import { logout } from '@boilerplate/front-end/store/queries/token.query'
+import { cartSlice } from '@boilerplate/front-end/store/slices/cart.slice'
 import { profileSlice } from '@boilerplate/front-end/store/slices/profile.slice'
-import { useRouter } from 'next/navigation'
 
-interface SignOutStartActionPayload { }
+interface SignOutStartActionPayload {
+  redirect: () => void
+}
 
 export const signOutStart = createAction<SignOutStartActionPayload>(createSagaActionType('sign-out-start'))
 
-function* handler(): SagaIterator<void> {
+function* handler(action: PayloadAction<SignOutStartActionPayload>): SagaIterator<void> {
   try {
-    const router: ReturnType<typeof useRouter> = yield getContext('router')
-
     const deleteTokenRequest = yield put(logout.initiate())
 
     const deleteTokenResponse: HttpClientResponse<DeleteTokenResultDto> = yield call(() => deleteTokenRequest)
@@ -35,12 +36,20 @@ function* handler(): SagaIterator<void> {
 
     yield put(profileSlice.actions.init(null))
 
-    yield call(router.push, '/')
+    yield put(cartSlice.actions.clearId())
+
+    yield put(
+      v1Api.util.invalidateTags([
+        { type: 'Cart', id: 'current' },
+        { type: 'Cart', id: 'LIST' },
+      ]),
+    )
+
+    yield call(action.payload.redirect)
   } catch (error) {
     logger.error(error)
   }
 }
-
 
 saga.run(function* () {
   yield takeLatest(signOutStart, handler)

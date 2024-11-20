@@ -63,7 +63,7 @@ function* handler(): SagaIterator<void> {
 
     yield put(cartSlice.actions.clearId())
 
-    const newCartId = yield put(postCart.initiate({ authorized: isAuthorized }))
+    const newCartId = yield put(postCart.initiate({ authorized: isAuthorized, force: true }))
 
     yield put(cartSlice.actions.setId(newCartId))
 

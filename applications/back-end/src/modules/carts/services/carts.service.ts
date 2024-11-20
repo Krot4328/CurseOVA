@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common'
 
+import { OrderType } from '@boilerplate/core/interfaces/core'
 import { HttpListServerResponse, HttpServerResponse } from '@boilerplate/core/interfaces/http'
 
 import {
@@ -13,6 +14,8 @@ import {
   PostCartResult,
   StatusType,
 } from '@boilerplate/types/carts/interfaces/carts'
+
+import { CartEntity } from '@boilerplate/back-end/modules/carts/entities/cart.entity'
 
 import { CartsRepository } from '@boilerplate/back-end/modules/carts/repositories/carts.repository'
 
@@ -27,8 +30,8 @@ export class CartsService {
   ) { }
 
   async getCartsList(queries: GetCartsSearch): Promise<HttpListServerResponse<GetCart>> {
-    const page = parseInt(`${queries.page ?? 0}`, 10)
-    const pageSize = parseInt(`${queries.pageSize ?? 10}`, 10)
+    const page = parseInt(`${queries.page ?? 0}`, 10) || 0
+    const pageSize = parseInt(`${queries.pageSize ?? 20}`, 10) || 20
 
     const [carts, total] = await this.cartsRepository.findCartsAndCount({
       page,
@@ -41,8 +44,29 @@ export class CartsService {
     }
   }
 
-  async postCart(userGid?: string): Promise<HttpServerResponse<PostCartResult>> {
-    const cart = await this.cartsRepository.save({ userGid })
+  async postCart(userGid?: string, force = false): Promise<HttpServerResponse<PostCartResult>> {
+    if (force) {
+      const { id: cartId } = await this.cartsRepository.save({ userGid })
+
+      return { result: { cartId, isSuccess: true } }
+    }
+    
+    let cart: CartEntity
+    
+    if (!userGid) {
+      cart = await this.cartsRepository.save({ userGid })
+    }
+
+    cart = await this.cartsRepository.findOne({
+      where: { userGid },
+      order: {
+        createdAt: OrderType.Desc,
+      },
+    })
+
+    if (!cart) {
+      cart = await this.cartsRepository.save({ userGid })
+    }
 
     const result: PostCartResult = {
       cartId: cart.id,

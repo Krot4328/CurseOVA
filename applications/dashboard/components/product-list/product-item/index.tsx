@@ -3,6 +3,7 @@
 import { useCallback } from 'react'
 
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 import { type Tag } from '@boilerplate/types/reference/interfaces/tags'
 
@@ -20,11 +21,16 @@ interface DashItemProps {
 
 export const DashItem: React.FC<DashItemProps> = ({ id, title, price, tag, imageSrc }) => {
   const dispatch = useAppDispatch()
+  const router = useRouter()
 
   const handleDelete = useCallback<React.MouseEventHandler<HTMLButtonElement>>(async () => {
     const { deleteProductStart } = await import('@boilerplate/dashboard/store/sagas/delete-product.saga')
 
     dispatch(deleteProductStart({ productId: id }))
+  }, [id])
+
+  const handleEdit = useCallback<React.MouseEventHandler<HTMLButtonElement>>(() => {
+    router.push(`/products/${id}`)
   }, [id])
 
   return (
@@ -36,7 +42,9 @@ export const DashItem: React.FC<DashItemProps> = ({ id, title, price, tag, image
       <td className={classes['table-cell']}>{tag ? tag.title : 'N/A'}</td>
       <td className={classes['table-cell']}>{price.toFixed(2)}₴</td>
       <td className={classes['table-cell']}>
-        <button className={classes['btn-update']}>Редагувати</button>
+        <button className={classes['btn-update']} onClick={handleEdit}>
+          Редагувати
+        </button>
         <button className={classes['btn-delete']} onClick={handleDelete}>
           Видалити
         </button>
