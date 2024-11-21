@@ -10,9 +10,9 @@ import { v1Api } from '@boilerplate/dashboard/store/api/v1.api'
 import { usePostFilePreloadMutation } from '@boilerplate/dashboard/store/queries/file.query'
 import { useGetProductQuery } from '@boilerplate/dashboard/store/queries/product.query'
 import { useGetTagsListQuery } from '@boilerplate/dashboard/store/queries/reference.query'
-import { postProductSlice } from '@boilerplate/dashboard/store/slices/create-product.slice'
+import { editProductSlice } from '@boilerplate/dashboard/store/slices/edit-product.slice'
 
-interface UpdateProductFormProps {}
+interface UpdateProductFormProps { }
 
 export const UpdateProductForm: React.FC<UpdateProductFormProps> = () => {
   const dispatch = useAppDispatch()
@@ -27,29 +27,49 @@ export const UpdateProductForm: React.FC<UpdateProductFormProps> = () => {
     }
   }, [productId])
 
+  const { data: productData } = useGetProductQuery({ productId })
+
+  console.log(productData)
+
+  useEffect(() => {
+    if (productData) {
+      dispatch(editProductSlice.actions.setTitle(productData.title))
+      dispatch(editProductSlice.actions.setPrice(productData.price?.value || 0))
+      dispatch(editProductSlice.actions.setDescription(productData.description))
+
+      const firstTagId = productData.tags?.[0]?.id || ''
+
+      dispatch(editProductSlice.actions.setTagId(firstTagId))
+
+      const firstFileId = productData.images?.[0]?.id || null
+
+      dispatch(editProductSlice.actions.setFileId(firstFileId))
+    }
+  }, [productData, dispatch])
+
   const { data: tagsListData = {} } = useGetTagsListQuery()
   const tagsGroups = tagsListData.result || []
 
   const [postFilePreload] = usePostFilePreloadMutation()
 
-  const title = useAppSelector(postProductSlice.selectors.title)
+  const title = useAppSelector(editProductSlice.selectors.title)
   const handleTitleChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>((event) => {
-    dispatch(postProductSlice.actions.setTitle(event.target.value))
+    dispatch(editProductSlice.actions.setTitle(event.target.value))
   }, [])
 
-  const price = useAppSelector(postProductSlice.selectors.price)
+  const price = useAppSelector(editProductSlice.selectors.price)
   const handlePriceChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>((event) => {
-    dispatch(postProductSlice.actions.setPrice(parseFloat(event.target.value)))
+    dispatch(editProductSlice.actions.setPrice(parseFloat(event.target.value)))
   }, [])
 
-  const description = useAppSelector(postProductSlice.selectors.description)
+  const description = useAppSelector(editProductSlice.selectors.description)
   const handleDescriptionChange = useCallback<React.ChangeEventHandler<HTMLTextAreaElement>>((event) => {
-    dispatch(postProductSlice.actions.setDescription(event.target.value))
+    dispatch(editProductSlice.actions.setDescription(event.target.value))
   }, [])
 
-  const tagId = useAppSelector(postProductSlice.selectors.tagId)
+  const tagId = useAppSelector(editProductSlice.selectors.tagId)
   const handleChangeTagId = useCallback<React.ChangeEventHandler<HTMLSelectElement>>((event) => {
-    dispatch(postProductSlice.actions.setTagId(event.target.value))
+    dispatch(editProductSlice.actions.setTagId(event.target.value))
   }, [])
 
   const handleFileChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(async (event) => {
@@ -62,17 +82,20 @@ export const UpdateProductForm: React.FC<UpdateProductFormProps> = () => {
     const { data } = await postFilePreload(selectedFile)
 
     if (data?.id) {
-      dispatch(postProductSlice.actions.setFileId(data.id))
+      dispatch(editProductSlice.actions.setFileId(data.id))
     }
   }, [])
 
-  const handleSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>(async (event) => {
-    event.preventDefault()
+  const handleSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>(
+    async (event) => {
+      event.preventDefault()
 
-    const { createProductStart } = await import('@boilerplate/dashboard/store/sagas/create-product.saga')
+      const { editProductStart } = await import('@boilerplate/dashboard/store/sagas/edit-product.saga')
 
-    dispatch(createProductStart({}))
-  }, [])
+      dispatch(editProductStart({ productId }))
+    },
+    [dispatch, productId, title, price, description],
+  )
 
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">

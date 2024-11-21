@@ -5,8 +5,6 @@ interface LeftTackleProps { }
 
 export const LeftTackle: React.FC<LeftTackleProps> = () => (
   <div className={classes['left-main-container']}>
-
-
     <div className={classes.gearContainer}>
       <FishingGear />
     </div>
