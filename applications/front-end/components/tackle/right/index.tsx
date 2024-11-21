@@ -14,7 +14,7 @@ import { Card } from '@boilerplate/front-end/components/tackle/right/card'
 import { Corusel } from '@boilerplate/front-end/components/tackle/right/corusel'
 import classes from '@boilerplate/front-end/components/tackle/right/style.module.scss'
 
-interface RightTackleProps {}
+interface RightTackleProps { }
 
 export const RightTackle: React.FC<RightTackleProps> = () => {
   const [pageSize] = usePageSize()
@@ -44,7 +44,13 @@ export const RightTackle: React.FC<RightTackleProps> = () => {
       </div>
       <div className={classes.cardContainer}>
         {result.map(({ id, title, price, images }) => (
-          <Card key={id} id={id} title={title} price={price.value} imageSrc={images.length > 0 ? images[0].src : ''} />
+          <Card
+            key={id}
+            id={id}
+            title={title}
+            price={price.value}
+            imageSrc={images.length > 0 ? images[images.length - 1].src : ''}
+          />
         ))}
       </div>
       {totalPages > 1 ? (

@@ -2,16 +2,20 @@
 
 import { useCallback, useEffect } from 'react'
 
+import { useRouter } from 'next/navigation'
+
 import { useAppDispatch, useAppSelector } from '@boilerplate/dashboard/store'
 
 import { usePostFilePreloadMutation } from '@boilerplate/dashboard/store/queries/file.query'
 import { useGetTagsListQuery } from '@boilerplate/dashboard/store/queries/reference.query'
 import { postProductSlice } from '@boilerplate/dashboard/store/slices/create-product.slice'
 
-interface CreateProductFormProps {}
+interface CreateProductFormProps { }
 
 export const CreateProductForm: React.FC<CreateProductFormProps> = () => {
   const dispatch = useAppDispatch()
+
+  const router = useRouter()
 
   useEffect(() => {
     dispatch(postProductSlice.actions.clear())
@@ -136,7 +140,10 @@ export const CreateProductForm: React.FC<CreateProductFormProps> = () => {
         <div className="flex justify-end gap-4.5">
           <button
             className="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-            type="submit"
+            type="button"
+            onClick={() => {
+              router.push('/products')
+            }}
           >
             Скасувати
           </button>

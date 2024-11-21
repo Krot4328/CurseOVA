@@ -7,7 +7,7 @@ import x from '@boilerplate/front-end/assets/icons/x.svg'
 
 import classes from '@boilerplate/front-end/components/footer/style.module.scss'
 
-interface FooterProps {}
+interface FooterProps { }
 
 export const Footer: React.FC<FooterProps> = () => (
   <div className={classes.footer}>
@@ -21,9 +21,9 @@ export const Footer: React.FC<FooterProps> = () => (
       <a className={classes.a} href="help">
         Допомога
       </a>
-      <a className={classes.a} href="contact">
+      {/* <a className={classes.a} href="contact">
         Повідомити про проблему
-      </a>
+      </a> */}
     </div>
 
     <div className={classes['middle-footer']}>

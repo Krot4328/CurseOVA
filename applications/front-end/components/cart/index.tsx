@@ -33,7 +33,7 @@ export const Cart: React.FC<CartProps> = () => {
               id={product.id}
               title={product.title}
               price={product.price.value}
-              imageSrc={product.images?.length > 0 ? product.images[0].src : deleteIcon}
+              imageSrc={product.images?.length > 0 ? product.images[product.images.length - 1].src : deleteIcon}
               quantity={quantity}
             />
           ))}

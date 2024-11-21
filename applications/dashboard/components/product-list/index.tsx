@@ -7,7 +7,7 @@ import { useGetProductsQuery } from '@boilerplate/dashboard/store/queries/produc
 import { DashItem } from '@boilerplate/dashboard/components/product-list/product-item'
 import classes from '@boilerplate/dashboard/components/product-list/style.module.scss'
 
-interface TacklePageProps {}
+interface TacklePageProps { }
 
 export const TacklePage: React.FC<TacklePageProps> = () => {
   const { data = [] } = useGetProductsQuery()
@@ -43,14 +43,13 @@ export const TacklePage: React.FC<TacklePageProps> = () => {
               id={id}
               title={title}
               price={price.value}
-              imageSrc={images.length > 0 ? images[0].src : undefined}
-              tag={tags.length > 0 ? tags[0] : undefined}
+              imageSrc={images.length > 0 ? images[images.length - 1].src : undefined}
+              tag={tags.length > 0 ? tags[tags.length - 1] : undefined}
             />
           ))}
         </tbody>
       </table>
 
-      {/* Pagination controls */}
       <div className={classes.paginationContainer}>
         <button
           onClick={() => handlePageChange(currentPage - 1)}

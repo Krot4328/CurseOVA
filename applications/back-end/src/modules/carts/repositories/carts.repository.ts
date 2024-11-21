@@ -45,8 +45,6 @@ export class CartsRepository extends Repository<CartEntity> {
       }
     }
 
-    console.log({ options })
-
     return await this.findAndCount(options)
   }
 

@@ -52,7 +52,7 @@ export const TackleDescription: React.FC<TackleDescriptionProps> = ({ tackleId }
       <div className={classes['about-tackle']}>
         <div className={classes['column-1']}>
           <Image
-            src={tackle?.images?.length > 0 ? tackle?.images[0].src : error}
+            src={tackle?.images?.length > 0 ? tackle.images[tackle?.images?.length - 1].src : error}
             alt="ArthasFigure"
             className={classes['tackle-img']}
             width={500}
@@ -67,11 +67,7 @@ export const TackleDescription: React.FC<TackleDescriptionProps> = ({ tackleId }
           {tackle?.tags && tackle.tags.length > 0 ? (
             <div className={classes['category-list']}>
               <div className={classes['category-container']}>
-                {tackle.tags.map((tag, index) => (
-                  <p key={index} className={classes.p}>
-                    {tag.title}
-                  </p>
-                ))}
+                <p className={classes.p}>{tackle.tags[tackle.tags.length - 1].title}</p>
               </div>
             </div>
           ) : null}

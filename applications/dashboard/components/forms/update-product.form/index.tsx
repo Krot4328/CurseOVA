@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect } from 'react'
 
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 
 import { useAppDispatch, useAppSelector } from '@boilerplate/dashboard/store'
 
@@ -17,6 +17,7 @@ interface UpdateProductFormProps { }
 export const UpdateProductForm: React.FC<UpdateProductFormProps> = () => {
   const dispatch = useAppDispatch()
 
+  const router = useRouter()
   const { productId } = useParams<Record<'productId', string>>()
 
   useGetProductQuery({ productId }, { refetchOnMountOrArgChange: true })
@@ -29,19 +30,17 @@ export const UpdateProductForm: React.FC<UpdateProductFormProps> = () => {
 
   const { data: productData } = useGetProductQuery({ productId })
 
-  console.log(productData)
-
   useEffect(() => {
     if (productData) {
       dispatch(editProductSlice.actions.setTitle(productData.title))
       dispatch(editProductSlice.actions.setPrice(productData.price?.value || 0))
       dispatch(editProductSlice.actions.setDescription(productData.description))
 
-      const firstTagId = productData.tags?.[0]?.id || ''
+      const firstTagId = productData.tags?.[length - 1]?.id || ''
 
       dispatch(editProductSlice.actions.setTagId(firstTagId))
 
-      const firstFileId = productData.images?.[0]?.id || null
+      const firstFileId = productData.images?.[length - 1]?.id || null
 
       dispatch(editProductSlice.actions.setFileId(firstFileId))
     }
@@ -72,19 +71,23 @@ export const UpdateProductForm: React.FC<UpdateProductFormProps> = () => {
     dispatch(editProductSlice.actions.setTagId(event.target.value))
   }, [])
 
-  const handleFileChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(async (event) => {
-    const selectedFile = event.target.files?.[0] || null
+  const fileId = useAppSelector(editProductSlice.selectors.fileId)
+  const handleFileChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
+    async (event) => {
+      const selectedFile = event.target.files?.[0] || null
 
-    if (!selectedFile) {
-      return
-    }
+      if (!selectedFile) {
+        return
+      }
 
-    const { data } = await postFilePreload(selectedFile)
+      const { data } = await postFilePreload(selectedFile)
 
-    if (data?.id) {
-      dispatch(editProductSlice.actions.setFileId(data.id))
-    }
-  }, [])
+      if (data?.id) {
+        dispatch(editProductSlice.actions.setFileId(data.id))
+      }
+    },
+    [postFilePreload],
+  )
 
   const handleSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>(
     async (event) => {
@@ -94,7 +97,7 @@ export const UpdateProductForm: React.FC<UpdateProductFormProps> = () => {
 
       dispatch(editProductStart({ productId }))
     },
-    [dispatch, productId, title, price, description],
+    [dispatch, productId, title, price, description, tagId, fileId],
   )
 
   return (
@@ -169,7 +172,10 @@ export const UpdateProductForm: React.FC<UpdateProductFormProps> = () => {
         <div className="flex justify-end gap-4.5">
           <button
             className="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-            type="submit"
+            type="button"
+            onClick={() => {
+              router.push('/products')
+            }}
           >
             Скасувати
           </button>
