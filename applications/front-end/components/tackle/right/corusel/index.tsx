@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image'
 
-import bait from '@boilerplate/front-end/assets/images/bait.webp'
+import s1 from '@boilerplate/front-end/assets/images/Слайд_1.webp'
+import s2 from '@boilerplate/front-end/assets/images/Слайд_2.webp'
 
 import classes from '@boilerplate/front-end/components/tackle/right/corusel/style.module.scss'
 
@@ -12,7 +13,7 @@ interface CoruselProps { }
 
 export const Corusel: React.FC<CoruselProps> = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const slides = [bait, bait, bait]
+  const slides = [s1, s2]
   const slideInterval = 10000
 
   const nextSlide = () => {
@@ -31,7 +32,6 @@ export const Corusel: React.FC<CoruselProps> = () => {
 
   return (
     <div className={classes.carousel}>
-
       <button className={classes.prevButton} onClick={prevSlide}>
         ❮
       </button>

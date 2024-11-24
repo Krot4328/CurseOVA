@@ -11,7 +11,7 @@ import { Pagination } from '@boilerplate/dashboard/components/pagination'
 import { PaginationPageSize } from '@boilerplate/dashboard/components/pagination/page-size'
 import { OrdersTableRow } from '@boilerplate/dashboard/components/tables/orders.table/row'
 
-interface OrdersTableProps {}
+interface OrdersTableProps { }
 
 export const OrdersTable: React.FC<OrdersTableProps> = () => {
   const [page] = usePage()
@@ -23,7 +23,12 @@ export const OrdersTable: React.FC<OrdersTableProps> = () => {
   })
   const { result = [], total = 0 } = data || {}
 
-  const totalPages = Math.ceil(total / pageSize)
+  const updatedResult = result.map((order) => ({
+    ...order,
+    items: order.items?.map((item) => (item ? item : { id: null, name: 'Видалений товар' })),
+  }))
+
+  const totalPages = Math.ceil(updatedResult.length / pageSize)
   const tableHeight = Math.ceil(48 + 32.5 * pageSize)
 
   return (
@@ -63,7 +68,7 @@ export const OrdersTable: React.FC<OrdersTableProps> = () => {
               </thead>
               <tbody>
                 {isSuccess
-                  ? result.map(({ id, profileId }) => <OrdersTableRow key={id} id={id} profileId={profileId} />)
+                  ? updatedResult.map(({ id, profileId }) => <OrdersTableRow key={id} id={id} profileId={profileId} />)
                   : null}
               </tbody>
             </table>

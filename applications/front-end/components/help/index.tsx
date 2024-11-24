@@ -3,7 +3,6 @@
 import React from 'react'
 
 import { Accordion } from '@boilerplate/front-end/components/help/accordion'
-
 import classes from '@boilerplate/front-end/components/help/style.module.scss'
 
 interface HelpProps { }

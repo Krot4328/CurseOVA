@@ -31,6 +31,9 @@ export const FishingGear: React.FC<FishingGearProps> = () => {
 
   return (
     <div className={classes.container}>
+      <button className={classes['reset-button']} onClick={() => router.push('/')}>
+        Скинути пошук
+      </button>
       {tagsGroups.map(({ id: tagGroupId, title: tagGroupTitle, tags }) => (
         <div key={tagGroupId} className={classes['gear-category']}>
           <h3 onClick={() => toggleGroup(tagGroupId)}>{tagGroupTitle}</h3>

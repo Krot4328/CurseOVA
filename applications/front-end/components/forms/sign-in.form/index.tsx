@@ -6,13 +6,15 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 
+import { Method } from '@boilerplate/core/interfaces/http'
+
+import { PutTokenUrl } from '@boilerplate/types/auth/dto/requests/token'
+
 import { useAppDispatch, useAppSelector } from '@boilerplate/front-end/store'
 
 import { authSlice } from '@boilerplate/front-end/store/slices/auth.slice'
 
 import clasess from '@boilerplate/front-end/components/forms/sign-in.form/styles.module.scss'
-import { PutTokenUrl } from '@boilerplate/types/auth/dto/requests/token'
-import { Method } from '@boilerplate/core/interfaces/http'
 
 interface SignInFormProps { }
 
@@ -66,6 +68,6 @@ export const SignInForm: React.FC<SignInFormProps> = () => {
           </Button>
         </Form>
       </Card.Body>
-    </Card >
+    </Card>
   )
 }

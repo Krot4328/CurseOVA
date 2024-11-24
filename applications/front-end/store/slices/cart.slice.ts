@@ -93,5 +93,5 @@ export const cartSlice = {
 }
 
 declare module '@boilerplate/front-end/store' {
-  export interface LazyLoadedSlices extends WithSlice<typeof slice> {}
+  export interface LazyLoadedSlices extends WithSlice<typeof slice> { }
 }

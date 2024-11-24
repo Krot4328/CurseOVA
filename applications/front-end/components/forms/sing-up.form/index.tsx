@@ -42,11 +42,6 @@ export const SignUpForm: React.FC = () => {
     dispatch(authSlice.actions.setRepeatPassword(event.target.value))
   }
 
-  const promoCode = useAppSelector(authSlice.selectors.promoCode)
-  const handlePromoCodeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    dispatch(authSlice.actions.setPromoCode(event.target.value))
-  }
-
   const phone = useAppSelector(authSlice.selectors.phone)
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     dispatch(authSlice.actions.setPhone(event.target.value))
@@ -72,18 +67,27 @@ export const SignUpForm: React.FC = () => {
                 <Form.Control className={clasess.placeholder} type="last-name" placeholder="Введіть своє прізвище" />
               </Form.Group>
               <Form.Group className={clasess.form} controlId="exampleFormControlInput3">
-                <Form.Label className={clasess.text}>
-                  Електронна пошта</Form.Label>
-                <Form.Control className={clasess.placeholder} value={email} onChange={handleEmailChange} type="email" placeholder="Електронна пошта" />
+                <Form.Label className={clasess.text}>Електронна пошта</Form.Label>
+                <Form.Control
+                  className={clasess.placeholder}
+                  value={email}
+                  onChange={handleEmailChange}
+                  type="email"
+                  placeholder="Електронна пошта"
+                />
               </Form.Group>
               <Form.Group className={clasess.form} controlId="exampleFormControlInput4">
-                <Form.Label className={clasess.text}>
-                  Пароль</Form.Label>
-                <Form.Control className={clasess.placeholder} value={password} onChange={handlePasswordChange} type="password" placeholder="Пароль" />
+                <Form.Label className={clasess.text}>Пароль</Form.Label>
+                <Form.Control
+                  className={clasess.placeholder}
+                  value={password}
+                  onChange={handlePasswordChange}
+                  type="password"
+                  placeholder="Пароль"
+                />
               </Form.Group>
               <Form.Group className={clasess.form} controlId="exampleFormControlInput5">
-                <Form.Label className={clasess.text}>
-                  Повторіть пароль</Form.Label>
+                <Form.Label className={clasess.text}>Повторіть пароль</Form.Label>
                 <Form.Control
                   className={clasess.placeholder}
                   value={repeatPassword}
@@ -93,9 +97,14 @@ export const SignUpForm: React.FC = () => {
                 />
               </Form.Group>
               <Form.Group className={clasess.form} controlId="exampleFormControlInput7">
-                <Form.Label className={clasess.text}>
-                  Телефон</Form.Label>
-                <Form.Control className={clasess.placeholder} value={phone} onChange={handlePhoneChange} type="phone" placeholder="Введіть свій номер" />
+                <Form.Label className={clasess.text}>Телефон</Form.Label>
+                <Form.Control
+                  className={clasess.placeholder}
+                  value={phone}
+                  onChange={handlePhoneChange}
+                  type="phone"
+                  placeholder="Введіть свій номер"
+                />
               </Form.Group>
               <Button className={clasess.but} type="submit" variant="primary">
                 Зареєструватися

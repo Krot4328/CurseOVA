@@ -31,8 +31,9 @@
 
 .btn-update,
 .btn-delete {
+  width: 105px;
   padding: 5px 10px;
-  margin: 0 5px;
+  margin: 5px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 }

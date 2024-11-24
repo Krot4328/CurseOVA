@@ -13,7 +13,7 @@ import { useGetProductQuery } from '@boilerplate/front-end/store/queries/product
 import { cartSlice } from '@boilerplate/front-end/store/slices/cart.slice'
 import { profileSlice } from '@boilerplate/front-end/store/slices/profile.slice'
 
-import classes from '@boilerplate/front-end/components/tackle-description/style.module.scss'
+import styles from '@boilerplate/front-end/components/tackle-description/style.module.scss'
 
 interface TackleDescriptionProps {
   tackleId: string
@@ -48,54 +48,51 @@ export const TackleDescription: React.FC<TackleDescriptionProps> = ({ tackleId }
   }
 
   return (
-    <div className={classes['product-desc']}>
-      <div className={classes['about-tackle']}>
-        <div className={classes['column-1']}>
+    <div className={styles.productDescription}>
+      <div className={styles.productDetails}>
+        <div className={styles.imageColumn}>
           <Image
-            src={tackle?.images?.length > 0 ? tackle.images[tackle?.images?.length - 1].src : error}
-            alt="ArthasFigure"
-            className={classes['tackle-img']}
+            src={tackle?.images?.length > 0 ? tackle.images[tackle.images.length - 1].src : error}
+            alt="Product"
+            className={styles.productImage}
             width={500}
             height={500}
           />
         </div>
-        <div className={classes['column-2']}>
-          <h3 className={classes.h3}>{tackle?.title}</h3>
-          <div className={classes['tackle-desc']}>
-            <p className={classes['common-text']}>{`${tackle?.description}`}</p>
+        <div className={styles.detailsColumn}>
+          <h3 className={styles.productTitle}>{tackle?.title}</h3>
+          <div className={styles.productDescriptionText}>
+            <p>{tackle?.description}</p>
           </div>
-          {tackle?.tags && tackle.tags.length > 0 ? (
-            <div className={classes['category-list']}>
-              <div className={classes['category-container']}>
-                <p className={classes.p}>{tackle.tags[tackle.tags.length - 1].title}</p>
+          {tackle?.tags && tackle.tags.length > 0 && (
+            <div className={styles.tagList}>
+              <div className={styles.tagContainer}>
+                <p>{tackle.tags[tackle.tags.length - 1].title}</p>
               </div>
             </div>
-          ) : null}
-          <div className={classes['price-container']}>
-            <h2 className={classes.price}>{tackle?.price.value}₴</h2>
-            <div className={classes['change-quantity']}>
-              <p className={classes.p}>Обрати кількість</p>
+          )}
+          <div className={styles.priceSection}>
+            <h2 className={styles.productPrice}>{tackle?.price.value}₴</h2>
+            <div className={styles.quantityControls}>
+              <p className={styles.p}>Обрати кількість</p>
               <input
-                className={classes['input-number']}
+                className={styles.quantityInput}
                 type="number"
-                id="quan"
                 value={quantity}
                 min="1"
                 onChange={handleInputChange}
               />
-              <div className={classes['quantity-arrows']}>
-                <button onClick={increaseQuantity} className={classes.increaseButton}>
+              <div className={styles.quantityArrows}>
+                <button onClick={increaseQuantity} className={styles.adjustButton}>
                   +
                 </button>
-                <button onClick={decreaseQuantity} className={classes.decreaseButton}>
+                <button onClick={decreaseQuantity} className={styles.adjustButton}>
                   -
                 </button>
               </div>
             </div>
-            <button className={classes['add-to-cart']}>
-              <p className={classes.h} onClick={handleAddToCartClick}>
-                Додати у кошик
-              </p>
+            <button className={styles.addToCartButton} onClick={handleAddToCartClick}>
+              Додати у кошик
             </button>
           </div>
         </div>

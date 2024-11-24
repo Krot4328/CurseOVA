@@ -69,40 +69,49 @@ export const SendCartData: React.FC<SendCartDataProps> = ({ firstName, lastName,
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>Ім'я</Form.Label>
-            <Form.Control type="firstname" placeholder="" onChange={handleChangeFirstName} />
+            <Form.Control type="firstname" placeholder="Введіть своє ім'я" onChange={handleChangeFirstName} required />
           </Form.Group>
 
           <Form.Group as={Col} controlId="formGridPassword">
             <Form.Label>Прізвище</Form.Label>
-            <Form.Control type="lastname" placeholder="" onChange={handleChangeLastName} />
+            <Form.Control
+              type="lastname"
+              placeholder="Введіть своє прізвище"
+              onChange={handleChangeLastName}
+              required
+            />
           </Form.Group>
         </Row>
 
         <Form.Group className="mb-3" controlId="formGridAddress1">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="" onChange={handleChangeEmail} />
+          <Form.Control
+            type="email"
+            placeholder="Введіть свою електронну пошту"
+            onChange={handleChangeEmail}
+            required
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formGridAddress1">
           <Form.Label>Номер</Form.Label>
-          <Form.Control type="phone" placeholder="" onChange={handleChangePhone} />
+          <Form.Control type="phone" placeholder="Введіть свій номер телефону" onChange={handleChangePhone} required />
         </Form.Group>
 
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridCity">
             <Form.Label>Місто</Form.Label>
-            <Form.Control type="city" onChange={handleChangeCity} />
+            <Form.Control type="city" placeholder="Введіть своє місто" onChange={handleChangeCity} required />
           </Form.Group>
 
           <Form.Group as={Col} controlId="formGridZip">
             <Form.Label>Відділення НП</Form.Label>
-            <Form.Control type="text" onChange={handleChangeDepartment} />
+            <Form.Control type="text" placeholder="Куди доставити" onChange={handleChangeDepartment} required />
           </Form.Group>
 
           <Form.Group as={Col} controlId="formGridState">
             <Form.Label>Спосіб оплати</Form.Label>
-            <Form.Select defaultValue="Choose...">
-              <option>Choose...</option>
+            <Form.Select defaultValue="Choose..." required>
               <option>Готівка</option>
             </Form.Select>
           </Form.Group>

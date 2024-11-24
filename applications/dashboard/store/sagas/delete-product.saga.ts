@@ -10,7 +10,7 @@ import { type DeleteProductResultDto } from '@boilerplate/types/products/dto/res
 
 import { saga } from '@boilerplate/dashboard/store'
 
-import { deleteProduct } from '@boilerplate/dashboard/store/queries/products.query'
+import { deleteProduct } from '@boilerplate/dashboard/store/queries/product.query'
 import { confirmDeletion } from '@boilerplate/dashboard/store/sagas/confirm-deletion.saga'
 
 import { notification } from '@boilerplate/dashboard/utils/notification'

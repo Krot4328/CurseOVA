@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown } from 'react-icons/io'
 
 import classes from '@boilerplate/front-end/components/help/accordion/style.module.scss'
 

@@ -116,6 +116,33 @@
   padding: 0;
 }
 
+.cart-list-empty {
+  font-size: 26px;
+  text-align: center;
+  color: #444;
+  width: 800px;
+  margin: 20px auto;
+}
+
+.cart-main-page {
+  color: #8888ff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #1111ff
+  }
+}
+
+.cart-list-empty-p {
+  font-size: 20px;
+  width: 800px;
+  color: #555;
+  margin: auto;
+  text-align: center;
+}
+
 .orderForm {
   width: 40rem;
 }

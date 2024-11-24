@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 import deleteIcon from '@boilerplate/front-end/assets/icons/delete.svg'
 
 import { useAppSelector } from '@boilerplate/front-end/store'
@@ -24,21 +26,34 @@ export const Cart: React.FC<CartProps> = () => {
 
   return (
     <div className={classes.order}>
-      <SendCartData />
-      <div className={classes.cart}>
-        <ul className={classes['cart-list']}>
-          {cartItems.map(({ product, quantity }) => (
-            <CartItem
-              key={product.id}
-              id={product.id}
-              title={product.title}
-              price={product.price.value}
-              imageSrc={product.images?.length > 0 ? product.images[product.images.length - 1].src : deleteIcon}
-              quantity={quantity}
-            />
-          ))}
-        </ul>
-      </div>
+      {cartItems.length > 0 && <SendCartData />}
+      {cartItems.length === 0 ? (
+        <div>
+          <p className={classes['cart-list-empty']}>Ваш кошик порожній</p>
+          <p className={classes['cart-list-empty-p']}>
+            Поверніться на{' '}
+            <Link href="/" className={classes['cart-main-page']}>
+              головну сторінку
+            </Link>{' '}
+            і додайте в кошик побільше товарів
+          </p>
+        </div>
+      ) : (
+        <div className={classes.cart}>
+          <ul className={classes['cart-list']}>
+            {cartItems.map(({ product, quantity }) => (
+              <CartItem
+                key={product.id}
+                id={product.id}
+                title={product.title}
+                price={product.price.value}
+                imageSrc={product.images?.length > 0 ? product.images[product.images.length - 1].src : deleteIcon}
+                quantity={quantity}
+              />
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }

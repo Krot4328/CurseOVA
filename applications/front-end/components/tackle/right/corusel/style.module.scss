@@ -1,6 +1,5 @@
 .carousel {
   position: relative;
-  // width: 100%;
   overflow: hidden;
 
   &Inner {
@@ -12,6 +11,7 @@
     min-width: 100%;
     transition: opacity 0.5s ease;
     opacity: 0;
+    position: relative;
 
     &.active {
       opacity: 1;
@@ -24,6 +24,32 @@
   height: 90%;
   display: block;
   object-fit: contain;
+}
+
+.textOverlay {
+  opacity: 75%;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(150, 150, 150, 0.6);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 80%;
+  z-index: 2;
+}
+
+.textOverlay h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.textOverlay p {
+  font-size: 1rem;
+  margin: 5px 0 0;
 }
 
 .prevButton,
@@ -53,12 +79,12 @@
 }
 
 .indicators {
-  padding: 10px;
+  top: 237px;
+  padding: 5px;
   background-color: rgb(150, 150, 150);
-  opacity: 30%;
+  opacity: 60%;
   border-radius: 10px;
   position: absolute;
-  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -66,7 +92,7 @@
 }
 
 .indicator {
-  width: 115px;
+  width: 50px;
   height: 5px;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
@@ -78,10 +104,10 @@
   }
 }
 
-
 .carouselItem {
   display: flex;
   justify-content: center;
   max-width: 950px;
   max-height: 380px;
+  position: relative;
 }

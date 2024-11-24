@@ -64,3 +64,19 @@
 .gear-category li:hover {
   color: #007bff;
 }
+
+.reset-button {
+  color: white;
+  background-color: #f77;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  align-items: end;
+  padding: 10px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+
+.reset-button:hover {
+  background-color: #f55;
+}
