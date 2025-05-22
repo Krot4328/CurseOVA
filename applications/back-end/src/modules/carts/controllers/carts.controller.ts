@@ -14,6 +14,8 @@ import {
   GetCartUnauthorizedUrl,
   GetCartsListUrl,
   GetCartsSearchDto,
+  GetUserCartsListHttpServerRequestDto,
+  GetUserCartsListUrl,
   PatchCartAdminHttpServerRequestDto,
   PatchCartAdminUrl,
   PatchCartAuthorizedHttpServerRequestDto,
@@ -26,11 +28,12 @@ import {
   PostCartAuthorizedUrl,
   PostCartAuthorizedUrlHttpServerRequestDto,
   PostCartDataDto,
-  PostCartUnauthorizedUrl,
+  PostCartUnauthorizedUrl
 } from '@boilerplate/types/carts/dto/requests/carts'
 import {
   GetCartHttpResponseDto,
   GetCartsHttpListResponseDto,
+  GetUserCartsListHttpServerResponseDto,
   PatchCartResultHttpResponseDto,
   PostCartResultHttpResponseDto,
 } from '@boilerplate/types/carts/dto/responses/carts'
@@ -246,5 +249,19 @@ export class CartsController {
       { firstName, lastName, email, phone, city, department },
       userGid,
     )
+  }
+
+  @Get(GetUserCartsListUrl)
+  @ApiBearerAuth()
+  @UseGuards(JwtPassportAuthGuard)
+  @Roles([Role.Admin, Role.User])
+  async addUserCart(
+    @Request() request: GetUserCartsListHttpServerRequestDto,
+  ): Promise<GetUserCartsListHttpServerResponseDto> {
+    const {
+      user: { gid: userGid },
+    } = request
+
+    return await this.cartsService.getUserCartsList(userGid)
   }
 }

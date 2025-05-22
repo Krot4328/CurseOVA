@@ -48,6 +48,29 @@ export class CartsRepository extends Repository<CartEntity> {
     return await this.findAndCount(options)
   }
 
+  async findCartsByUserAndCount(userGid: string): Promise<[CartEntity[], number]> {
+    const options: FindManyOptions<CartEntity> = {
+      where: { userGid },
+      relations: {
+        toProducts: {
+          product: {
+            toImages: {
+              image: true,
+            },
+            toTags: {
+              tag: true,
+            },
+          },
+        },
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+    }
+
+    return await this.findAndCount(options)
+  }
+
   async findCartOneOrFail(id: string, userGid?: string | 'all'): Promise<CartEntity> {
     let where: FindOptionsWhere<CartEntity> | FindOptionsWhere<CartEntity>[] = [
       {

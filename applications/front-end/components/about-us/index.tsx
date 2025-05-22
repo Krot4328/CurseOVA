@@ -28,12 +28,12 @@ export const AboutUs: React.FC<AboutUsProps> = () => (
           досвіду, у нас знайдеться спорядження, яке допоможе вам досягти успіху. Обирайте кращі товари за доступними
           цінами та насолоджуйтеся незабутніми моментами на природі!
         </p>
-        <p className={classes.p}>
+        {/* <p className={classes.p}>
           Якщо виникла проблема{' '}
           <Link className={classes.a} href="contact">
             повідомте нас!
           </Link>
-        </p>
+        </p> */}
       </div>
 
       <div className={classes.image}>

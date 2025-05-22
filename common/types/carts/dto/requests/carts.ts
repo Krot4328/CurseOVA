@@ -7,3 +7,5 @@ export * from '@boilerplate/types/carts/dto/requests/carts/patch-cart-request.dt
 export * from '@boilerplate/types/carts/dto/requests/carts/post-cart-request.dto'
 
 export * from '@boilerplate/types/carts/dto/requests/carts/patch-cart-data-request.dto'
+
+export * from '@boilerplate/types/carts/dto/requests/carts/get-user-carts-list-request.dto'

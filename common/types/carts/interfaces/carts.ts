@@ -23,6 +23,23 @@ export interface GetCart {
   items: CartItem[]
 }
 
+export interface GetCartItems {
+  items: CartItem[]
+}
+
+export interface GetCartInfo extends GetCartItems {
+  id?: string
+
+  profileId?: string
+
+  firstName?: string
+  lastName?: string
+  phone?: string
+  email?: string
+  city?: string
+  updatedAt?: string
+}
+
 export interface GetCartsSearch extends HttpSearch {
   page?: string
   pageSize?: string

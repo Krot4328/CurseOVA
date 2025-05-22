@@ -1,44 +1,30 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { Suspense, lazy, useState } from 'react'
 
 import Image from 'next/image'
 
 import profile from '@boilerplate/front-end/assets/icons/profile.svg'
 
 import { useGetProfileQuery } from '@boilerplate/front-end/store/queries/profile.query'
+import { useGetUserCartsListQuery } from '@boilerplate/front-end/store/queries/user-carts-list.query'
 
 import classes from '@boilerplate/front-end/components/profile/style.module.scss'
 
 // eslint-disable-next-line prettier/prettier
 interface ProfileProps { }
+const History = lazy(() => import('@boilerplate/front-end/components/profile/history'))
 
 export const Profile: React.FC<ProfileProps> = () => {
   const { data } = useGetProfileQuery()
   const { firstName, lastName, phone, email } = data ?? {}
-  // const [contactInfo, setContactInfo] = useState({
-  //   phone: '123-456-7890',
-  //   email: 'example@gmail.com',
-  //   address: '123 Main St, City, Country',
-  // })
 
-  const [isEditing, setIsEditing] = useState(false)
-  // const [newContactInfo, setNewContactInfo] = useState(contactInfo)
+  const { data: carts, isLoading: isCartsLoading } = useGetUserCartsListQuery()
 
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target
+  const [showHistory, setShowHistory] = useState(false)
 
-  //   setNewContactInfo((prev) => ({ ...prev, [name]: value }))
-  // }
-
-  // // const handleEdit = () => {
-  //   setIsEditing(!isEditing)
-  // }
-
-  // const handleSave = () => {
-  //   setContactInfo(newContactInfo)
-  //   setIsEditing(false)
-  // }
+  const handleShowHistory = () => setShowHistory(true)
+  const handleCloseHistory = () => setShowHistory(false)
 
   return (
     <div className={classes.profileContainer}>
@@ -51,49 +37,49 @@ export const Profile: React.FC<ProfileProps> = () => {
 
       <div className={classes.contactInfo}>
         <h3 className={classes.contactHeader}>Контактна інформація</h3>
-        {isEditing ? (
-          <div className={classes.editForm}>
-            <p className={classes.contactEdit}>Телефон</p>
-            <input
-              className={classes.contactInput}
-              type="text"
-              name="phone"
-              value={newContactInfo.phone}
-              onChange={handleChange}
-              placeholder="Телефон"
-            />
-            <p className={classes.contactEdit}>Електронна пошта</p>
-            <input
-              className={classes.contactInput}
-              type="email"
-              name="email"
-              value={newContactInfo.email}
-              onChange={handleChange}
-              placeholder="Електронна пошта"
-            />
-            <p className={classes.contactEdit}>Адреса</p>
-            <input
-              className={classes.contactInput}
-              type="text"
-              name="address"
-              value={newContactInfo.address}
-              onChange={handleChange}
-              placeholder="Адреса"
-            />
-            {/* <button className={classes.saveButton} onClick={handleSave}>
-              Зберегти
-            </button> */}
-          </div>
-        ) : (
-          <div className={classes.contactDetails}>
-            <p className={classes.contactDetail}>Телефон: {phone}</p>
-            <p className={classes.contactDetail}>Електронна пошта: {email}</p>
-            {/* <button className={classes.editButton} onClick={handleEdit}>
-              Редагувати
-            </button> */}
-          </div>
-        )}
+        <div className={classes.contactDetails}>
+          <p className={classes.contactDetail}>Телефон: {phone}</p>
+          <p className={classes.contactDetail}>Електронна пошта: {email}</p>
+        </div>
+        <button className={classes.ShowHistoryButton} onClick={handleShowHistory}>
+          Показати історію покупок
+        </button>
       </div>
+      {showHistory && (
+        <div className={classes.modalOverlay} onClick={handleCloseHistory}>
+          <div className={classes.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button className={classes.closeButton} onClick={handleCloseHistory}>
+              ✖
+            </button>
+
+            {isCartsLoading ? (
+              <p>Завантаження історії...</p>
+            ) : carts && carts.filter((cart) => cart.items.length > 0).length > 0 ? (
+              <Suspense fallback={<p>Завантаження компоненту історії...</p>}>
+                {carts
+                  .filter((cart) => cart.items.length > 0)
+                  .map((cart) => (
+                    <History
+                      key={cart.id}
+                      cartId={cart.id ?? ''}
+                      updatedAt={cart.updatedAt ?? ''}
+                      items={cart.items.map((item) => ({
+                        product: {
+                          id: item.product.id,
+                          title: item.product.title,
+                          price: item.product.price.value,
+                        },
+                        quantity: item.quantity,
+                      }))}
+                    />
+                  ))}
+              </Suspense>
+            ) : (
+              <p>Історія покупок порожня</p>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

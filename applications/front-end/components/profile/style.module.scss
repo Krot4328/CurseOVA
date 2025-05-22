@@ -95,3 +95,144 @@
   font-size: 0.8rem;
   margin-bottom: 0.5rem;
 }
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-height: 80vh;
+  overflow-y: auto;
+  max-width: 90vw;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.cartCard {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: 0.3s ease;
+}
+
+.cartCard:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.cartHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.cartTitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.cartId {
+  font-weight: normal;
+  color: #888;
+  font-size: 0.95rem;
+}
+
+.cartDate {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.cartCard:first-of-type {
+  margin-top: 35px;
+}
+
+.cartTotal {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #000;
+  text-align: end;
+  padding-top: 10px;
+}
+
+.cartItems {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cartItem {
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+}
+
+.cartItemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.itemTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.itemDetail {
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.ShowHistoryButton {
+  padding: 0.3rem 0.8rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.ShowHistoryButton:hover {
+  background-color: #0069d9;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

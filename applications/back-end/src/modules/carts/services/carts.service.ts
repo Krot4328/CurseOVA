@@ -1,11 +1,14 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common'
+import { FindOptionsWhere } from 'typeorm'
 
 import { OrderType } from '@boilerplate/core/interfaces/core'
 import { HttpListServerResponse, HttpServerResponse } from '@boilerplate/core/interfaces/http'
 
+import { GetUserCartsListDto } from '@boilerplate/types/carts/dto/responses/carts'
 import {
   GetCart,
+  GetCartItems,
   GetCartsSearch,
   PatchCartData,
   PatchCartResult,
@@ -29,6 +32,39 @@ export class CartsService {
     private readonly cartsDataMapper: CartsDataMapper,
   ) { }
 
+  async getUserCartsList(userGid: string): Promise<HttpServerResponse<GetUserCartsListDto[]>> {
+    const where: FindOptionsWhere<CartEntity> = {
+      userGid: userGid,
+    }
+
+    const [carts] = await this.cartsRepository.findAndCount({
+      where,
+      order: {
+        updatedAt: 'DESC',
+      },
+    })
+
+    if (!carts.length) {
+      return { result: [] }
+    }
+
+    const result = await Promise.all(
+      carts.map((cart) => this.getCartInfo(cart.id, userGid).then((res) => res.result)),
+    )
+
+    return {
+      result,
+    }
+  }
+
+  async getCartInfo(id?: string, userGid?: string | 'all'): Promise<HttpServerResponse<GetCartItems>> {
+    const cart = await this.cartsRepository.findCartOneOrFail(id, userGid)
+
+    return {
+      result: this.cartsDataMapper.toCartInfo(cart),
+    }
+  }
+
   async getCartsList(queries: GetCartsSearch): Promise<HttpListServerResponse<GetCart>> {
     const page = parseInt(`${queries.page ?? 0}`, 10) || 0
     const pageSize = parseInt(`${queries.pageSize ?? 20}`, 10) || 20
@@ -50,9 +86,9 @@ export class CartsService {
 
       return { result: { cartId, isSuccess: true } }
     }
-    
+
     let cart: CartEntity
-    
+
     if (!userGid) {
       cart = await this.cartsRepository.save({ userGid })
     }

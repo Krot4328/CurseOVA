@@ -4,38 +4,60 @@ import { default as clsx } from 'clsx'
 
 import { useGetCartsListQuery } from '@boilerplate/dashboard/store/queries/carts.query'
 
-import { usePageSize } from '@boilerplate/dashboard/hooks/use-page-size.hook'
 import { usePage } from '@boilerplate/dashboard/hooks/use-page.hook'
 
 import { Pagination } from '@boilerplate/dashboard/components/pagination'
-import { PaginationPageSize } from '@boilerplate/dashboard/components/pagination/page-size'
 import { OrdersTableRow } from '@boilerplate/dashboard/components/tables/orders.table/row'
 
 interface OrdersTableProps { }
 
 export const OrdersTable: React.FC<OrdersTableProps> = () => {
   const [page] = usePage()
-  const [pageSize] = usePageSize()
+  const pageSize = 10
 
   const { data, isSuccess, isLoading } = useGetCartsListQuery({
     page: `${page}`,
     pageSize: `${pageSize}`,
   })
+
   const { result = [], total = 0 } = data || {}
 
-  const updatedResult = result.map((order) => ({
-    ...order,
-    items: order.items?.map((item) => (item ? item : { id: null, name: 'Видалений товар' })),
-  }))
+  const updatedResult = result.map((order) => {
+    const items =
+      order.items?.map((item) => {
+        if (!item || !item.product) {
+          return {
+            product: { name: 'Видалений товар' },
+            quantity: 0,
+            price: 0,
+          }
+        }
 
-  const totalPages = Math.ceil(updatedResult.length / pageSize)
-  const tableHeight = Math.ceil(48 + 32.5 * pageSize)
+        return {
+          product: {
+            name: item.product.title ?? 'Без назви',
+          },
+          quantity: item.quantity ?? 1,
+          price: item.product.price?.value ?? 0,
+        }
+      }) || []
+
+    const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+
+    return {
+      ...order,
+      items,
+      totalPrice,
+    }
+  })
+
+  const totalPages = Math.ceil(total / pageSize)
 
   return (
     <>
-      <div className="flex w-full items-center justify-end px-2 pb-2 pr-0">
+      {/* <div className="flex w-full items-center justify-end px-2 pb-2 pr-0">
         <PaginationPageSize />
-      </div>
+      </div> */}
       <div
         className={clsx(
           'rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark',
@@ -43,9 +65,6 @@ export const OrdersTable: React.FC<OrdersTableProps> = () => {
             'flex items-center justify-center': isLoading,
           },
         )}
-        style={{
-          height: `${tableHeight}px`,
-        }}
       >
         {!isLoading ? (
           <div className="max-w-full overflow-x-auto">
@@ -60,16 +79,76 @@ export const OrdersTable: React.FC<OrdersTableProps> = () => {
                   </th>
                   <th className="px-4 py-2 text-left text-xs font-medium text-black dark:text-white">
                     <span className="flex flex-col">
-                      <span>id</span>
+                      <span>Ім'я</span>
                       <span>користувача</span>
+                    </span>
+                  </th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-black dark:text-white">
+                    <span className="flex flex-col">
+                      <span>Прізвище</span>
+                      <span>користувача</span>
+                    </span>
+                  </th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-black dark:text-white">
+                    <span className="flex flex-col">
+                      <span>Номер телефону</span>
+                      <span>користувача</span>
+                    </span>
+                  </th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-black dark:text-white">
+                    <span className="flex flex-col">
+                      <span>Електронна пошта</span>
+                      <span>користувача</span>
+                    </span>
+                  </th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-black dark:text-white">
+                    <span className="flex flex-col">
+                      <span>Список</span>
+                      <span>замовлення</span>
+                    </span>
+                  </th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-black dark:text-white">
+                    <span className="flex flex-col">
+                      <span>Загальна</span>
+                      <span>ціна</span>
                     </span>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {isSuccess
-                  ? updatedResult.map(({ id, profileId }) => <OrdersTableRow key={id} id={id} profileId={profileId} />)
-                  : null}
+                {isSuccess &&
+                  updatedResult
+                    .filter((order) => Array.isArray(order.items) && order.items.length > 0)
+                    .map(
+                      ({
+                        id,
+                        profileId,
+                        firstName,
+                        lastName,
+                        phone,
+                        email,
+                        city,
+                        department,
+                        paymentStatus,
+                        items,
+                        totalPrice,
+                      }) => (
+                        <OrdersTableRow
+                          key={id}
+                          id={id}
+                          profileId={profileId}
+                          firstName={firstName}
+                          lastName={lastName}
+                          phone={phone}
+                          email={email}
+                          city={city}
+                          department={department}
+                          paymentStatus={paymentStatus}
+                          items={items}
+                          totalPrice={totalPrice}
+                        />
+                      ),
+                    )}
               </tbody>
             </table>
           </div>

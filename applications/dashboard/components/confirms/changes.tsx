@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '@boilerplate/dashboard/store'
 import { confirmChangesClose, confirmChangesOk } from '@boilerplate/dashboard/store/sagas/confirm-changes.saga'
 import { confirmChangesSlice } from '@boilerplate/dashboard/store/slices/confirm-changes.slice'
 
-interface ConfirmChangesProps {}
+interface ConfirmChangesProps { }
 
 const ConfirmChanges: React.FC<ConfirmChangesProps> = () => {
   const dispatch = useAppDispatch()
@@ -97,10 +97,10 @@ const ConfirmChanges: React.FC<ConfirmChangesProps> = () => {
               <button
                 type="button"
                 data-behavior="commit"
-                className="inline-flex w-full justify-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                className="inline-flex w-full justify-center rounded-md border border-transparent bg-rose-700 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-rose-800 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                 onClick={handleConfirm}
               >
-                Confirm
+                Підтвердити
               </button>
               <button
                 type="button"
@@ -108,7 +108,7 @@ const ConfirmChanges: React.FC<ConfirmChangesProps> = () => {
                 className="border-gray-300 text-gray-700 hover:text-gray-500 mt-3 inline-flex w-full justify-center rounded-md border bg-white px-4 py-2 text-base font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm"
                 onClick={handleCancel}
               >
-                Cancel
+                Скасувати
               </button>
             </div>
           </div>
