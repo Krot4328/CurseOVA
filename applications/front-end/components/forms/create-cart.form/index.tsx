@@ -30,6 +30,31 @@ export const SendCartData: React.FC<SendCartDataProps> = ({ firstName, lastName,
   // const cartId = useAppSelector(cartSlice.selectors.id) as string
   // const isAuthorized = useAppSelector(profileSlice.selectors.isAuthorized)
 
+  const cities = [
+    'Вінниця',
+    'Дніпро',
+    'Житомир',
+    'Запоріжжя',
+    'Івано-Франківськ',
+    'Київ',
+    'Кропивницький',
+    'Луцьк',
+    'Львів',
+    'Миколаїв',
+    'Одеса',
+    'Полтава',
+    'Рівне',
+    'Суми',
+    'Тернопіль',
+    'Ужгород',
+    'Харків',
+    'Херсон',
+    'Хмельницький',
+    'Черкаси',
+    'Чернівці',
+    'Чернігів',
+  ]
+
   const cartId = useAppSelector(cartSlice.selectors.id) as string
   const isAuthorized = useAppSelector(profileSlice.selectors.isAuthorized)
 
@@ -69,7 +94,7 @@ export const SendCartData: React.FC<SendCartDataProps> = ({ firstName, lastName,
     dispatch(cartSlice.actions.setLastName(lastName || ''))
     dispatch(cartSlice.actions.setEmail(email || ''))
     dispatch(cartSlice.actions.setPhone(phone || ''))
-    dispatch(cartSlice.actions.setEmail(city || ''))
+    dispatch(cartSlice.actions.setCity(city || ''))
   }, [firstName, lastName, email, phone, city, dispatch])
 
   const handleShowModal = () => {
@@ -104,13 +129,15 @@ export const SendCartData: React.FC<SendCartDataProps> = ({ firstName, lastName,
     dispatch(cartSlice.actions.setPhone(event.target.value))
   }, [])
 
-  const handleChangeCity = useCallback<React.ChangeEventHandler<HTMLInputElement>>((event) => {
-    dispatch(cartSlice.actions.setCity(event.target.value))
-  }, [])
+  // const handleChangeCity = useCallback<React.ChangeEventHandler<HTMLInputElement>>((event) => {
+  //   dispatch(cartSlice.actions.setCity(event.target.value))
+  // }, [])
 
   // const handleChangeDepartment = useCallback<React.ChangeEventHandler<HTMLInputElement>>((event) => {
   //   dispatch(cartSlice.actions.setDepartment(event.target.value))
   // }, [])
+  // ...
+  const selectedCity = useAppSelector(cartSlice.selectors.city)
 
   const content = (
     <div className={classes.cartForm}>
@@ -165,19 +192,13 @@ export const SendCartData: React.FC<SendCartDataProps> = ({ firstName, lastName,
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridCity">
             <Form.Label>Місто</Form.Label>
-            <Form.Control
-              type="text"
-              name="city"
-              placeholder="Введіть своє місто"
-              onChange={handleChangeCity}
-              required
-            />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridState">
-            <Form.Label>Спосіб оплати</Form.Label>
-            <Form.Select defaultValue="Choose..." required>
-              <option>Готівка</option>
+            <Form.Select name="city" onChange={(e) => dispatch(cartSlice.actions.setCity(e.target.value))} required>
+              <option value="">Оберіть місто</option>
+              {cities.map((cityName) => (
+                <option key={cityName} value={cityName}>
+                  {cityName}
+                </option>
+              ))}
             </Form.Select>
           </Form.Group>
         </Row>
@@ -194,12 +215,7 @@ export const SendCartData: React.FC<SendCartDataProps> = ({ firstName, lastName,
         <BaseSendCartFormProps onSuccess={handleShowModal}>{content}</BaseSendCartFormProps>
       </Suspense>
 
-      <OrderConfirmationModal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        totalPrice={totalPrice}
-        city={city || ''}
-      />
+      <OrderConfirmationModal show={showModal} totalPrice={totalPrice} city={selectedCity || ''} items={items} />
     </>
   )
 }

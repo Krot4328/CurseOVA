@@ -38,7 +38,7 @@ export class CartsDataMapper {
   }
 
   toCartInfo(entity: CartEntity): GetCartInfo {
-    const { toProducts, userGid, firstName, lastName, phone, email, id, updatedAt } = entity
+    const { toProducts, userGid, firstName, lastName, phone, email, id, updatedAt, city } = entity
 
     return {
       id,
@@ -49,6 +49,7 @@ export class CartsDataMapper {
       phone,
       email,
       updatedAt: updatedAt?.toISOString(),
+      city,
     }
   }
 }

@@ -26,6 +26,8 @@ export const Profile: React.FC<ProfileProps> = () => {
   const handleShowHistory = () => setShowHistory(true)
   const handleCloseHistory = () => setShowHistory(false)
 
+  console.log({ carts })
+
   return (
     <div className={classes.profileContainer}>
       <div className={classes.profileInfo}>
@@ -63,6 +65,7 @@ export const Profile: React.FC<ProfileProps> = () => {
                       key={cart.id}
                       cartId={cart.id ?? ''}
                       updatedAt={cart.updatedAt ?? ''}
+                      city={cart.city ?? ''}
                       items={cart.items.map((item) => ({
                         product: {
                           id: item.product.id,

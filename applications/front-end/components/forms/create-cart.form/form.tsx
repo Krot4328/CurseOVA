@@ -31,7 +31,7 @@ const BaseSendCartDataForm: React.FC<BaseSendCartFormProps> = ({ onSuccess, ...p
             redirect: () => router.push('/'),
           }),
         )
-      }, 20000)
+      }, 1000)
 
       if (onSuccess) {
         onSuccess()
